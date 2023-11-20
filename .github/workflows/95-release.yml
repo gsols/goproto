@@ -1,0 +1,23 @@
+name: Release Please
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Release Please
+        uses: google-github-actions/release-please-action@4c5670f886fe259db4d11222f7dff41c1382304d #v3.7.12
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: go-yoshi
+          changelog-path: CHANGELOG.md
+          signoff: "nickaguilarh[bot] <nickaguilarh@gmail.com>"
+          package-name: ${{ github.repositories }}
+          bump-minor-pre-major: true
+          bump-patch-for-minor-pre-major: true
