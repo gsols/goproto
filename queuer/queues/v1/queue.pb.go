@@ -8,9 +8,8 @@ package v1
 
 import (
 	_ "github.com/envoyproxy/protoc-gen-validate/validate"
-	v12 "github.com/gsols/goproto/queuer/api/entities/v1"
+	v11 "github.com/gsols/goproto/queuer/api/entities/v1"
 	v1 "github.com/gsols/goproto/queuer/entities/v1"
-	v11 "github.com/gsols/iot-queuer/api/entities/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -276,8 +275,8 @@ type PublishMessageRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	QueueId string       `protobuf:"bytes,1,opt,name=queue_id,json=queueId,proto3" json:"queue_id,omitempty"`
-	Message *v11.Message `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	QueueId string      `protobuf:"bytes,1,opt,name=queue_id,json=queueId,proto3" json:"queue_id,omitempty"`
+	Message *v1.Message `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
 }
 
 func (x *PublishMessageRequest) Reset() {
@@ -319,7 +318,7 @@ func (x *PublishMessageRequest) GetQueueId() string {
 	return ""
 }
 
-func (x *PublishMessageRequest) GetMessage() *v11.Message {
+func (x *PublishMessageRequest) GetMessage() *v1.Message {
 	if x != nil {
 		return x.Message
 	}
@@ -497,8 +496,8 @@ var file_queuer_queues_v1_queue_proto_goTypes = []interface{}{
 	(*PublishMessageRequest)(nil),  // 5: queuer.queues.v1.PublishMessageRequest
 	(*PublishMessageResponse)(nil), // 6: queuer.queues.v1.PublishMessageResponse
 	(*v1.Queue)(nil),               // 7: queuer.entities.v1.Queue
-	(*v11.Message)(nil),            // 8: queuer.entities.v1.Message
-	(*v12.Stats)(nil),              // 9: queuer.entities.v1.Stats
+	(*v1.Message)(nil),             // 8: queuer.entities.v1.Message
+	(*v11.Stats)(nil),              // 9: queuer.entities.v1.Stats
 	(*emptypb.Empty)(nil),          // 10: google.protobuf.Empty
 }
 var file_queuer_queues_v1_queue_proto_depIdxs = []int32{
