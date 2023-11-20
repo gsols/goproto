@@ -53,5 +53,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
-      - name: Generate protofiles
+      - name: Lint proto files
+        run: make protolint
+
+      - name: Generate proto files
         run: make proto
