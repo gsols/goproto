@@ -8,12 +8,9 @@ package v1
 
 import (
 	context "context"
-	v11 "github.com/gsols/goproto/queuer/api/entities/v1"
-	v1 "github.com/gsols/goproto/queuer/entities/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -35,9 +32,9 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type QueueServiceClient interface {
 	CreateQueue(ctx context.Context, in *CreateQueueRequest, opts ...grpc.CallOption) (*CreateQueueResponse, error)
-	GetQueue(ctx context.Context, in *GetQueueRequest, opts ...grpc.CallOption) (*v1.Queue, error)
-	DeleteQueue(ctx context.Context, in *DeleteQueueRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	FlushQueue(ctx context.Context, in *FlushQueueRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	GetQueue(ctx context.Context, in *GetQueueRequest, opts ...grpc.CallOption) (*GetQueueResponse, error)
+	DeleteQueue(ctx context.Context, in *DeleteQueueRequest, opts ...grpc.CallOption) (*DeleteQueueResponse, error)
+	FlushQueue(ctx context.Context, in *FlushQueueRequest, opts ...grpc.CallOption) (*FlushQueueResponse, error)
 	PublishMessage(ctx context.Context, in *PublishMessageRequest, opts ...grpc.CallOption) (*PublishMessageResponse, error)
 	ClientStats(ctx context.Context, opts ...grpc.CallOption) (QueueService_ClientStatsClient, error)
 }
@@ -59,8 +56,8 @@ func (c *queueServiceClient) CreateQueue(ctx context.Context, in *CreateQueueReq
 	return out, nil
 }
 
-func (c *queueServiceClient) GetQueue(ctx context.Context, in *GetQueueRequest, opts ...grpc.CallOption) (*v1.Queue, error) {
-	out := new(v1.Queue)
+func (c *queueServiceClient) GetQueue(ctx context.Context, in *GetQueueRequest, opts ...grpc.CallOption) (*GetQueueResponse, error) {
+	out := new(GetQueueResponse)
 	err := c.cc.Invoke(ctx, QueueService_GetQueue_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -68,8 +65,8 @@ func (c *queueServiceClient) GetQueue(ctx context.Context, in *GetQueueRequest, 
 	return out, nil
 }
 
-func (c *queueServiceClient) DeleteQueue(ctx context.Context, in *DeleteQueueRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *queueServiceClient) DeleteQueue(ctx context.Context, in *DeleteQueueRequest, opts ...grpc.CallOption) (*DeleteQueueResponse, error) {
+	out := new(DeleteQueueResponse)
 	err := c.cc.Invoke(ctx, QueueService_DeleteQueue_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -77,8 +74,8 @@ func (c *queueServiceClient) DeleteQueue(ctx context.Context, in *DeleteQueueReq
 	return out, nil
 }
 
-func (c *queueServiceClient) FlushQueue(ctx context.Context, in *FlushQueueRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *queueServiceClient) FlushQueue(ctx context.Context, in *FlushQueueRequest, opts ...grpc.CallOption) (*FlushQueueResponse, error) {
+	out := new(FlushQueueResponse)
 	err := c.cc.Invoke(ctx, QueueService_FlushQueue_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -105,8 +102,8 @@ func (c *queueServiceClient) ClientStats(ctx context.Context, opts ...grpc.CallO
 }
 
 type QueueService_ClientStatsClient interface {
-	Send(*v11.Stats) error
-	CloseAndRecv() (*emptypb.Empty, error)
+	Send(*ClientStatsRequest) error
+	CloseAndRecv() (*ClientStatsResponse, error)
 	grpc.ClientStream
 }
 
@@ -114,15 +111,15 @@ type queueServiceClientStatsClient struct {
 	grpc.ClientStream
 }
 
-func (x *queueServiceClientStatsClient) Send(m *v11.Stats) error {
+func (x *queueServiceClientStatsClient) Send(m *ClientStatsRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *queueServiceClientStatsClient) CloseAndRecv() (*emptypb.Empty, error) {
+func (x *queueServiceClientStatsClient) CloseAndRecv() (*ClientStatsResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
-	m := new(emptypb.Empty)
+	m := new(ClientStatsResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -134,9 +131,9 @@ func (x *queueServiceClientStatsClient) CloseAndRecv() (*emptypb.Empty, error) {
 // for forward compatibility
 type QueueServiceServer interface {
 	CreateQueue(context.Context, *CreateQueueRequest) (*CreateQueueResponse, error)
-	GetQueue(context.Context, *GetQueueRequest) (*v1.Queue, error)
-	DeleteQueue(context.Context, *DeleteQueueRequest) (*emptypb.Empty, error)
-	FlushQueue(context.Context, *FlushQueueRequest) (*emptypb.Empty, error)
+	GetQueue(context.Context, *GetQueueRequest) (*GetQueueResponse, error)
+	DeleteQueue(context.Context, *DeleteQueueRequest) (*DeleteQueueResponse, error)
+	FlushQueue(context.Context, *FlushQueueRequest) (*FlushQueueResponse, error)
 	PublishMessage(context.Context, *PublishMessageRequest) (*PublishMessageResponse, error)
 	ClientStats(QueueService_ClientStatsServer) error
 	mustEmbedUnimplementedQueueServiceServer()
@@ -149,13 +146,13 @@ type UnimplementedQueueServiceServer struct {
 func (UnimplementedQueueServiceServer) CreateQueue(context.Context, *CreateQueueRequest) (*CreateQueueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateQueue not implemented")
 }
-func (UnimplementedQueueServiceServer) GetQueue(context.Context, *GetQueueRequest) (*v1.Queue, error) {
+func (UnimplementedQueueServiceServer) GetQueue(context.Context, *GetQueueRequest) (*GetQueueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetQueue not implemented")
 }
-func (UnimplementedQueueServiceServer) DeleteQueue(context.Context, *DeleteQueueRequest) (*emptypb.Empty, error) {
+func (UnimplementedQueueServiceServer) DeleteQueue(context.Context, *DeleteQueueRequest) (*DeleteQueueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteQueue not implemented")
 }
-func (UnimplementedQueueServiceServer) FlushQueue(context.Context, *FlushQueueRequest) (*emptypb.Empty, error) {
+func (UnimplementedQueueServiceServer) FlushQueue(context.Context, *FlushQueueRequest) (*FlushQueueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FlushQueue not implemented")
 }
 func (UnimplementedQueueServiceServer) PublishMessage(context.Context, *PublishMessageRequest) (*PublishMessageResponse, error) {
@@ -272,8 +269,8 @@ func _QueueService_ClientStats_Handler(srv interface{}, stream grpc.ServerStream
 }
 
 type QueueService_ClientStatsServer interface {
-	SendAndClose(*emptypb.Empty) error
-	Recv() (*v11.Stats, error)
+	SendAndClose(*ClientStatsResponse) error
+	Recv() (*ClientStatsRequest, error)
 	grpc.ServerStream
 }
 
@@ -281,12 +278,12 @@ type queueServiceClientStatsServer struct {
 	grpc.ServerStream
 }
 
-func (x *queueServiceClientStatsServer) SendAndClose(m *emptypb.Empty) error {
+func (x *queueServiceClientStatsServer) SendAndClose(m *ClientStatsResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *queueServiceClientStatsServer) Recv() (*v11.Stats, error) {
-	m := new(v11.Stats)
+func (x *queueServiceClientStatsServer) Recv() (*ClientStatsRequest, error) {
+	m := new(ClientStatsRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}

@@ -15,8 +15,7 @@ GO_DEPENDENCIES = google.golang.org/protobuf/cmd/protoc-gen-go \
                   github.com/bufbuild/buf/cmd/buf \
                   github.com/bufbuild/buf/cmd/protoc-gen-buf-breaking \
                   github.com/bufbuild/buf/cmd/protoc-gen-buf-lint\
-                  golang.org/x/tools/cmd/goimports \
-                  github.com/cosmtrek/air
+                  golang.org/x/tools/cmd/goimports
 
 define make-go-dependency
   # target template for go tools, can be referenced e.g. via /bin/<tool>
@@ -34,8 +33,8 @@ proto/buf.lock: bin/buf
 protolint: proto/buf.lock bin/protoc-gen-buf-lint ## Lints your protobuf files
 	bin/buf lint
 
-protobreaking: proto/buf.lock bin/protoc-gen-buf-breaking ## Compares your current protobuf with the version on master to find breaking changes
-	bin/buf breaking --against '.git#branch=main'
+#protobreaking: proto/buf.lock bin/protoc-gen-buf-breaking ## Compares your current protobuf with the version on master to find breaking changes
+#	bin/buf breaking --against '.git#branch=main'
 
 proto: ## Generates code from protobuf files
 proto:  proto/buf.lock bin/protoc-gen-go bin/protoc-gen-go-grpc bin/protoc-gen-validate

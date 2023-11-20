@@ -8,11 +8,9 @@ package v1
 
 import (
 	context "context"
-	v1 "github.com/gsols/goproto/queuer/entities/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -29,7 +27,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MessageServiceClient interface {
-	ConfirmMessage(ctx context.Context, in *ConfirmMessageRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ConfirmMessage(ctx context.Context, in *ConfirmMessageRequest, opts ...grpc.CallOption) (*ConfirmMessageResponse, error)
 	GetMessages(ctx context.Context, opts ...grpc.CallOption) (MessageService_GetMessagesClient, error)
 }
 
@@ -41,8 +39,8 @@ func NewMessageServiceClient(cc grpc.ClientConnInterface) MessageServiceClient {
 	return &messageServiceClient{cc}
 }
 
-func (c *messageServiceClient) ConfirmMessage(ctx context.Context, in *ConfirmMessageRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *messageServiceClient) ConfirmMessage(ctx context.Context, in *ConfirmMessageRequest, opts ...grpc.CallOption) (*ConfirmMessageResponse, error) {
+	out := new(ConfirmMessageResponse)
 	err := c.cc.Invoke(ctx, MessageService_ConfirmMessage_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -61,7 +59,7 @@ func (c *messageServiceClient) GetMessages(ctx context.Context, opts ...grpc.Cal
 
 type MessageService_GetMessagesClient interface {
 	Send(*GetMessagesRequest) error
-	Recv() (*v1.Message, error)
+	Recv() (*GetMessagesResponse, error)
 	grpc.ClientStream
 }
 
@@ -73,8 +71,8 @@ func (x *messageServiceGetMessagesClient) Send(m *GetMessagesRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *messageServiceGetMessagesClient) Recv() (*v1.Message, error) {
-	m := new(v1.Message)
+func (x *messageServiceGetMessagesClient) Recv() (*GetMessagesResponse, error) {
+	m := new(GetMessagesResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -85,7 +83,7 @@ func (x *messageServiceGetMessagesClient) Recv() (*v1.Message, error) {
 // All implementations must embed UnimplementedMessageServiceServer
 // for forward compatibility
 type MessageServiceServer interface {
-	ConfirmMessage(context.Context, *ConfirmMessageRequest) (*emptypb.Empty, error)
+	ConfirmMessage(context.Context, *ConfirmMessageRequest) (*ConfirmMessageResponse, error)
 	GetMessages(MessageService_GetMessagesServer) error
 	mustEmbedUnimplementedMessageServiceServer()
 }
@@ -94,7 +92,7 @@ type MessageServiceServer interface {
 type UnimplementedMessageServiceServer struct {
 }
 
-func (UnimplementedMessageServiceServer) ConfirmMessage(context.Context, *ConfirmMessageRequest) (*emptypb.Empty, error) {
+func (UnimplementedMessageServiceServer) ConfirmMessage(context.Context, *ConfirmMessageRequest) (*ConfirmMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConfirmMessage not implemented")
 }
 func (UnimplementedMessageServiceServer) GetMessages(MessageService_GetMessagesServer) error {
@@ -136,7 +134,7 @@ func _MessageService_GetMessages_Handler(srv interface{}, stream grpc.ServerStre
 }
 
 type MessageService_GetMessagesServer interface {
-	Send(*v1.Message) error
+	Send(*GetMessagesResponse) error
 	Recv() (*GetMessagesRequest, error)
 	grpc.ServerStream
 }
@@ -145,7 +143,7 @@ type messageServiceGetMessagesServer struct {
 	grpc.ServerStream
 }
 
-func (x *messageServiceGetMessagesServer) Send(m *v1.Message) error {
+func (x *messageServiceGetMessagesServer) Send(m *GetMessagesResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 

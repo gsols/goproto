@@ -422,6 +422,135 @@ var _ interface {
 	ErrorName() string
 } = GetQueueRequestValidationError{}
 
+// Validate checks the field values on GetQueueResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *GetQueueResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetQueueResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetQueueResponseMultiError, or nil if none found.
+func (m *GetQueueResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetQueueResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetQueue()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, GetQueueResponseValidationError{
+					field:  "Queue",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, GetQueueResponseValidationError{
+					field:  "Queue",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetQueue()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return GetQueueResponseValidationError{
+				field:  "Queue",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return GetQueueResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetQueueResponseMultiError is an error wrapping multiple validation errors
+// returned by GetQueueResponse.ValidateAll() if the designated constraints
+// aren't met.
+type GetQueueResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetQueueResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetQueueResponseMultiError) AllErrors() []error { return m }
+
+// GetQueueResponseValidationError is the validation error returned by
+// GetQueueResponse.Validate if the designated constraints aren't met.
+type GetQueueResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetQueueResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetQueueResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetQueueResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetQueueResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetQueueResponseValidationError) ErrorName() string { return "GetQueueResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetQueueResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetQueueResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetQueueResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetQueueResponseValidationError{}
+
 // Validate checks the field values on FlushQueueRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
@@ -544,6 +673,110 @@ var _ interface {
 	ErrorName() string
 } = FlushQueueRequestValidationError{}
 
+// Validate checks the field values on FlushQueueResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *FlushQueueResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on FlushQueueResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// FlushQueueResponseMultiError, or nil if none found.
+func (m *FlushQueueResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *FlushQueueResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Success
+
+	if len(errors) > 0 {
+		return FlushQueueResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// FlushQueueResponseMultiError is an error wrapping multiple validation errors
+// returned by FlushQueueResponse.ValidateAll() if the designated constraints
+// aren't met.
+type FlushQueueResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m FlushQueueResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m FlushQueueResponseMultiError) AllErrors() []error { return m }
+
+// FlushQueueResponseValidationError is the validation error returned by
+// FlushQueueResponse.Validate if the designated constraints aren't met.
+type FlushQueueResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e FlushQueueResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e FlushQueueResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e FlushQueueResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e FlushQueueResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e FlushQueueResponseValidationError) ErrorName() string {
+	return "FlushQueueResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e FlushQueueResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sFlushQueueResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = FlushQueueResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = FlushQueueResponseValidationError{}
+
 // Validate checks the field values on DeleteQueueRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -665,6 +898,110 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DeleteQueueRequestValidationError{}
+
+// Validate checks the field values on DeleteQueueResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeleteQueueResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeleteQueueResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeleteQueueResponseMultiError, or nil if none found.
+func (m *DeleteQueueResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeleteQueueResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Success
+
+	if len(errors) > 0 {
+		return DeleteQueueResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeleteQueueResponseMultiError is an error wrapping multiple validation
+// errors returned by DeleteQueueResponse.ValidateAll() if the designated
+// constraints aren't met.
+type DeleteQueueResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeleteQueueResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeleteQueueResponseMultiError) AllErrors() []error { return m }
+
+// DeleteQueueResponseValidationError is the validation error returned by
+// DeleteQueueResponse.Validate if the designated constraints aren't met.
+type DeleteQueueResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteQueueResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteQueueResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteQueueResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteQueueResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteQueueResponseValidationError) ErrorName() string {
+	return "DeleteQueueResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteQueueResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteQueueResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteQueueResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteQueueResponseValidationError{}
 
 // Validate checks the field values on PublishMessageRequest with the rules
 // defined in the proto definition for this message. If any rules are
@@ -920,3 +1257,258 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = PublishMessageResponseValidationError{}
+
+// Validate checks the field values on ClientStatsRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ClientStatsRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ClientStatsRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ClientStatsRequestMultiError, or nil if none found.
+func (m *ClientStatsRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ClientStatsRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if err := m._validateUuid(m.GetQueueId()); err != nil {
+		err = ClientStatsRequestValidationError{
+			field:  "QueueId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if all {
+		switch v := interface{}(m.GetStats()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ClientStatsRequestValidationError{
+					field:  "Stats",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ClientStatsRequestValidationError{
+					field:  "Stats",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetStats()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ClientStatsRequestValidationError{
+				field:  "Stats",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return ClientStatsRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *ClientStatsRequest) _validateUuid(uuid string) error {
+	if matched := _queue_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
+	}
+
+	return nil
+}
+
+// ClientStatsRequestMultiError is an error wrapping multiple validation errors
+// returned by ClientStatsRequest.ValidateAll() if the designated constraints
+// aren't met.
+type ClientStatsRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ClientStatsRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ClientStatsRequestMultiError) AllErrors() []error { return m }
+
+// ClientStatsRequestValidationError is the validation error returned by
+// ClientStatsRequest.Validate if the designated constraints aren't met.
+type ClientStatsRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ClientStatsRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ClientStatsRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ClientStatsRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ClientStatsRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ClientStatsRequestValidationError) ErrorName() string {
+	return "ClientStatsRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ClientStatsRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sClientStatsRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ClientStatsRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ClientStatsRequestValidationError{}
+
+// Validate checks the field values on ClientStatsResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ClientStatsResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ClientStatsResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// ClientStatsResponseMultiError, or nil if none found.
+func (m *ClientStatsResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ClientStatsResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Success
+
+	if len(errors) > 0 {
+		return ClientStatsResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// ClientStatsResponseMultiError is an error wrapping multiple validation
+// errors returned by ClientStatsResponse.ValidateAll() if the designated
+// constraints aren't met.
+type ClientStatsResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ClientStatsResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ClientStatsResponseMultiError) AllErrors() []error { return m }
+
+// ClientStatsResponseValidationError is the validation error returned by
+// ClientStatsResponse.Validate if the designated constraints aren't met.
+type ClientStatsResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ClientStatsResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ClientStatsResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ClientStatsResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ClientStatsResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ClientStatsResponseValidationError) ErrorName() string {
+	return "ClientStatsResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ClientStatsResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sClientStatsResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ClientStatsResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ClientStatsResponseValidationError{}

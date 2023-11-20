@@ -8,7 +8,6 @@ package v1
 
 import (
 	context "context"
-	v1 "github.com/gsols/goproto/queuer/entities/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -30,7 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type OwnerServiceClient interface {
 	CreateOwner(ctx context.Context, in *CreateOwnerRequest, opts ...grpc.CallOption) (*CreateOwnerResponse, error)
-	GetOwner(ctx context.Context, in *GetOwnerRequest, opts ...grpc.CallOption) (*v1.Owner, error)
+	GetOwner(ctx context.Context, in *GetOwnerRequest, opts ...grpc.CallOption) (*GetOwnerResponse, error)
 	ListQueues(ctx context.Context, in *ListQueuesRequest, opts ...grpc.CallOption) (*ListQueuesResponse, error)
 }
 
@@ -51,8 +50,8 @@ func (c *ownerServiceClient) CreateOwner(ctx context.Context, in *CreateOwnerReq
 	return out, nil
 }
 
-func (c *ownerServiceClient) GetOwner(ctx context.Context, in *GetOwnerRequest, opts ...grpc.CallOption) (*v1.Owner, error) {
-	out := new(v1.Owner)
+func (c *ownerServiceClient) GetOwner(ctx context.Context, in *GetOwnerRequest, opts ...grpc.CallOption) (*GetOwnerResponse, error) {
+	out := new(GetOwnerResponse)
 	err := c.cc.Invoke(ctx, OwnerService_GetOwner_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -74,7 +73,7 @@ func (c *ownerServiceClient) ListQueues(ctx context.Context, in *ListQueuesReque
 // for forward compatibility
 type OwnerServiceServer interface {
 	CreateOwner(context.Context, *CreateOwnerRequest) (*CreateOwnerResponse, error)
-	GetOwner(context.Context, *GetOwnerRequest) (*v1.Owner, error)
+	GetOwner(context.Context, *GetOwnerRequest) (*GetOwnerResponse, error)
 	ListQueues(context.Context, *ListQueuesRequest) (*ListQueuesResponse, error)
 	mustEmbedUnimplementedOwnerServiceServer()
 }
@@ -86,7 +85,7 @@ type UnimplementedOwnerServiceServer struct {
 func (UnimplementedOwnerServiceServer) CreateOwner(context.Context, *CreateOwnerRequest) (*CreateOwnerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateOwner not implemented")
 }
-func (UnimplementedOwnerServiceServer) GetOwner(context.Context, *GetOwnerRequest) (*v1.Owner, error) {
+func (UnimplementedOwnerServiceServer) GetOwner(context.Context, *GetOwnerRequest) (*GetOwnerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOwner not implemented")
 }
 func (UnimplementedOwnerServiceServer) ListQueues(context.Context, *ListQueuesRequest) (*ListQueuesResponse, error) {
