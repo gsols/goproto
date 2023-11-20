@@ -22,7 +22,7 @@ jobs:
     name: lint
     if: (github.actor != 'github-actions[bot]')
     permissions:
-      contents: write
+      pull-requests: write
     strategy:
       matrix:
         go-version: [1.21.x]
@@ -63,10 +63,5 @@ jobs:
       - name: Generate proto files
         run: make proto
 
-      - name: Commit changes
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add .
-          git commit -m "[bot]Update proto files"
-          git push
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
