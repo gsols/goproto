@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1](https://github.com/gsols/goproto/compare/v0.1.0...v0.1.1) (2023-11-21)
+
+
+### Features
+
+* require manual intervention to update ([baa6b8f](https://github.com/gsols/goproto/commit/baa6b8f8f4dbc929a5bcc9859284ca5dbe0e7c71))
+* require manual push to update ([0e01af0](https://github.com/gsols/goproto/commit/0e01af026d397d910d8549891d5005b30031b16d))
+
 ## 0.1.0 (2023-11-21)
 
 
