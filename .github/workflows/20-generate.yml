@@ -57,6 +57,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
+      - name: Update submodules
+        run: git submodule update --init --recursive --remote
+
       - name: Lint proto files
         run: make protolint
 
