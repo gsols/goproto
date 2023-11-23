@@ -21,6 +21,7 @@ jobs:
   generate:
     if: (github.actor != 'github-actions[bot]')
     permissions:
+      contents: write
       pull-requests: write
     strategy:
       matrix:
