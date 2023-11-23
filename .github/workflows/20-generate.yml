@@ -19,7 +19,6 @@ on:
 
 jobs:
   generate:
-    name: lint
     if: (github.actor != 'github-actions[bot]')
     permissions:
       pull-requests: write
