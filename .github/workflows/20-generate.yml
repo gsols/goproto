@@ -68,3 +68,7 @@ jobs:
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "ci: build proto files using  for go"
+          title: "CI: build proto files using for go"
+          body: "CI: build proto files using ${{ github.sha }} for go."
