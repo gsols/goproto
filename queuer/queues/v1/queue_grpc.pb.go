@@ -24,7 +24,6 @@ const (
 	QueueService_DeleteQueue_FullMethodName    = "/queuer.queues.v1.QueueService/DeleteQueue"
 	QueueService_FlushQueue_FullMethodName     = "/queuer.queues.v1.QueueService/FlushQueue"
 	QueueService_PublishMessage_FullMethodName = "/queuer.queues.v1.QueueService/PublishMessage"
-	QueueService_ClientStats_FullMethodName    = "/queuer.queues.v1.QueueService/ClientStats"
 )
 
 // QueueServiceClient is the client API for QueueService service.
@@ -36,7 +35,6 @@ type QueueServiceClient interface {
 	DeleteQueue(ctx context.Context, in *DeleteQueueRequest, opts ...grpc.CallOption) (*DeleteQueueResponse, error)
 	FlushQueue(ctx context.Context, in *FlushQueueRequest, opts ...grpc.CallOption) (*FlushQueueResponse, error)
 	PublishMessage(ctx context.Context, in *PublishMessageRequest, opts ...grpc.CallOption) (*PublishMessageResponse, error)
-	ClientStats(ctx context.Context, opts ...grpc.CallOption) (QueueService_ClientStatsClient, error)
 }
 
 type queueServiceClient struct {
@@ -92,40 +90,6 @@ func (c *queueServiceClient) PublishMessage(ctx context.Context, in *PublishMess
 	return out, nil
 }
 
-func (c *queueServiceClient) ClientStats(ctx context.Context, opts ...grpc.CallOption) (QueueService_ClientStatsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &QueueService_ServiceDesc.Streams[0], QueueService_ClientStats_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &queueServiceClientStatsClient{stream}
-	return x, nil
-}
-
-type QueueService_ClientStatsClient interface {
-	Send(*ClientStatsRequest) error
-	CloseAndRecv() (*ClientStatsResponse, error)
-	grpc.ClientStream
-}
-
-type queueServiceClientStatsClient struct {
-	grpc.ClientStream
-}
-
-func (x *queueServiceClientStatsClient) Send(m *ClientStatsRequest) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *queueServiceClientStatsClient) CloseAndRecv() (*ClientStatsResponse, error) {
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	m := new(ClientStatsResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 // QueueServiceServer is the server API for QueueService service.
 // All implementations must embed UnimplementedQueueServiceServer
 // for forward compatibility
@@ -135,7 +99,6 @@ type QueueServiceServer interface {
 	DeleteQueue(context.Context, *DeleteQueueRequest) (*DeleteQueueResponse, error)
 	FlushQueue(context.Context, *FlushQueueRequest) (*FlushQueueResponse, error)
 	PublishMessage(context.Context, *PublishMessageRequest) (*PublishMessageResponse, error)
-	ClientStats(QueueService_ClientStatsServer) error
 	mustEmbedUnimplementedQueueServiceServer()
 }
 
@@ -157,9 +120,6 @@ func (UnimplementedQueueServiceServer) FlushQueue(context.Context, *FlushQueueRe
 }
 func (UnimplementedQueueServiceServer) PublishMessage(context.Context, *PublishMessageRequest) (*PublishMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PublishMessage not implemented")
-}
-func (UnimplementedQueueServiceServer) ClientStats(QueueService_ClientStatsServer) error {
-	return status.Errorf(codes.Unimplemented, "method ClientStats not implemented")
 }
 func (UnimplementedQueueServiceServer) mustEmbedUnimplementedQueueServiceServer() {}
 
@@ -264,32 +224,6 @@ func _QueueService_PublishMessage_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _QueueService_ClientStats_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(QueueServiceServer).ClientStats(&queueServiceClientStatsServer{stream})
-}
-
-type QueueService_ClientStatsServer interface {
-	SendAndClose(*ClientStatsResponse) error
-	Recv() (*ClientStatsRequest, error)
-	grpc.ServerStream
-}
-
-type queueServiceClientStatsServer struct {
-	grpc.ServerStream
-}
-
-func (x *queueServiceClientStatsServer) SendAndClose(m *ClientStatsResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *queueServiceClientStatsServer) Recv() (*ClientStatsRequest, error) {
-	m := new(ClientStatsRequest)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 // QueueService_ServiceDesc is the grpc.ServiceDesc for QueueService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -318,12 +252,6 @@ var QueueService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _QueueService_PublishMessage_Handler,
 		},
 	},
-	Streams: []grpc.StreamDesc{
-		{
-			StreamName:    "ClientStats",
-			Handler:       _QueueService_ClientStats_Handler,
-			ClientStreams: true,
-		},
-	},
+	Streams:  []grpc.StreamDesc{},
 	Metadata: "queuer/queues/v1/queue.proto",
 }
