@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.2](https://github.com/gsols/goproto/compare/v0.1.1...v0.1.2) (2023-11-23)
+
+
+### Features
+
+* change name ([8203d45](https://github.com/gsols/goproto/commit/8203d45f5f984f9b4a54b2a9804ee7f81c23cf01))
+* update messages ([d17dc48](https://github.com/gsols/goproto/commit/d17dc48b50a5426abff99ec3add412fe3f6097f3))
+* update permissions ([5732c58](https://github.com/gsols/goproto/commit/5732c588f7bc4baaf4a094ad8fd5e0fef850af01))
+
 ## [0.1.1](https://github.com/gsols/goproto/compare/v0.1.0...v0.1.1) (2023-11-21)
 
 
