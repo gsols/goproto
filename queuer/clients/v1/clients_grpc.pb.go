@@ -19,6 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	ClientService_RegisterClient_FullMethodName   = "/queuer.clients.v1.ClientService/RegisterClient"
 	ClientService_StoreClientStats_FullMethodName = "/queuer.clients.v1.ClientService/StoreClientStats"
 )
 
@@ -26,6 +27,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ClientServiceClient interface {
+	RegisterClient(ctx context.Context, in *RegisterClientRequest, opts ...grpc.CallOption) (*RegisterClientResponse, error)
 	StoreClientStats(ctx context.Context, opts ...grpc.CallOption) (ClientService_StoreClientStatsClient, error)
 }
 
@@ -35,6 +37,15 @@ type clientServiceClient struct {
 
 func NewClientServiceClient(cc grpc.ClientConnInterface) ClientServiceClient {
 	return &clientServiceClient{cc}
+}
+
+func (c *clientServiceClient) RegisterClient(ctx context.Context, in *RegisterClientRequest, opts ...grpc.CallOption) (*RegisterClientResponse, error) {
+	out := new(RegisterClientResponse)
+	err := c.cc.Invoke(ctx, ClientService_RegisterClient_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *clientServiceClient) StoreClientStats(ctx context.Context, opts ...grpc.CallOption) (ClientService_StoreClientStatsClient, error) {
@@ -75,6 +86,7 @@ func (x *clientServiceStoreClientStatsClient) CloseAndRecv() (*StoreClientStatsR
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility
 type ClientServiceServer interface {
+	RegisterClient(context.Context, *RegisterClientRequest) (*RegisterClientResponse, error)
 	StoreClientStats(ClientService_StoreClientStatsServer) error
 	mustEmbedUnimplementedClientServiceServer()
 }
@@ -83,6 +95,9 @@ type ClientServiceServer interface {
 type UnimplementedClientServiceServer struct {
 }
 
+func (UnimplementedClientServiceServer) RegisterClient(context.Context, *RegisterClientRequest) (*RegisterClientResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterClient not implemented")
+}
 func (UnimplementedClientServiceServer) StoreClientStats(ClientService_StoreClientStatsServer) error {
 	return status.Errorf(codes.Unimplemented, "method StoreClientStats not implemented")
 }
@@ -97,6 +112,24 @@ type UnsafeClientServiceServer interface {
 
 func RegisterClientServiceServer(s grpc.ServiceRegistrar, srv ClientServiceServer) {
 	s.RegisterService(&ClientService_ServiceDesc, srv)
+}
+
+func _ClientService_RegisterClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterClientRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).RegisterClient(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ClientService_RegisterClient_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).RegisterClient(ctx, req.(*RegisterClientRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _ClientService_StoreClientStats_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -131,7 +164,12 @@ func (x *clientServiceStoreClientStatsServer) Recv() (*StoreClientStatsRequest, 
 var ClientService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "queuer.clients.v1.ClientService",
 	HandlerType: (*ClientServiceServer)(nil),
-	Methods:     []grpc.MethodDesc{},
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "RegisterClient",
+			Handler:    _ClientService_RegisterClient_Handler,
+		},
+	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "StoreClientStats",

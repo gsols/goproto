@@ -67,6 +67,64 @@ func (m *Client) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if all {
+		switch v := interface{}(m.GetHost()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ClientValidationError{
+					field:  "Host",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ClientValidationError{
+					field:  "Host",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetHost()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ClientValidationError{
+				field:  "Host",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
+		switch v := interface{}(m.GetProcess()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, ClientValidationError{
+					field:  "Process",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, ClientValidationError{
+					field:  "Process",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetProcess()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ClientValidationError{
+				field:  "Process",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	if len(errors) > 0 {
 		return ClientMultiError(errors)
 	}
@@ -143,3 +201,278 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ClientValidationError{}
+
+// Validate checks the field values on HostInfo with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *HostInfo) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on HostInfo with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in HostInfoMultiError, or nil
+// if none found.
+func (m *HostInfo) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *HostInfo) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetOs()) < 1 {
+		err := HostInfoValidationError{
+			field:  "Os",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetArch()) < 1 {
+		err := HostInfoValidationError{
+			field:  "Arch",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetIp()) < 1 {
+		err := HostInfoValidationError{
+			field:  "Ip",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetHostname()) < 1 {
+		err := HostInfoValidationError{
+			field:  "Hostname",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetBootTime()) < 1 {
+		err := HostInfoValidationError{
+			field:  "BootTime",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return HostInfoMultiError(errors)
+	}
+
+	return nil
+}
+
+// HostInfoMultiError is an error wrapping multiple validation errors returned
+// by HostInfo.ValidateAll() if the designated constraints aren't met.
+type HostInfoMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m HostInfoMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m HostInfoMultiError) AllErrors() []error { return m }
+
+// HostInfoValidationError is the validation error returned by
+// HostInfo.Validate if the designated constraints aren't met.
+type HostInfoValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e HostInfoValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e HostInfoValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e HostInfoValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e HostInfoValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e HostInfoValidationError) ErrorName() string { return "HostInfoValidationError" }
+
+// Error satisfies the builtin error interface
+func (e HostInfoValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sHostInfo.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = HostInfoValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = HostInfoValidationError{}
+
+// Validate checks the field values on ProcessInfo with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *ProcessInfo) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on ProcessInfo with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in ProcessInfoMultiError, or
+// nil if none found.
+func (m *ProcessInfo) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *ProcessInfo) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if utf8.RuneCountInString(m.GetPid()) < 1 {
+		err := ProcessInfoValidationError{
+			field:  "Pid",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetUid()) < 1 {
+		err := ProcessInfoValidationError{
+			field:  "Uid",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return ProcessInfoMultiError(errors)
+	}
+
+	return nil
+}
+
+// ProcessInfoMultiError is an error wrapping multiple validation errors
+// returned by ProcessInfo.ValidateAll() if the designated constraints aren't met.
+type ProcessInfoMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ProcessInfoMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ProcessInfoMultiError) AllErrors() []error { return m }
+
+// ProcessInfoValidationError is the validation error returned by
+// ProcessInfo.Validate if the designated constraints aren't met.
+type ProcessInfoValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ProcessInfoValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ProcessInfoValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ProcessInfoValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ProcessInfoValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ProcessInfoValidationError) ErrorName() string { return "ProcessInfoValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ProcessInfoValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sProcessInfo.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ProcessInfoValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ProcessInfoValidationError{}

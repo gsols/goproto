@@ -25,19 +25,19 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type HardwareStats struct {
+type CPUStats struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	TotalCpu uint64 `protobuf:"varint,1,opt,name=total_cpu,json=totalCpu,proto3" json:"total_cpu,omitempty"`
-	FreeCpu  uint64 `protobuf:"varint,2,opt,name=free_cpu,json=freeCpu,proto3" json:"free_cpu,omitempty"`
-	TotalRam uint64 `protobuf:"varint,3,opt,name=total_ram,json=totalRam,proto3" json:"total_ram,omitempty"`
-	FreeRam  uint64 `protobuf:"varint,4,opt,name=free_ram,json=freeRam,proto3" json:"free_ram,omitempty"`
+	User   uint64 `protobuf:"varint,1,opt,name=user,proto3" json:"user,omitempty"`
+	System uint64 `protobuf:"varint,2,opt,name=system,proto3" json:"system,omitempty"`
+	Idle   uint64 `protobuf:"varint,3,opt,name=idle,proto3" json:"idle,omitempty"`
+	Total  uint64 `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
 }
 
-func (x *HardwareStats) Reset() {
-	*x = HardwareStats{}
+func (x *CPUStats) Reset() {
+	*x = CPUStats{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_queuer_entities_v1_stats_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -45,13 +45,13 @@ func (x *HardwareStats) Reset() {
 	}
 }
 
-func (x *HardwareStats) String() string {
+func (x *CPUStats) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HardwareStats) ProtoMessage() {}
+func (*CPUStats) ProtoMessage() {}
 
-func (x *HardwareStats) ProtoReflect() protoreflect.Message {
+func (x *CPUStats) ProtoReflect() protoreflect.Message {
 	mi := &file_queuer_entities_v1_stats_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -63,50 +63,52 @@ func (x *HardwareStats) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HardwareStats.ProtoReflect.Descriptor instead.
-func (*HardwareStats) Descriptor() ([]byte, []int) {
+// Deprecated: Use CPUStats.ProtoReflect.Descriptor instead.
+func (*CPUStats) Descriptor() ([]byte, []int) {
 	return file_queuer_entities_v1_stats_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *HardwareStats) GetTotalCpu() uint64 {
+func (x *CPUStats) GetUser() uint64 {
 	if x != nil {
-		return x.TotalCpu
+		return x.User
 	}
 	return 0
 }
 
-func (x *HardwareStats) GetFreeCpu() uint64 {
+func (x *CPUStats) GetSystem() uint64 {
 	if x != nil {
-		return x.FreeCpu
+		return x.System
 	}
 	return 0
 }
 
-func (x *HardwareStats) GetTotalRam() uint64 {
+func (x *CPUStats) GetIdle() uint64 {
 	if x != nil {
-		return x.TotalRam
+		return x.Idle
 	}
 	return 0
 }
 
-func (x *HardwareStats) GetFreeRam() uint64 {
+func (x *CPUStats) GetTotal() uint64 {
 	if x != nil {
-		return x.FreeRam
+		return x.Total
 	}
 	return 0
 }
 
-type NetworkStats struct {
+type MemoryStats struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Ip    string `protobuf:"bytes,1,opt,name=ip,proto3" json:"ip,omitempty"`
-	Speed uint64 `protobuf:"varint,2,opt,name=speed,proto3" json:"speed,omitempty"`
+	Total     uint64 `protobuf:"varint,1,opt,name=total,proto3" json:"total,omitempty"`
+	Used      uint64 `protobuf:"varint,2,opt,name=used,proto3" json:"used,omitempty"`
+	Available uint64 `protobuf:"varint,3,opt,name=available,proto3" json:"available,omitempty"`
+	Free      uint64 `protobuf:"varint,4,opt,name=free,proto3" json:"free,omitempty"`
 }
 
-func (x *NetworkStats) Reset() {
-	*x = NetworkStats{}
+func (x *MemoryStats) Reset() {
+	*x = MemoryStats{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_queuer_entities_v1_stats_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -114,13 +116,13 @@ func (x *NetworkStats) Reset() {
 	}
 }
 
-func (x *NetworkStats) String() string {
+func (x *MemoryStats) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*NetworkStats) ProtoMessage() {}
+func (*MemoryStats) ProtoMessage() {}
 
-func (x *NetworkStats) ProtoReflect() protoreflect.Message {
+func (x *MemoryStats) ProtoReflect() protoreflect.Message {
 	mi := &file_queuer_entities_v1_stats_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -132,21 +134,153 @@ func (x *NetworkStats) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use NetworkStats.ProtoReflect.Descriptor instead.
-func (*NetworkStats) Descriptor() ([]byte, []int) {
+// Deprecated: Use MemoryStats.ProtoReflect.Descriptor instead.
+func (*MemoryStats) Descriptor() ([]byte, []int) {
 	return file_queuer_entities_v1_stats_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *NetworkStats) GetIp() string {
+func (x *MemoryStats) GetTotal() uint64 {
 	if x != nil {
-		return x.Ip
+		return x.Total
 	}
-	return ""
+	return 0
 }
 
-func (x *NetworkStats) GetSpeed() uint64 {
+func (x *MemoryStats) GetUsed() uint64 {
 	if x != nil {
-		return x.Speed
+		return x.Used
+	}
+	return 0
+}
+
+func (x *MemoryStats) GetAvailable() uint64 {
+	if x != nil {
+		return x.Available
+	}
+	return 0
+}
+
+func (x *MemoryStats) GetFree() uint64 {
+	if x != nil {
+		return x.Free
+	}
+	return 0
+}
+
+type LoadStats struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	One     float32 `protobuf:"fixed32,1,opt,name=one,proto3" json:"one,omitempty"`
+	Five    float32 `protobuf:"fixed32,2,opt,name=five,proto3" json:"five,omitempty"`
+	Fifteen float32 `protobuf:"fixed32,3,opt,name=fifteen,proto3" json:"fifteen,omitempty"`
+}
+
+func (x *LoadStats) Reset() {
+	*x = LoadStats{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_queuer_entities_v1_stats_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *LoadStats) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoadStats) ProtoMessage() {}
+
+func (x *LoadStats) ProtoReflect() protoreflect.Message {
+	mi := &file_queuer_entities_v1_stats_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoadStats.ProtoReflect.Descriptor instead.
+func (*LoadStats) Descriptor() ([]byte, []int) {
+	return file_queuer_entities_v1_stats_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *LoadStats) GetOne() float32 {
+	if x != nil {
+		return x.One
+	}
+	return 0
+}
+
+func (x *LoadStats) GetFive() float32 {
+	if x != nil {
+		return x.Five
+	}
+	return 0
+}
+
+func (x *LoadStats) GetFifteen() float32 {
+	if x != nil {
+		return x.Fifteen
+	}
+	return 0
+}
+
+type NetworkSpeed struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Download float32 `protobuf:"fixed32,1,opt,name=download,proto3" json:"download,omitempty"`
+	Upload   float32 `protobuf:"fixed32,2,opt,name=upload,proto3" json:"upload,omitempty"`
+}
+
+func (x *NetworkSpeed) Reset() {
+	*x = NetworkSpeed{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_queuer_entities_v1_stats_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *NetworkSpeed) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*NetworkSpeed) ProtoMessage() {}
+
+func (x *NetworkSpeed) ProtoReflect() protoreflect.Message {
+	mi := &file_queuer_entities_v1_stats_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use NetworkSpeed.ProtoReflect.Descriptor instead.
+func (*NetworkSpeed) Descriptor() ([]byte, []int) {
+	return file_queuer_entities_v1_stats_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *NetworkSpeed) GetDownload() float32 {
+	if x != nil {
+		return x.Download
+	}
+	return 0
+}
+
+func (x *NetworkSpeed) GetUpload() float32 {
+	if x != nil {
+		return x.Upload
 	}
 	return 0
 }
@@ -156,14 +290,15 @@ type Stats struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Stats   *HardwareStats `protobuf:"bytes,1,opt,name=stats,proto3" json:"stats,omitempty"`
-	Network *NetworkStats  `protobuf:"bytes,2,opt,name=network,proto3" json:"network,omitempty"`
+	Cpu    *CPUStats    `protobuf:"bytes,1,opt,name=cpu,proto3" json:"cpu,omitempty"`
+	Load   *LoadStats   `protobuf:"bytes,2,opt,name=load,proto3" json:"load,omitempty"`
+	Memory *MemoryStats `protobuf:"bytes,3,opt,name=memory,proto3" json:"memory,omitempty"`
 }
 
 func (x *Stats) Reset() {
 	*x = Stats{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_entities_v1_stats_proto_msgTypes[2]
+		mi := &file_queuer_entities_v1_stats_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -176,7 +311,7 @@ func (x *Stats) String() string {
 func (*Stats) ProtoMessage() {}
 
 func (x *Stats) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_entities_v1_stats_proto_msgTypes[2]
+	mi := &file_queuer_entities_v1_stats_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -189,19 +324,26 @@ func (x *Stats) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Stats.ProtoReflect.Descriptor instead.
 func (*Stats) Descriptor() ([]byte, []int) {
-	return file_queuer_entities_v1_stats_proto_rawDescGZIP(), []int{2}
+	return file_queuer_entities_v1_stats_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *Stats) GetStats() *HardwareStats {
+func (x *Stats) GetCpu() *CPUStats {
 	if x != nil {
-		return x.Stats
+		return x.Cpu
 	}
 	return nil
 }
 
-func (x *Stats) GetNetwork() *NetworkStats {
+func (x *Stats) GetLoad() *LoadStats {
 	if x != nil {
-		return x.Network
+		return x.Load
+	}
+	return nil
+}
+
+func (x *Stats) GetMemory() *MemoryStats {
+	if x != nil {
+		return x.Memory
 	}
 	return nil
 }
@@ -223,30 +365,43 @@ var file_queuer_entities_v1_stats_proto_rawDesc = []byte{
 	0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75,
 	0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x1a, 0x17, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x65, 0x2f, 0x76, 0x61, 0x6c, 0x69,
-	0x64, 0x61, 0x74, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x7f, 0x0a, 0x0d, 0x48, 0x61,
-	0x72, 0x64, 0x77, 0x61, 0x72, 0x65, 0x53, 0x74, 0x61, 0x74, 0x73, 0x12, 0x1b, 0x0a, 0x09, 0x74,
-	0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x63, 0x70, 0x75, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x08,
-	0x74, 0x6f, 0x74, 0x61, 0x6c, 0x43, 0x70, 0x75, 0x12, 0x19, 0x0a, 0x08, 0x66, 0x72, 0x65, 0x65,
-	0x5f, 0x63, 0x70, 0x75, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x07, 0x66, 0x72, 0x65, 0x65,
-	0x43, 0x70, 0x75, 0x12, 0x1b, 0x0a, 0x09, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x5f, 0x72, 0x61, 0x6d,
-	0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x52, 0x08, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x52, 0x61, 0x6d,
-	0x12, 0x19, 0x0a, 0x08, 0x66, 0x72, 0x65, 0x65, 0x5f, 0x72, 0x61, 0x6d, 0x18, 0x04, 0x20, 0x01,
-	0x28, 0x04, 0x52, 0x07, 0x66, 0x72, 0x65, 0x65, 0x52, 0x61, 0x6d, 0x22, 0x34, 0x0a, 0x0c, 0x4e,
-	0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x53, 0x74, 0x61, 0x74, 0x73, 0x12, 0x0e, 0x0a, 0x02, 0x69,
-	0x70, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x70, 0x12, 0x14, 0x0a, 0x05, 0x73,
-	0x70, 0x65, 0x65, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x73, 0x70, 0x65, 0x65,
-	0x64, 0x22, 0x7c, 0x0a, 0x05, 0x53, 0x74, 0x61, 0x74, 0x73, 0x12, 0x37, 0x0a, 0x05, 0x73, 0x74,
-	0x61, 0x74, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x21, 0x2e, 0x71, 0x75, 0x65, 0x75,
-	0x65, 0x72, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x48,
-	0x61, 0x72, 0x64, 0x77, 0x61, 0x72, 0x65, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52, 0x05, 0x73, 0x74,
-	0x61, 0x74, 0x73, 0x12, 0x3a, 0x0a, 0x07, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x65, 0x6e,
-	0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72,
-	0x6b, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52, 0x07, 0x6e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x42,
-	0x30, 0x5a, 0x2e, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67, 0x73,
-	0x6f, 0x6c, 0x73, 0x2f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x71, 0x75, 0x65, 0x75,
-	0x65, 0x72, 0x2f, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2f, 0x76, 0x31, 0x3b, 0x76,
-	0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x64, 0x61, 0x74, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x60, 0x0a, 0x08, 0x43, 0x50,
+	0x55, 0x53, 0x74, 0x61, 0x74, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x73, 0x65, 0x72, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x04, 0x52, 0x04, 0x75, 0x73, 0x65, 0x72, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x79,
+	0x73, 0x74, 0x65, 0x6d, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x06, 0x73, 0x79, 0x73, 0x74,
+	0x65, 0x6d, 0x12, 0x12, 0x0a, 0x04, 0x69, 0x64, 0x6c, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04,
+	0x52, 0x04, 0x69, 0x64, 0x6c, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x18,
+	0x04, 0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61, 0x6c, 0x22, 0x69, 0x0a, 0x0b,
+	0x4d, 0x65, 0x6d, 0x6f, 0x72, 0x79, 0x53, 0x74, 0x61, 0x74, 0x73, 0x12, 0x14, 0x0a, 0x05, 0x74,
+	0x6f, 0x74, 0x61, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x04, 0x52, 0x05, 0x74, 0x6f, 0x74, 0x61,
+	0x6c, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x73, 0x65, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52,
+	0x04, 0x75, 0x73, 0x65, 0x64, 0x12, 0x1c, 0x0a, 0x09, 0x61, 0x76, 0x61, 0x69, 0x6c, 0x61, 0x62,
+	0x6c, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x04, 0x52, 0x09, 0x61, 0x76, 0x61, 0x69, 0x6c, 0x61,
+	0x62, 0x6c, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x72, 0x65, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28,
+	0x04, 0x52, 0x04, 0x66, 0x72, 0x65, 0x65, 0x22, 0x4b, 0x0a, 0x09, 0x4c, 0x6f, 0x61, 0x64, 0x53,
+	0x74, 0x61, 0x74, 0x73, 0x12, 0x10, 0x0a, 0x03, 0x6f, 0x6e, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x02, 0x52, 0x03, 0x6f, 0x6e, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x69, 0x76, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x02, 0x52, 0x04, 0x66, 0x69, 0x76, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x66, 0x69,
+	0x66, 0x74, 0x65, 0x65, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x02, 0x52, 0x07, 0x66, 0x69, 0x66,
+	0x74, 0x65, 0x65, 0x6e, 0x22, 0x42, 0x0a, 0x0c, 0x4e, 0x65, 0x74, 0x77, 0x6f, 0x72, 0x6b, 0x53,
+	0x70, 0x65, 0x65, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x64, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x02, 0x52, 0x08, 0x64, 0x6f, 0x77, 0x6e, 0x6c, 0x6f, 0x61, 0x64,
+	0x12, 0x16, 0x0a, 0x06, 0x75, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x02,
+	0x52, 0x06, 0x75, 0x70, 0x6c, 0x6f, 0x61, 0x64, 0x22, 0xa3, 0x01, 0x0a, 0x05, 0x53, 0x74, 0x61,
+	0x74, 0x73, 0x12, 0x2e, 0x0a, 0x03, 0x63, 0x70, 0x75, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x1c, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65,
+	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x50, 0x55, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52, 0x03, 0x63,
+	0x70, 0x75, 0x12, 0x31, 0x0a, 0x04, 0x6c, 0x6f, 0x61, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
+	0x32, 0x1d, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69,
+	0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x4c, 0x6f, 0x61, 0x64, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52,
+	0x04, 0x6c, 0x6f, 0x61, 0x64, 0x12, 0x37, 0x0a, 0x06, 0x6d, 0x65, 0x6d, 0x6f, 0x72, 0x79, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x65,
+	0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x4d, 0x65, 0x6d, 0x6f, 0x72,
+	0x79, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52, 0x06, 0x6d, 0x65, 0x6d, 0x6f, 0x72, 0x79, 0x42, 0x30,
+	0x5a, 0x2e, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67, 0x73, 0x6f,
+	0x6c, 0x73, 0x2f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x71, 0x75, 0x65, 0x75, 0x65,
+	0x72, 0x2f, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2f, 0x76, 0x31, 0x3b, 0x76, 0x31,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -261,20 +416,23 @@ func file_queuer_entities_v1_stats_proto_rawDescGZIP() []byte {
 	return file_queuer_entities_v1_stats_proto_rawDescData
 }
 
-var file_queuer_entities_v1_stats_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_queuer_entities_v1_stats_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_queuer_entities_v1_stats_proto_goTypes = []interface{}{
-	(*HardwareStats)(nil), // 0: queuer.entities.v1.HardwareStats
-	(*NetworkStats)(nil),  // 1: queuer.entities.v1.NetworkStats
-	(*Stats)(nil),         // 2: queuer.entities.v1.Stats
+	(*CPUStats)(nil),     // 0: queuer.entities.v1.CPUStats
+	(*MemoryStats)(nil),  // 1: queuer.entities.v1.MemoryStats
+	(*LoadStats)(nil),    // 2: queuer.entities.v1.LoadStats
+	(*NetworkSpeed)(nil), // 3: queuer.entities.v1.NetworkSpeed
+	(*Stats)(nil),        // 4: queuer.entities.v1.Stats
 }
 var file_queuer_entities_v1_stats_proto_depIdxs = []int32{
-	0, // 0: queuer.entities.v1.Stats.stats:type_name -> queuer.entities.v1.HardwareStats
-	1, // 1: queuer.entities.v1.Stats.network:type_name -> queuer.entities.v1.NetworkStats
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	0, // 0: queuer.entities.v1.Stats.cpu:type_name -> queuer.entities.v1.CPUStats
+	2, // 1: queuer.entities.v1.Stats.load:type_name -> queuer.entities.v1.LoadStats
+	1, // 2: queuer.entities.v1.Stats.memory:type_name -> queuer.entities.v1.MemoryStats
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_queuer_entities_v1_stats_proto_init() }
@@ -284,7 +442,7 @@ func file_queuer_entities_v1_stats_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_queuer_entities_v1_stats_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*HardwareStats); i {
+			switch v := v.(*CPUStats); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -296,7 +454,7 @@ func file_queuer_entities_v1_stats_proto_init() {
 			}
 		}
 		file_queuer_entities_v1_stats_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*NetworkStats); i {
+			switch v := v.(*MemoryStats); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -308,6 +466,30 @@ func file_queuer_entities_v1_stats_proto_init() {
 			}
 		}
 		file_queuer_entities_v1_stats_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*LoadStats); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_queuer_entities_v1_stats_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*NetworkSpeed); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_queuer_entities_v1_stats_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Stats); i {
 			case 0:
 				return &v.state
@@ -326,7 +508,7 @@ func file_queuer_entities_v1_stats_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_queuer_entities_v1_stats_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
