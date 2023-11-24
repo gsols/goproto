@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.5](https://github.com/gsols/goproto/compare/v0.1.4...v0.1.5) (2023-11-24)
+
+
+### Features
+
+* add readme ([6f72c4d](https://github.com/gsols/goproto/commit/6f72c4d80e2e6e652c5118509ded2471cf0b2f6c))
+* update commit message ([506f432](https://github.com/gsols/goproto/commit/506f43266219faab58bb16227a33eeeb92f27873))
+
 ## [0.1.4](https://github.com/gsols/goproto/compare/v0.1.3...v0.1.4) (2023-11-24)
 
 
