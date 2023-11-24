@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/gsols/goproto/compare/v0.1.3...v0.1.4) (2023-11-24)
+
+
+### Features
+
+* do clean up before building ([541a069](https://github.com/gsols/goproto/commit/541a069856dcb797166f43219395bd7254d55135))
+
 ## [0.1.3](https://github.com/gsols/goproto/compare/v0.1.2...v0.1.3) (2023-11-24)
 
 
