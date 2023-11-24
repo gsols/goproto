@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/gsols/goproto/compare/v0.1.2...v0.1.3) (2023-11-24)
+
+
+### Features
+
+* ruun release manually ([6fbf823](https://github.com/gsols/goproto/commit/6fbf823602010c0e3580343beeaf022e015f8dee))
+
 ## [0.1.2](https://github.com/gsols/goproto/compare/v0.1.1...v0.1.2) (2023-11-23)
 
 
