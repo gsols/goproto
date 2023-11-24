@@ -270,22 +270,22 @@ var _ interface {
 	ErrorName() string
 } = RegisterClientResponseValidationError{}
 
-// Validate checks the field values on StoreClientStatsRequest with the rules
+// Validate checks the field values on PublishClientStatsRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *StoreClientStatsRequest) Validate() error {
+func (m *PublishClientStatsRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on StoreClientStatsRequest with the
+// ValidateAll checks the field values on PublishClientStatsRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// StoreClientStatsRequestMultiError, or nil if none found.
-func (m *StoreClientStatsRequest) ValidateAll() error {
+// PublishClientStatsRequestMultiError, or nil if none found.
+func (m *PublishClientStatsRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *StoreClientStatsRequest) validate(all bool) error {
+func (m *PublishClientStatsRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -298,7 +298,7 @@ func (m *StoreClientStatsRequest) validate(all bool) error {
 		switch v := interface{}(m.GetStats()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, StoreClientStatsRequestValidationError{
+				errors = append(errors, PublishClientStatsRequestValidationError{
 					field:  "Stats",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -306,7 +306,7 @@ func (m *StoreClientStatsRequest) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, StoreClientStatsRequestValidationError{
+				errors = append(errors, PublishClientStatsRequestValidationError{
 					field:  "Stats",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -315,7 +315,7 @@ func (m *StoreClientStatsRequest) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetStats()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return StoreClientStatsRequestValidationError{
+			return PublishClientStatsRequestValidationError{
 				field:  "Stats",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -324,19 +324,19 @@ func (m *StoreClientStatsRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return StoreClientStatsRequestMultiError(errors)
+		return PublishClientStatsRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// StoreClientStatsRequestMultiError is an error wrapping multiple validation
-// errors returned by StoreClientStatsRequest.ValidateAll() if the designated
-// constraints aren't met.
-type StoreClientStatsRequestMultiError []error
+// PublishClientStatsRequestMultiError is an error wrapping multiple validation
+// errors returned by PublishClientStatsRequest.ValidateAll() if the
+// designated constraints aren't met.
+type PublishClientStatsRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m StoreClientStatsRequestMultiError) Error() string {
+func (m PublishClientStatsRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -345,11 +345,11 @@ func (m StoreClientStatsRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m StoreClientStatsRequestMultiError) AllErrors() []error { return m }
+func (m PublishClientStatsRequestMultiError) AllErrors() []error { return m }
 
-// StoreClientStatsRequestValidationError is the validation error returned by
-// StoreClientStatsRequest.Validate if the designated constraints aren't met.
-type StoreClientStatsRequestValidationError struct {
+// PublishClientStatsRequestValidationError is the validation error returned by
+// PublishClientStatsRequest.Validate if the designated constraints aren't met.
+type PublishClientStatsRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -357,24 +357,24 @@ type StoreClientStatsRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e StoreClientStatsRequestValidationError) Field() string { return e.field }
+func (e PublishClientStatsRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e StoreClientStatsRequestValidationError) Reason() string { return e.reason }
+func (e PublishClientStatsRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e StoreClientStatsRequestValidationError) Cause() error { return e.cause }
+func (e PublishClientStatsRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e StoreClientStatsRequestValidationError) Key() bool { return e.key }
+func (e PublishClientStatsRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e StoreClientStatsRequestValidationError) ErrorName() string {
-	return "StoreClientStatsRequestValidationError"
+func (e PublishClientStatsRequestValidationError) ErrorName() string {
+	return "PublishClientStatsRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e StoreClientStatsRequestValidationError) Error() string {
+func (e PublishClientStatsRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -386,14 +386,14 @@ func (e StoreClientStatsRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sStoreClientStatsRequest.%s: %s%s",
+		"invalid %sPublishClientStatsRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = StoreClientStatsRequestValidationError{}
+var _ error = PublishClientStatsRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -401,24 +401,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = StoreClientStatsRequestValidationError{}
+} = PublishClientStatsRequestValidationError{}
 
-// Validate checks the field values on StoreClientStatsResponse with the rules
-// defined in the proto definition for this message. If any rules are
+// Validate checks the field values on PublishClientStatsResponse with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *StoreClientStatsResponse) Validate() error {
+func (m *PublishClientStatsResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on StoreClientStatsResponse with the
+// ValidateAll checks the field values on PublishClientStatsResponse with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// StoreClientStatsResponseMultiError, or nil if none found.
-func (m *StoreClientStatsResponse) ValidateAll() error {
+// PublishClientStatsResponseMultiError, or nil if none found.
+func (m *PublishClientStatsResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *StoreClientStatsResponse) validate(all bool) error {
+func (m *PublishClientStatsResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -428,19 +428,19 @@ func (m *StoreClientStatsResponse) validate(all bool) error {
 	// no validation rules for Success
 
 	if len(errors) > 0 {
-		return StoreClientStatsResponseMultiError(errors)
+		return PublishClientStatsResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// StoreClientStatsResponseMultiError is an error wrapping multiple validation
-// errors returned by StoreClientStatsResponse.ValidateAll() if the designated
-// constraints aren't met.
-type StoreClientStatsResponseMultiError []error
+// PublishClientStatsResponseMultiError is an error wrapping multiple
+// validation errors returned by PublishClientStatsResponse.ValidateAll() if
+// the designated constraints aren't met.
+type PublishClientStatsResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m StoreClientStatsResponseMultiError) Error() string {
+func (m PublishClientStatsResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -449,11 +449,11 @@ func (m StoreClientStatsResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m StoreClientStatsResponseMultiError) AllErrors() []error { return m }
+func (m PublishClientStatsResponseMultiError) AllErrors() []error { return m }
 
-// StoreClientStatsResponseValidationError is the validation error returned by
-// StoreClientStatsResponse.Validate if the designated constraints aren't met.
-type StoreClientStatsResponseValidationError struct {
+// PublishClientStatsResponseValidationError is the validation error returned
+// by PublishClientStatsResponse.Validate if the designated constraints aren't met.
+type PublishClientStatsResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -461,24 +461,24 @@ type StoreClientStatsResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e StoreClientStatsResponseValidationError) Field() string { return e.field }
+func (e PublishClientStatsResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e StoreClientStatsResponseValidationError) Reason() string { return e.reason }
+func (e PublishClientStatsResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e StoreClientStatsResponseValidationError) Cause() error { return e.cause }
+func (e PublishClientStatsResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e StoreClientStatsResponseValidationError) Key() bool { return e.key }
+func (e PublishClientStatsResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e StoreClientStatsResponseValidationError) ErrorName() string {
-	return "StoreClientStatsResponseValidationError"
+func (e PublishClientStatsResponseValidationError) ErrorName() string {
+	return "PublishClientStatsResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e StoreClientStatsResponseValidationError) Error() string {
+func (e PublishClientStatsResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -490,14 +490,14 @@ func (e StoreClientStatsResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sStoreClientStatsResponse.%s: %s%s",
+		"invalid %sPublishClientStatsResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = StoreClientStatsResponseValidationError{}
+var _ error = PublishClientStatsResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -505,4 +505,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = StoreClientStatsResponseValidationError{}
+} = PublishClientStatsResponseValidationError{}

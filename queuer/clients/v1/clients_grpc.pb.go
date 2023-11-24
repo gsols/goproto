@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ClientService_RegisterClient_FullMethodName   = "/queuer.clients.v1.ClientService/RegisterClient"
-	ClientService_StoreClientStats_FullMethodName = "/queuer.clients.v1.ClientService/StoreClientStats"
+	ClientService_RegisterClient_FullMethodName     = "/queuer.clients.v1.ClientService/RegisterClient"
+	ClientService_PublishClientStats_FullMethodName = "/queuer.clients.v1.ClientService/PublishClientStats"
 )
 
 // ClientServiceClient is the client API for ClientService service.
@@ -28,7 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ClientServiceClient interface {
 	RegisterClient(ctx context.Context, in *RegisterClientRequest, opts ...grpc.CallOption) (*RegisterClientResponse, error)
-	StoreClientStats(ctx context.Context, opts ...grpc.CallOption) (ClientService_StoreClientStatsClient, error)
+	PublishClientStats(ctx context.Context, opts ...grpc.CallOption) (ClientService_PublishClientStatsClient, error)
 }
 
 type clientServiceClient struct {
@@ -48,34 +48,34 @@ func (c *clientServiceClient) RegisterClient(ctx context.Context, in *RegisterCl
 	return out, nil
 }
 
-func (c *clientServiceClient) StoreClientStats(ctx context.Context, opts ...grpc.CallOption) (ClientService_StoreClientStatsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ClientService_ServiceDesc.Streams[0], ClientService_StoreClientStats_FullMethodName, opts...)
+func (c *clientServiceClient) PublishClientStats(ctx context.Context, opts ...grpc.CallOption) (ClientService_PublishClientStatsClient, error) {
+	stream, err := c.cc.NewStream(ctx, &ClientService_ServiceDesc.Streams[0], ClientService_PublishClientStats_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &clientServiceStoreClientStatsClient{stream}
+	x := &clientServicePublishClientStatsClient{stream}
 	return x, nil
 }
 
-type ClientService_StoreClientStatsClient interface {
-	Send(*StoreClientStatsRequest) error
-	CloseAndRecv() (*StoreClientStatsResponse, error)
+type ClientService_PublishClientStatsClient interface {
+	Send(*PublishClientStatsRequest) error
+	CloseAndRecv() (*PublishClientStatsResponse, error)
 	grpc.ClientStream
 }
 
-type clientServiceStoreClientStatsClient struct {
+type clientServicePublishClientStatsClient struct {
 	grpc.ClientStream
 }
 
-func (x *clientServiceStoreClientStatsClient) Send(m *StoreClientStatsRequest) error {
+func (x *clientServicePublishClientStatsClient) Send(m *PublishClientStatsRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *clientServiceStoreClientStatsClient) CloseAndRecv() (*StoreClientStatsResponse, error) {
+func (x *clientServicePublishClientStatsClient) CloseAndRecv() (*PublishClientStatsResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
-	m := new(StoreClientStatsResponse)
+	m := new(PublishClientStatsResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func (x *clientServiceStoreClientStatsClient) CloseAndRecv() (*StoreClientStatsR
 // for forward compatibility
 type ClientServiceServer interface {
 	RegisterClient(context.Context, *RegisterClientRequest) (*RegisterClientResponse, error)
-	StoreClientStats(ClientService_StoreClientStatsServer) error
+	PublishClientStats(ClientService_PublishClientStatsServer) error
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -98,8 +98,8 @@ type UnimplementedClientServiceServer struct {
 func (UnimplementedClientServiceServer) RegisterClient(context.Context, *RegisterClientRequest) (*RegisterClientResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterClient not implemented")
 }
-func (UnimplementedClientServiceServer) StoreClientStats(ClientService_StoreClientStatsServer) error {
-	return status.Errorf(codes.Unimplemented, "method StoreClientStats not implemented")
+func (UnimplementedClientServiceServer) PublishClientStats(ClientService_PublishClientStatsServer) error {
+	return status.Errorf(codes.Unimplemented, "method PublishClientStats not implemented")
 }
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 
@@ -132,26 +132,26 @@ func _ClientService_RegisterClient_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ClientService_StoreClientStats_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ClientServiceServer).StoreClientStats(&clientServiceStoreClientStatsServer{stream})
+func _ClientService_PublishClientStats_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ClientServiceServer).PublishClientStats(&clientServicePublishClientStatsServer{stream})
 }
 
-type ClientService_StoreClientStatsServer interface {
-	SendAndClose(*StoreClientStatsResponse) error
-	Recv() (*StoreClientStatsRequest, error)
+type ClientService_PublishClientStatsServer interface {
+	SendAndClose(*PublishClientStatsResponse) error
+	Recv() (*PublishClientStatsRequest, error)
 	grpc.ServerStream
 }
 
-type clientServiceStoreClientStatsServer struct {
+type clientServicePublishClientStatsServer struct {
 	grpc.ServerStream
 }
 
-func (x *clientServiceStoreClientStatsServer) SendAndClose(m *StoreClientStatsResponse) error {
+func (x *clientServicePublishClientStatsServer) SendAndClose(m *PublishClientStatsResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *clientServiceStoreClientStatsServer) Recv() (*StoreClientStatsRequest, error) {
-	m := new(StoreClientStatsRequest)
+func (x *clientServicePublishClientStatsServer) Recv() (*PublishClientStatsRequest, error) {
+	m := new(PublishClientStatsRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
@@ -172,8 +172,8 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "StoreClientStats",
-			Handler:       _ClientService_StoreClientStats_Handler,
+			StreamName:    "PublishClientStats",
+			Handler:       _ClientService_PublishClientStats_Handler,
 			ClientStreams: true,
 		},
 	},
