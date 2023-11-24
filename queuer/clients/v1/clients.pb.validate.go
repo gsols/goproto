@@ -35,6 +35,241 @@ var (
 	_ = sort.Sort
 )
 
+// Validate checks the field values on RegisterClientRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *RegisterClientRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on RegisterClientRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// RegisterClientRequestMultiError, or nil if none found.
+func (m *RegisterClientRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *RegisterClientRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetClient()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, RegisterClientRequestValidationError{
+					field:  "Client",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, RegisterClientRequestValidationError{
+					field:  "Client",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetClient()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RegisterClientRequestValidationError{
+				field:  "Client",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return RegisterClientRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// RegisterClientRequestMultiError is an error wrapping multiple validation
+// errors returned by RegisterClientRequest.ValidateAll() if the designated
+// constraints aren't met.
+type RegisterClientRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m RegisterClientRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m RegisterClientRequestMultiError) AllErrors() []error { return m }
+
+// RegisterClientRequestValidationError is the validation error returned by
+// RegisterClientRequest.Validate if the designated constraints aren't met.
+type RegisterClientRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RegisterClientRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RegisterClientRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RegisterClientRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RegisterClientRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RegisterClientRequestValidationError) ErrorName() string {
+	return "RegisterClientRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RegisterClientRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRegisterClientRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RegisterClientRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RegisterClientRequestValidationError{}
+
+// Validate checks the field values on RegisterClientResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *RegisterClientResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on RegisterClientResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// RegisterClientResponseMultiError, or nil if none found.
+func (m *RegisterClientResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *RegisterClientResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Success
+
+	if len(errors) > 0 {
+		return RegisterClientResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// RegisterClientResponseMultiError is an error wrapping multiple validation
+// errors returned by RegisterClientResponse.ValidateAll() if the designated
+// constraints aren't met.
+type RegisterClientResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m RegisterClientResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m RegisterClientResponseMultiError) AllErrors() []error { return m }
+
+// RegisterClientResponseValidationError is the validation error returned by
+// RegisterClientResponse.Validate if the designated constraints aren't met.
+type RegisterClientResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RegisterClientResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RegisterClientResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RegisterClientResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RegisterClientResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RegisterClientResponseValidationError) ErrorName() string {
+	return "RegisterClientResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RegisterClientResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRegisterClientResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RegisterClientResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RegisterClientResponseValidationError{}
+
 // Validate checks the field values on StoreClientStatsRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
