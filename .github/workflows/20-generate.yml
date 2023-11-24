@@ -60,6 +60,9 @@ jobs:
       - name: Update submodules
         run: git submodule update --init --recursive --remote
 
+      - name: Clean up
+        run: ls -l src | grep '^d' | awk -F ' ' '{print $9}' | xargs -I {} rm -rf {}
+
       - name: Lint proto files
         run: make protolint
 
