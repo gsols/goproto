@@ -21,6 +21,8 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	ClientService_RegisterClient_FullMethodName     = "/queuer.clients.v1.ClientService/RegisterClient"
 	ClientService_PublishClientStats_FullMethodName = "/queuer.clients.v1.ClientService/PublishClientStats"
+	ClientService_GetCommands_FullMethodName        = "/queuer.clients.v1.ClientService/GetCommands"
+	ClientService_AckCommand_FullMethodName         = "/queuer.clients.v1.ClientService/AckCommand"
 )
 
 // ClientServiceClient is the client API for ClientService service.
@@ -29,6 +31,8 @@ const (
 type ClientServiceClient interface {
 	RegisterClient(ctx context.Context, in *RegisterClientRequest, opts ...grpc.CallOption) (*RegisterClientResponse, error)
 	PublishClientStats(ctx context.Context, opts ...grpc.CallOption) (ClientService_PublishClientStatsClient, error)
+	GetCommands(ctx context.Context, in *GetCommandsRequest, opts ...grpc.CallOption) (ClientService_GetCommandsClient, error)
+	AckCommand(ctx context.Context, in *AckCommandRequest, opts ...grpc.CallOption) (*AckCommandResponse, error)
 }
 
 type clientServiceClient struct {
@@ -82,12 +86,55 @@ func (x *clientServicePublishClientStatsClient) CloseAndRecv() (*PublishClientSt
 	return m, nil
 }
 
+func (c *clientServiceClient) GetCommands(ctx context.Context, in *GetCommandsRequest, opts ...grpc.CallOption) (ClientService_GetCommandsClient, error) {
+	stream, err := c.cc.NewStream(ctx, &ClientService_ServiceDesc.Streams[1], ClientService_GetCommands_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &clientServiceGetCommandsClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type ClientService_GetCommandsClient interface {
+	Recv() (*GetCommandsResponse, error)
+	grpc.ClientStream
+}
+
+type clientServiceGetCommandsClient struct {
+	grpc.ClientStream
+}
+
+func (x *clientServiceGetCommandsClient) Recv() (*GetCommandsResponse, error) {
+	m := new(GetCommandsResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *clientServiceClient) AckCommand(ctx context.Context, in *AckCommandRequest, opts ...grpc.CallOption) (*AckCommandResponse, error) {
+	out := new(AckCommandResponse)
+	err := c.cc.Invoke(ctx, ClientService_AckCommand_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ClientServiceServer is the server API for ClientService service.
 // All implementations must embed UnimplementedClientServiceServer
 // for forward compatibility
 type ClientServiceServer interface {
 	RegisterClient(context.Context, *RegisterClientRequest) (*RegisterClientResponse, error)
 	PublishClientStats(ClientService_PublishClientStatsServer) error
+	GetCommands(*GetCommandsRequest, ClientService_GetCommandsServer) error
+	AckCommand(context.Context, *AckCommandRequest) (*AckCommandResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -100,6 +147,12 @@ func (UnimplementedClientServiceServer) RegisterClient(context.Context, *Registe
 }
 func (UnimplementedClientServiceServer) PublishClientStats(ClientService_PublishClientStatsServer) error {
 	return status.Errorf(codes.Unimplemented, "method PublishClientStats not implemented")
+}
+func (UnimplementedClientServiceServer) GetCommands(*GetCommandsRequest, ClientService_GetCommandsServer) error {
+	return status.Errorf(codes.Unimplemented, "method GetCommands not implemented")
+}
+func (UnimplementedClientServiceServer) AckCommand(context.Context, *AckCommandRequest) (*AckCommandResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AckCommand not implemented")
 }
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 
@@ -158,6 +211,45 @@ func (x *clientServicePublishClientStatsServer) Recv() (*PublishClientStatsReque
 	return m, nil
 }
 
+func _ClientService_GetCommands_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(GetCommandsRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ClientServiceServer).GetCommands(m, &clientServiceGetCommandsServer{stream})
+}
+
+type ClientService_GetCommandsServer interface {
+	Send(*GetCommandsResponse) error
+	grpc.ServerStream
+}
+
+type clientServiceGetCommandsServer struct {
+	grpc.ServerStream
+}
+
+func (x *clientServiceGetCommandsServer) Send(m *GetCommandsResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _ClientService_AckCommand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AckCommandRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).AckCommand(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ClientService_AckCommand_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).AckCommand(ctx, req.(*AckCommandRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ClientService_ServiceDesc is the grpc.ServiceDesc for ClientService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -169,12 +261,21 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "RegisterClient",
 			Handler:    _ClientService_RegisterClient_Handler,
 		},
+		{
+			MethodName: "AckCommand",
+			Handler:    _ClientService_AckCommand_Handler,
+		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "PublishClientStats",
 			Handler:       _ClientService_PublishClientStats_Handler,
 			ClientStreams: true,
+		},
+		{
+			StreamName:    "GetCommands",
+			Handler:       _ClientService_GetCommands_Handler,
+			ServerStreams: true,
 		},
 	},
 	Metadata: "queuer/clients/v1/clients.proto",

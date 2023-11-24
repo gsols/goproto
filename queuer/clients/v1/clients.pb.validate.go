@@ -17,6 +17,8 @@ import (
 	"unicode/utf8"
 
 	"google.golang.org/protobuf/types/known/anypb"
+
+	v1 "github.com/gsols/goproto/queuer/entities/v1"
 )
 
 // ensure the imports are used
@@ -33,6 +35,8 @@ var (
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
 	_ = sort.Sort
+
+	_ = v1.CommandStatus(0)
 )
 
 // Validate checks the field values on RegisterClientRequest with the rules
@@ -506,3 +510,455 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = PublishClientStatsResponseValidationError{}
+
+// Validate checks the field values on GetCommandsRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetCommandsRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetCommandsRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetCommandsRequestMultiError, or nil if none found.
+func (m *GetCommandsRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetCommandsRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for ClientId
+
+	if len(errors) > 0 {
+		return GetCommandsRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetCommandsRequestMultiError is an error wrapping multiple validation errors
+// returned by GetCommandsRequest.ValidateAll() if the designated constraints
+// aren't met.
+type GetCommandsRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetCommandsRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetCommandsRequestMultiError) AllErrors() []error { return m }
+
+// GetCommandsRequestValidationError is the validation error returned by
+// GetCommandsRequest.Validate if the designated constraints aren't met.
+type GetCommandsRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetCommandsRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetCommandsRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetCommandsRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetCommandsRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetCommandsRequestValidationError) ErrorName() string {
+	return "GetCommandsRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetCommandsRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetCommandsRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetCommandsRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetCommandsRequestValidationError{}
+
+// Validate checks the field values on GetCommandsResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetCommandsResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetCommandsResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetCommandsResponseMultiError, or nil if none found.
+func (m *GetCommandsResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetCommandsResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetCommands() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, GetCommandsResponseValidationError{
+						field:  fmt.Sprintf("Commands[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, GetCommandsResponseValidationError{
+						field:  fmt.Sprintf("Commands[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GetCommandsResponseValidationError{
+					field:  fmt.Sprintf("Commands[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return GetCommandsResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetCommandsResponseMultiError is an error wrapping multiple validation
+// errors returned by GetCommandsResponse.ValidateAll() if the designated
+// constraints aren't met.
+type GetCommandsResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetCommandsResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetCommandsResponseMultiError) AllErrors() []error { return m }
+
+// GetCommandsResponseValidationError is the validation error returned by
+// GetCommandsResponse.Validate if the designated constraints aren't met.
+type GetCommandsResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetCommandsResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetCommandsResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetCommandsResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetCommandsResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetCommandsResponseValidationError) ErrorName() string {
+	return "GetCommandsResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetCommandsResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetCommandsResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetCommandsResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetCommandsResponseValidationError{}
+
+// Validate checks the field values on AckCommandRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *AckCommandRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AckCommandRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AckCommandRequestMultiError, or nil if none found.
+func (m *AckCommandRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AckCommandRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for ClientId
+
+	// no validation rules for CommandId
+
+	// no validation rules for Status
+
+	if len(errors) > 0 {
+		return AckCommandRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// AckCommandRequestMultiError is an error wrapping multiple validation errors
+// returned by AckCommandRequest.ValidateAll() if the designated constraints
+// aren't met.
+type AckCommandRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AckCommandRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AckCommandRequestMultiError) AllErrors() []error { return m }
+
+// AckCommandRequestValidationError is the validation error returned by
+// AckCommandRequest.Validate if the designated constraints aren't met.
+type AckCommandRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AckCommandRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AckCommandRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AckCommandRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AckCommandRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AckCommandRequestValidationError) ErrorName() string {
+	return "AckCommandRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AckCommandRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAckCommandRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AckCommandRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AckCommandRequestValidationError{}
+
+// Validate checks the field values on AckCommandResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AckCommandResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AckCommandResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AckCommandResponseMultiError, or nil if none found.
+func (m *AckCommandResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AckCommandResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Success
+
+	if len(errors) > 0 {
+		return AckCommandResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// AckCommandResponseMultiError is an error wrapping multiple validation errors
+// returned by AckCommandResponse.ValidateAll() if the designated constraints
+// aren't met.
+type AckCommandResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AckCommandResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AckCommandResponseMultiError) AllErrors() []error { return m }
+
+// AckCommandResponseValidationError is the validation error returned by
+// AckCommandResponse.Validate if the designated constraints aren't met.
+type AckCommandResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AckCommandResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AckCommandResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AckCommandResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AckCommandResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AckCommandResponseValidationError) ErrorName() string {
+	return "AckCommandResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AckCommandResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAckCommandResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AckCommandResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AckCommandResponseValidationError{}
