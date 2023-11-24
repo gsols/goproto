@@ -78,16 +78,7 @@ func (m *Message) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if l := utf8.RuneCountInString(m.GetPayload()); l < 1 || l > 1000 {
-		err := MessageValidationError{
-			field:  "Payload",
-			reason: "value length must be between 1 and 1000 runes, inclusive",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for Payload
 
 	// no validation rules for Priority
 

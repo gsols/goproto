@@ -511,22 +511,22 @@ var _ interface {
 	ErrorName() string
 } = PublishClientStatsResponseValidationError{}
 
-// Validate checks the field values on GetCommandsRequest with the rules
-// defined in the proto definition for this message. If any rules are
+// Validate checks the field values on SubscribeToCommandsRequest with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GetCommandsRequest) Validate() error {
+func (m *SubscribeToCommandsRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GetCommandsRequest with the rules
-// defined in the proto definition for this message. If any rules are
+// ValidateAll checks the field values on SubscribeToCommandsRequest with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// GetCommandsRequestMultiError, or nil if none found.
-func (m *GetCommandsRequest) ValidateAll() error {
+// SubscribeToCommandsRequestMultiError, or nil if none found.
+func (m *SubscribeToCommandsRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GetCommandsRequest) validate(all bool) error {
+func (m *SubscribeToCommandsRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -536,19 +536,19 @@ func (m *GetCommandsRequest) validate(all bool) error {
 	// no validation rules for ClientId
 
 	if len(errors) > 0 {
-		return GetCommandsRequestMultiError(errors)
+		return SubscribeToCommandsRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// GetCommandsRequestMultiError is an error wrapping multiple validation errors
-// returned by GetCommandsRequest.ValidateAll() if the designated constraints
-// aren't met.
-type GetCommandsRequestMultiError []error
+// SubscribeToCommandsRequestMultiError is an error wrapping multiple
+// validation errors returned by SubscribeToCommandsRequest.ValidateAll() if
+// the designated constraints aren't met.
+type SubscribeToCommandsRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GetCommandsRequestMultiError) Error() string {
+func (m SubscribeToCommandsRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -557,11 +557,11 @@ func (m GetCommandsRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GetCommandsRequestMultiError) AllErrors() []error { return m }
+func (m SubscribeToCommandsRequestMultiError) AllErrors() []error { return m }
 
-// GetCommandsRequestValidationError is the validation error returned by
-// GetCommandsRequest.Validate if the designated constraints aren't met.
-type GetCommandsRequestValidationError struct {
+// SubscribeToCommandsRequestValidationError is the validation error returned
+// by SubscribeToCommandsRequest.Validate if the designated constraints aren't met.
+type SubscribeToCommandsRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -569,24 +569,24 @@ type GetCommandsRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetCommandsRequestValidationError) Field() string { return e.field }
+func (e SubscribeToCommandsRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetCommandsRequestValidationError) Reason() string { return e.reason }
+func (e SubscribeToCommandsRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetCommandsRequestValidationError) Cause() error { return e.cause }
+func (e SubscribeToCommandsRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetCommandsRequestValidationError) Key() bool { return e.key }
+func (e SubscribeToCommandsRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetCommandsRequestValidationError) ErrorName() string {
-	return "GetCommandsRequestValidationError"
+func (e SubscribeToCommandsRequestValidationError) ErrorName() string {
+	return "SubscribeToCommandsRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GetCommandsRequestValidationError) Error() string {
+func (e SubscribeToCommandsRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -598,14 +598,14 @@ func (e GetCommandsRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetCommandsRequest.%s: %s%s",
+		"invalid %sSubscribeToCommandsRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetCommandsRequestValidationError{}
+var _ error = SubscribeToCommandsRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -613,78 +613,73 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetCommandsRequestValidationError{}
+} = SubscribeToCommandsRequestValidationError{}
 
-// Validate checks the field values on GetCommandsResponse with the rules
-// defined in the proto definition for this message. If any rules are
+// Validate checks the field values on SubscribeToCommandsResponse with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GetCommandsResponse) Validate() error {
+func (m *SubscribeToCommandsResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GetCommandsResponse with the rules
-// defined in the proto definition for this message. If any rules are
+// ValidateAll checks the field values on SubscribeToCommandsResponse with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// GetCommandsResponseMultiError, or nil if none found.
-func (m *GetCommandsResponse) ValidateAll() error {
+// SubscribeToCommandsResponseMultiError, or nil if none found.
+func (m *SubscribeToCommandsResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GetCommandsResponse) validate(all bool) error {
+func (m *SubscribeToCommandsResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
-	for idx, item := range m.GetCommands() {
-		_, _ = idx, item
-
-		if all {
-			switch v := interface{}(item).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, GetCommandsResponseValidationError{
-						field:  fmt.Sprintf("Commands[%v]", idx),
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, GetCommandsResponseValidationError{
-						field:  fmt.Sprintf("Commands[%v]", idx),
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return GetCommandsResponseValidationError{
-					field:  fmt.Sprintf("Commands[%v]", idx),
+	if all {
+		switch v := interface{}(m.GetCommands()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, SubscribeToCommandsResponseValidationError{
+					field:  "Commands",
 					reason: "embedded message failed validation",
 					cause:  err,
-				}
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, SubscribeToCommandsResponseValidationError{
+					field:  "Commands",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
 			}
 		}
-
+	} else if v, ok := interface{}(m.GetCommands()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return SubscribeToCommandsResponseValidationError{
+				field:  "Commands",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
 	}
 
 	if len(errors) > 0 {
-		return GetCommandsResponseMultiError(errors)
+		return SubscribeToCommandsResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// GetCommandsResponseMultiError is an error wrapping multiple validation
-// errors returned by GetCommandsResponse.ValidateAll() if the designated
-// constraints aren't met.
-type GetCommandsResponseMultiError []error
+// SubscribeToCommandsResponseMultiError is an error wrapping multiple
+// validation errors returned by SubscribeToCommandsResponse.ValidateAll() if
+// the designated constraints aren't met.
+type SubscribeToCommandsResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GetCommandsResponseMultiError) Error() string {
+func (m SubscribeToCommandsResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -693,11 +688,12 @@ func (m GetCommandsResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GetCommandsResponseMultiError) AllErrors() []error { return m }
+func (m SubscribeToCommandsResponseMultiError) AllErrors() []error { return m }
 
-// GetCommandsResponseValidationError is the validation error returned by
-// GetCommandsResponse.Validate if the designated constraints aren't met.
-type GetCommandsResponseValidationError struct {
+// SubscribeToCommandsResponseValidationError is the validation error returned
+// by SubscribeToCommandsResponse.Validate if the designated constraints
+// aren't met.
+type SubscribeToCommandsResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -705,24 +701,24 @@ type GetCommandsResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetCommandsResponseValidationError) Field() string { return e.field }
+func (e SubscribeToCommandsResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetCommandsResponseValidationError) Reason() string { return e.reason }
+func (e SubscribeToCommandsResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetCommandsResponseValidationError) Cause() error { return e.cause }
+func (e SubscribeToCommandsResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetCommandsResponseValidationError) Key() bool { return e.key }
+func (e SubscribeToCommandsResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetCommandsResponseValidationError) ErrorName() string {
-	return "GetCommandsResponseValidationError"
+func (e SubscribeToCommandsResponseValidationError) ErrorName() string {
+	return "SubscribeToCommandsResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GetCommandsResponseValidationError) Error() string {
+func (e SubscribeToCommandsResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -734,14 +730,14 @@ func (e GetCommandsResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetCommandsResponse.%s: %s%s",
+		"invalid %sSubscribeToCommandsResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetCommandsResponseValidationError{}
+var _ error = SubscribeToCommandsResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -749,7 +745,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetCommandsResponseValidationError{}
+} = SubscribeToCommandsResponseValidationError{}
 
 // Validate checks the field values on AckCommandRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
