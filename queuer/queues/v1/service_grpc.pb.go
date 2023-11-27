@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             (unknown)
-// source: queuer/queues/v1/queue.proto
+// source: queuer/queues/v1/service.proto
 
 package v1
 
@@ -24,6 +24,9 @@ const (
 	QueueService_DeleteQueue_FullMethodName    = "/queuer.queues.v1.QueueService/DeleteQueue"
 	QueueService_FlushQueue_FullMethodName     = "/queuer.queues.v1.QueueService/FlushQueue"
 	QueueService_PublishMessage_FullMethodName = "/queuer.queues.v1.QueueService/PublishMessage"
+	QueueService_Subscribe_FullMethodName      = "/queuer.queues.v1.QueueService/Subscribe"
+	QueueService_Unsubscribe_FullMethodName    = "/queuer.queues.v1.QueueService/Unsubscribe"
+	QueueService_UpdateState_FullMethodName    = "/queuer.queues.v1.QueueService/UpdateState"
 )
 
 // QueueServiceClient is the client API for QueueService service.
@@ -35,6 +38,9 @@ type QueueServiceClient interface {
 	DeleteQueue(ctx context.Context, in *DeleteQueueRequest, opts ...grpc.CallOption) (*DeleteQueueResponse, error)
 	FlushQueue(ctx context.Context, in *FlushQueueRequest, opts ...grpc.CallOption) (*FlushQueueResponse, error)
 	PublishMessage(ctx context.Context, in *PublishMessageRequest, opts ...grpc.CallOption) (*PublishMessageResponse, error)
+	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (QueueService_SubscribeClient, error)
+	Unsubscribe(ctx context.Context, in *UnsubscribeRequest, opts ...grpc.CallOption) (*UnsubscribeResponse, error)
+	UpdateState(ctx context.Context, in *UpdateStateRequest, opts ...grpc.CallOption) (*UpdateStateResponse, error)
 }
 
 type queueServiceClient struct {
@@ -90,6 +96,56 @@ func (c *queueServiceClient) PublishMessage(ctx context.Context, in *PublishMess
 	return out, nil
 }
 
+func (c *queueServiceClient) Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (QueueService_SubscribeClient, error) {
+	stream, err := c.cc.NewStream(ctx, &QueueService_ServiceDesc.Streams[0], QueueService_Subscribe_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &queueServiceSubscribeClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type QueueService_SubscribeClient interface {
+	Recv() (*SubscribeResponse, error)
+	grpc.ClientStream
+}
+
+type queueServiceSubscribeClient struct {
+	grpc.ClientStream
+}
+
+func (x *queueServiceSubscribeClient) Recv() (*SubscribeResponse, error) {
+	m := new(SubscribeResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+func (c *queueServiceClient) Unsubscribe(ctx context.Context, in *UnsubscribeRequest, opts ...grpc.CallOption) (*UnsubscribeResponse, error) {
+	out := new(UnsubscribeResponse)
+	err := c.cc.Invoke(ctx, QueueService_Unsubscribe_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queueServiceClient) UpdateState(ctx context.Context, in *UpdateStateRequest, opts ...grpc.CallOption) (*UpdateStateResponse, error) {
+	out := new(UpdateStateResponse)
+	err := c.cc.Invoke(ctx, QueueService_UpdateState_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueueServiceServer is the server API for QueueService service.
 // All implementations must embed UnimplementedQueueServiceServer
 // for forward compatibility
@@ -99,6 +155,9 @@ type QueueServiceServer interface {
 	DeleteQueue(context.Context, *DeleteQueueRequest) (*DeleteQueueResponse, error)
 	FlushQueue(context.Context, *FlushQueueRequest) (*FlushQueueResponse, error)
 	PublishMessage(context.Context, *PublishMessageRequest) (*PublishMessageResponse, error)
+	Subscribe(*SubscribeRequest, QueueService_SubscribeServer) error
+	Unsubscribe(context.Context, *UnsubscribeRequest) (*UnsubscribeResponse, error)
+	UpdateState(context.Context, *UpdateStateRequest) (*UpdateStateResponse, error)
 	mustEmbedUnimplementedQueueServiceServer()
 }
 
@@ -120,6 +179,15 @@ func (UnimplementedQueueServiceServer) FlushQueue(context.Context, *FlushQueueRe
 }
 func (UnimplementedQueueServiceServer) PublishMessage(context.Context, *PublishMessageRequest) (*PublishMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PublishMessage not implemented")
+}
+func (UnimplementedQueueServiceServer) Subscribe(*SubscribeRequest, QueueService_SubscribeServer) error {
+	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
+}
+func (UnimplementedQueueServiceServer) Unsubscribe(context.Context, *UnsubscribeRequest) (*UnsubscribeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Unsubscribe not implemented")
+}
+func (UnimplementedQueueServiceServer) UpdateState(context.Context, *UpdateStateRequest) (*UpdateStateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateState not implemented")
 }
 func (UnimplementedQueueServiceServer) mustEmbedUnimplementedQueueServiceServer() {}
 
@@ -224,6 +292,63 @@ func _QueueService_PublishMessage_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _QueueService_Subscribe_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SubscribeRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(QueueServiceServer).Subscribe(m, &queueServiceSubscribeServer{stream})
+}
+
+type QueueService_SubscribeServer interface {
+	Send(*SubscribeResponse) error
+	grpc.ServerStream
+}
+
+type queueServiceSubscribeServer struct {
+	grpc.ServerStream
+}
+
+func (x *queueServiceSubscribeServer) Send(m *SubscribeResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func _QueueService_Unsubscribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnsubscribeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueueServiceServer).Unsubscribe(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QueueService_Unsubscribe_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueueServiceServer).Unsubscribe(ctx, req.(*UnsubscribeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _QueueService_UpdateState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateStateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueueServiceServer).UpdateState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QueueService_UpdateState_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueueServiceServer).UpdateState(ctx, req.(*UpdateStateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // QueueService_ServiceDesc is the grpc.ServiceDesc for QueueService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -251,7 +376,21 @@ var QueueService_ServiceDesc = grpc.ServiceDesc{
 			MethodName: "PublishMessage",
 			Handler:    _QueueService_PublishMessage_Handler,
 		},
+		{
+			MethodName: "Unsubscribe",
+			Handler:    _QueueService_Unsubscribe_Handler,
+		},
+		{
+			MethodName: "UpdateState",
+			Handler:    _QueueService_UpdateState_Handler,
+		},
 	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "queuer/queues/v1/queue.proto",
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "Subscribe",
+			Handler:       _QueueService_Subscribe_Handler,
+			ServerStreams: true,
+		},
+	},
+	Metadata: "queuer/queues/v1/service.proto",
 }

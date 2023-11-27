@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             (unknown)
-// source: queuer/clients/v1/clients.proto
+// source: queuer/clients/v1/service.proto
 
 package v1
 
@@ -278,5 +278,5 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 	},
-	Metadata: "queuer/clients/v1/clients.proto",
+	Metadata: "queuer/clients/v1/service.proto",
 }
