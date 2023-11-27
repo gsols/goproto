@@ -38,22 +38,22 @@ var (
 // define the regex for a UUID once up-front
 var _messages_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
 
-// Validate checks the field values on GetMessagesRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GetMessagesRequest) Validate() error {
+// Validate checks the field values on GetNextRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *GetNextRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GetMessagesRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// GetMessagesRequestMultiError, or nil if none found.
-func (m *GetMessagesRequest) ValidateAll() error {
+// ValidateAll checks the field values on GetNextRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in GetNextRequestMultiError,
+// or nil if none found.
+func (m *GetNextRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GetMessagesRequest) validate(all bool) error {
+func (m *GetNextRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -61,7 +61,7 @@ func (m *GetMessagesRequest) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetQueueId()); err != nil {
-		err = GetMessagesRequestValidationError{
+		err = GetNextRequestValidationError{
 			field:  "QueueId",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -72,16 +72,14 @@ func (m *GetMessagesRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	// no validation rules for Ready
-
 	if len(errors) > 0 {
-		return GetMessagesRequestMultiError(errors)
+		return GetNextRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *GetMessagesRequest) _validateUuid(uuid string) error {
+func (m *GetNextRequest) _validateUuid(uuid string) error {
 	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -89,13 +87,13 @@ func (m *GetMessagesRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// GetMessagesRequestMultiError is an error wrapping multiple validation errors
-// returned by GetMessagesRequest.ValidateAll() if the designated constraints
+// GetNextRequestMultiError is an error wrapping multiple validation errors
+// returned by GetNextRequest.ValidateAll() if the designated constraints
 // aren't met.
-type GetMessagesRequestMultiError []error
+type GetNextRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GetMessagesRequestMultiError) Error() string {
+func (m GetNextRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -104,11 +102,11 @@ func (m GetMessagesRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GetMessagesRequestMultiError) AllErrors() []error { return m }
+func (m GetNextRequestMultiError) AllErrors() []error { return m }
 
-// GetMessagesRequestValidationError is the validation error returned by
-// GetMessagesRequest.Validate if the designated constraints aren't met.
-type GetMessagesRequestValidationError struct {
+// GetNextRequestValidationError is the validation error returned by
+// GetNextRequest.Validate if the designated constraints aren't met.
+type GetNextRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -116,24 +114,22 @@ type GetMessagesRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetMessagesRequestValidationError) Field() string { return e.field }
+func (e GetNextRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetMessagesRequestValidationError) Reason() string { return e.reason }
+func (e GetNextRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetMessagesRequestValidationError) Cause() error { return e.cause }
+func (e GetNextRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetMessagesRequestValidationError) Key() bool { return e.key }
+func (e GetNextRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetMessagesRequestValidationError) ErrorName() string {
-	return "GetMessagesRequestValidationError"
-}
+func (e GetNextRequestValidationError) ErrorName() string { return "GetNextRequestValidationError" }
 
 // Error satisfies the builtin error interface
-func (e GetMessagesRequestValidationError) Error() string {
+func (e GetNextRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -145,14 +141,14 @@ func (e GetMessagesRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetMessagesRequest.%s: %s%s",
+		"invalid %sGetNextRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetMessagesRequestValidationError{}
+var _ error = GetNextRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -160,24 +156,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetMessagesRequestValidationError{}
+} = GetNextRequestValidationError{}
 
-// Validate checks the field values on GetMessagesResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GetMessagesResponse) Validate() error {
+// Validate checks the field values on GetNextResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *GetNextResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GetMessagesResponse with the rules
+// ValidateAll checks the field values on GetNextResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// GetMessagesResponseMultiError, or nil if none found.
-func (m *GetMessagesResponse) ValidateAll() error {
+// GetNextResponseMultiError, or nil if none found.
+func (m *GetNextResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GetMessagesResponse) validate(all bool) error {
+func (m *GetNextResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -188,7 +184,7 @@ func (m *GetMessagesResponse) validate(all bool) error {
 		switch v := interface{}(m.GetMessage()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, GetMessagesResponseValidationError{
+				errors = append(errors, GetNextResponseValidationError{
 					field:  "Message",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -196,7 +192,7 @@ func (m *GetMessagesResponse) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, GetMessagesResponseValidationError{
+				errors = append(errors, GetNextResponseValidationError{
 					field:  "Message",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -205,7 +201,7 @@ func (m *GetMessagesResponse) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetMessage()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return GetMessagesResponseValidationError{
+			return GetNextResponseValidationError{
 				field:  "Message",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -214,19 +210,19 @@ func (m *GetMessagesResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return GetMessagesResponseMultiError(errors)
+		return GetNextResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// GetMessagesResponseMultiError is an error wrapping multiple validation
-// errors returned by GetMessagesResponse.ValidateAll() if the designated
-// constraints aren't met.
-type GetMessagesResponseMultiError []error
+// GetNextResponseMultiError is an error wrapping multiple validation errors
+// returned by GetNextResponse.ValidateAll() if the designated constraints
+// aren't met.
+type GetNextResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GetMessagesResponseMultiError) Error() string {
+func (m GetNextResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -235,11 +231,11 @@ func (m GetMessagesResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GetMessagesResponseMultiError) AllErrors() []error { return m }
+func (m GetNextResponseMultiError) AllErrors() []error { return m }
 
-// GetMessagesResponseValidationError is the validation error returned by
-// GetMessagesResponse.Validate if the designated constraints aren't met.
-type GetMessagesResponseValidationError struct {
+// GetNextResponseValidationError is the validation error returned by
+// GetNextResponse.Validate if the designated constraints aren't met.
+type GetNextResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -247,24 +243,22 @@ type GetMessagesResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetMessagesResponseValidationError) Field() string { return e.field }
+func (e GetNextResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetMessagesResponseValidationError) Reason() string { return e.reason }
+func (e GetNextResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetMessagesResponseValidationError) Cause() error { return e.cause }
+func (e GetNextResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetMessagesResponseValidationError) Key() bool { return e.key }
+func (e GetNextResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetMessagesResponseValidationError) ErrorName() string {
-	return "GetMessagesResponseValidationError"
-}
+func (e GetNextResponseValidationError) ErrorName() string { return "GetNextResponseValidationError" }
 
 // Error satisfies the builtin error interface
-func (e GetMessagesResponseValidationError) Error() string {
+func (e GetNextResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -276,14 +270,14 @@ func (e GetMessagesResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetMessagesResponse.%s: %s%s",
+		"invalid %sGetNextResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetMessagesResponseValidationError{}
+var _ error = GetNextResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -291,24 +285,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetMessagesResponseValidationError{}
+} = GetNextResponseValidationError{}
 
-// Validate checks the field values on ConfirmMessageRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *ConfirmMessageRequest) Validate() error {
+// Validate checks the field values on ConfirmRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *ConfirmRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on ConfirmMessageRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// ConfirmMessageRequestMultiError, or nil if none found.
-func (m *ConfirmMessageRequest) ValidateAll() error {
+// ValidateAll checks the field values on ConfirmRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in ConfirmRequestMultiError,
+// or nil if none found.
+func (m *ConfirmRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ConfirmMessageRequest) validate(all bool) error {
+func (m *ConfirmRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -316,7 +310,7 @@ func (m *ConfirmMessageRequest) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetQueueId()); err != nil {
-		err = ConfirmMessageRequestValidationError{
+		err = ConfirmRequestValidationError{
 			field:  "QueueId",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -328,7 +322,7 @@ func (m *ConfirmMessageRequest) validate(all bool) error {
 	}
 
 	if err := m._validateUuid(m.GetMessageId()); err != nil {
-		err = ConfirmMessageRequestValidationError{
+		err = ConfirmRequestValidationError{
 			field:  "MessageId",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -340,13 +334,13 @@ func (m *ConfirmMessageRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return ConfirmMessageRequestMultiError(errors)
+		return ConfirmRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *ConfirmMessageRequest) _validateUuid(uuid string) error {
+func (m *ConfirmRequest) _validateUuid(uuid string) error {
 	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -354,13 +348,13 @@ func (m *ConfirmMessageRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// ConfirmMessageRequestMultiError is an error wrapping multiple validation
-// errors returned by ConfirmMessageRequest.ValidateAll() if the designated
-// constraints aren't met.
-type ConfirmMessageRequestMultiError []error
+// ConfirmRequestMultiError is an error wrapping multiple validation errors
+// returned by ConfirmRequest.ValidateAll() if the designated constraints
+// aren't met.
+type ConfirmRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ConfirmMessageRequestMultiError) Error() string {
+func (m ConfirmRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -369,11 +363,11 @@ func (m ConfirmMessageRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ConfirmMessageRequestMultiError) AllErrors() []error { return m }
+func (m ConfirmRequestMultiError) AllErrors() []error { return m }
 
-// ConfirmMessageRequestValidationError is the validation error returned by
-// ConfirmMessageRequest.Validate if the designated constraints aren't met.
-type ConfirmMessageRequestValidationError struct {
+// ConfirmRequestValidationError is the validation error returned by
+// ConfirmRequest.Validate if the designated constraints aren't met.
+type ConfirmRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -381,24 +375,22 @@ type ConfirmMessageRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e ConfirmMessageRequestValidationError) Field() string { return e.field }
+func (e ConfirmRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ConfirmMessageRequestValidationError) Reason() string { return e.reason }
+func (e ConfirmRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ConfirmMessageRequestValidationError) Cause() error { return e.cause }
+func (e ConfirmRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ConfirmMessageRequestValidationError) Key() bool { return e.key }
+func (e ConfirmRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ConfirmMessageRequestValidationError) ErrorName() string {
-	return "ConfirmMessageRequestValidationError"
-}
+func (e ConfirmRequestValidationError) ErrorName() string { return "ConfirmRequestValidationError" }
 
 // Error satisfies the builtin error interface
-func (e ConfirmMessageRequestValidationError) Error() string {
+func (e ConfirmRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -410,14 +402,14 @@ func (e ConfirmMessageRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sConfirmMessageRequest.%s: %s%s",
+		"invalid %sConfirmRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ConfirmMessageRequestValidationError{}
+var _ error = ConfirmRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -425,24 +417,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ConfirmMessageRequestValidationError{}
+} = ConfirmRequestValidationError{}
 
-// Validate checks the field values on ConfirmMessageResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *ConfirmMessageResponse) Validate() error {
+// Validate checks the field values on ConfirmResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *ConfirmResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on ConfirmMessageResponse with the rules
+// ValidateAll checks the field values on ConfirmResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// ConfirmMessageResponseMultiError, or nil if none found.
-func (m *ConfirmMessageResponse) ValidateAll() error {
+// ConfirmResponseMultiError, or nil if none found.
+func (m *ConfirmResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ConfirmMessageResponse) validate(all bool) error {
+func (m *ConfirmResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -452,19 +444,19 @@ func (m *ConfirmMessageResponse) validate(all bool) error {
 	// no validation rules for Success
 
 	if len(errors) > 0 {
-		return ConfirmMessageResponseMultiError(errors)
+		return ConfirmResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// ConfirmMessageResponseMultiError is an error wrapping multiple validation
-// errors returned by ConfirmMessageResponse.ValidateAll() if the designated
-// constraints aren't met.
-type ConfirmMessageResponseMultiError []error
+// ConfirmResponseMultiError is an error wrapping multiple validation errors
+// returned by ConfirmResponse.ValidateAll() if the designated constraints
+// aren't met.
+type ConfirmResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ConfirmMessageResponseMultiError) Error() string {
+func (m ConfirmResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -473,11 +465,11 @@ func (m ConfirmMessageResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ConfirmMessageResponseMultiError) AllErrors() []error { return m }
+func (m ConfirmResponseMultiError) AllErrors() []error { return m }
 
-// ConfirmMessageResponseValidationError is the validation error returned by
-// ConfirmMessageResponse.Validate if the designated constraints aren't met.
-type ConfirmMessageResponseValidationError struct {
+// ConfirmResponseValidationError is the validation error returned by
+// ConfirmResponse.Validate if the designated constraints aren't met.
+type ConfirmResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -485,24 +477,22 @@ type ConfirmMessageResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e ConfirmMessageResponseValidationError) Field() string { return e.field }
+func (e ConfirmResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ConfirmMessageResponseValidationError) Reason() string { return e.reason }
+func (e ConfirmResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ConfirmMessageResponseValidationError) Cause() error { return e.cause }
+func (e ConfirmResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ConfirmMessageResponseValidationError) Key() bool { return e.key }
+func (e ConfirmResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ConfirmMessageResponseValidationError) ErrorName() string {
-	return "ConfirmMessageResponseValidationError"
-}
+func (e ConfirmResponseValidationError) ErrorName() string { return "ConfirmResponseValidationError" }
 
 // Error satisfies the builtin error interface
-func (e ConfirmMessageResponseValidationError) Error() string {
+func (e ConfirmResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -514,14 +504,14 @@ func (e ConfirmMessageResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sConfirmMessageResponse.%s: %s%s",
+		"invalid %sConfirmResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ConfirmMessageResponseValidationError{}
+var _ error = ConfirmResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -529,4 +519,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ConfirmMessageResponseValidationError{}
+} = ConfirmResponseValidationError{}
