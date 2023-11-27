@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.9](https://github.com/gsols/goproto/compare/v0.1.8...v0.1.9) (2023-11-27)
+
+
+### Features
+
+* build proto files using  for go ([b0722ba](https://github.com/gsols/goproto/commit/b0722ba0bf750d72e33f3f62b438351cc5fc500f))
+
 ## [0.1.8](https://github.com/gsols/goproto/compare/v0.1.7...v0.1.8) (2023-11-24)
 
 
