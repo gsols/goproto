@@ -274,6 +274,244 @@ var _ interface {
 	ErrorName() string
 } = RegisterClientResponseValidationError{}
 
+// Validate checks the field values on GetClientsRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *GetClientsRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetClientsRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetClientsRequestMultiError, or nil if none found.
+func (m *GetClientsRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetClientsRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return GetClientsRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetClientsRequestMultiError is an error wrapping multiple validation errors
+// returned by GetClientsRequest.ValidateAll() if the designated constraints
+// aren't met.
+type GetClientsRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetClientsRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetClientsRequestMultiError) AllErrors() []error { return m }
+
+// GetClientsRequestValidationError is the validation error returned by
+// GetClientsRequest.Validate if the designated constraints aren't met.
+type GetClientsRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetClientsRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetClientsRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetClientsRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetClientsRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetClientsRequestValidationError) ErrorName() string {
+	return "GetClientsRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetClientsRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetClientsRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetClientsRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetClientsRequestValidationError{}
+
+// Validate checks the field values on GetClientsResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetClientsResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetClientsResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetClientsResponseMultiError, or nil if none found.
+func (m *GetClientsResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetClientsResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetClients() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, GetClientsResponseValidationError{
+						field:  fmt.Sprintf("Clients[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, GetClientsResponseValidationError{
+						field:  fmt.Sprintf("Clients[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GetClientsResponseValidationError{
+					field:  fmt.Sprintf("Clients[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return GetClientsResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetClientsResponseMultiError is an error wrapping multiple validation errors
+// returned by GetClientsResponse.ValidateAll() if the designated constraints
+// aren't met.
+type GetClientsResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetClientsResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetClientsResponseMultiError) AllErrors() []error { return m }
+
+// GetClientsResponseValidationError is the validation error returned by
+// GetClientsResponse.Validate if the designated constraints aren't met.
+type GetClientsResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetClientsResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetClientsResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetClientsResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetClientsResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetClientsResponseValidationError) ErrorName() string {
+	return "GetClientsResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetClientsResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetClientsResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetClientsResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetClientsResponseValidationError{}
+
 // Validate checks the field values on PublishClientStatsRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
