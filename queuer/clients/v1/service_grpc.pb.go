@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	ClientService_RegisterClient_FullMethodName      = "/queuer.clients.v1.ClientService/RegisterClient"
+	ClientService_GetClients_FullMethodName          = "/queuer.clients.v1.ClientService/GetClients"
 	ClientService_PublishClientStats_FullMethodName  = "/queuer.clients.v1.ClientService/PublishClientStats"
 	ClientService_SubscribeToCommands_FullMethodName = "/queuer.clients.v1.ClientService/SubscribeToCommands"
 	ClientService_AckCommand_FullMethodName          = "/queuer.clients.v1.ClientService/AckCommand"
@@ -31,6 +32,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ClientServiceClient interface {
 	RegisterClient(ctx context.Context, in *RegisterClientRequest, opts ...grpc.CallOption) (*RegisterClientResponse, error)
+	GetClients(ctx context.Context, in *GetClientsRequest, opts ...grpc.CallOption) (*GetClientsResponse, error)
 	PublishClientStats(ctx context.Context, opts ...grpc.CallOption) (ClientService_PublishClientStatsClient, error)
 	SubscribeToCommands(ctx context.Context, in *SubscribeToCommandsRequest, opts ...grpc.CallOption) (ClientService_SubscribeToCommandsClient, error)
 	AckCommand(ctx context.Context, in *AckCommandRequest, opts ...grpc.CallOption) (*AckCommandResponse, error)
@@ -48,6 +50,15 @@ func NewClientServiceClient(cc grpc.ClientConnInterface) ClientServiceClient {
 func (c *clientServiceClient) RegisterClient(ctx context.Context, in *RegisterClientRequest, opts ...grpc.CallOption) (*RegisterClientResponse, error) {
 	out := new(RegisterClientResponse)
 	err := c.cc.Invoke(ctx, ClientService_RegisterClient_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *clientServiceClient) GetClients(ctx context.Context, in *GetClientsRequest, opts ...grpc.CallOption) (*GetClientsResponse, error) {
+	out := new(GetClientsResponse)
+	err := c.cc.Invoke(ctx, ClientService_GetClients_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -143,6 +154,7 @@ func (c *clientServiceClient) GetSubscribedQueues(ctx context.Context, in *GetSu
 // for forward compatibility
 type ClientServiceServer interface {
 	RegisterClient(context.Context, *RegisterClientRequest) (*RegisterClientResponse, error)
+	GetClients(context.Context, *GetClientsRequest) (*GetClientsResponse, error)
 	PublishClientStats(ClientService_PublishClientStatsServer) error
 	SubscribeToCommands(*SubscribeToCommandsRequest, ClientService_SubscribeToCommandsServer) error
 	AckCommand(context.Context, *AckCommandRequest) (*AckCommandResponse, error)
@@ -156,6 +168,9 @@ type UnimplementedClientServiceServer struct {
 
 func (UnimplementedClientServiceServer) RegisterClient(context.Context, *RegisterClientRequest) (*RegisterClientResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterClient not implemented")
+}
+func (UnimplementedClientServiceServer) GetClients(context.Context, *GetClientsRequest) (*GetClientsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClients not implemented")
 }
 func (UnimplementedClientServiceServer) PublishClientStats(ClientService_PublishClientStatsServer) error {
 	return status.Errorf(codes.Unimplemented, "method PublishClientStats not implemented")
@@ -196,6 +211,24 @@ func _ClientService_RegisterClient_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ClientServiceServer).RegisterClient(ctx, req.(*RegisterClientRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ClientService_GetClients_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetClientsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ClientServiceServer).GetClients(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ClientService_GetClients_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ClientServiceServer).GetClients(ctx, req.(*GetClientsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -293,6 +326,10 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RegisterClient",
 			Handler:    _ClientService_RegisterClient_Handler,
+		},
+		{
+			MethodName: "GetClients",
+			Handler:    _ClientService_GetClients_Handler,
 		},
 		{
 			MethodName: "AckCommand",

@@ -55,7 +55,7 @@ var file_queuer_clients_v1_service_proto_rawDesc = []byte{
 	0x2f, 0x76, 0x31, 0x2f, 0x73, 0x74, 0x61, 0x74, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a,
 	0x20, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2f, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x2f,
 	0x76, 0x31, 0x2f, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x32, 0x8a, 0x06, 0x0a, 0x0d, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x53, 0x65, 0x72, 0x76,
+	0x6f, 0x32, 0xfa, 0x06, 0x0a, 0x0d, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x53, 0x65, 0x72, 0x76,
 	0x69, 0x63, 0x65, 0x12, 0x7d, 0x0a, 0x0e, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x43,
 	0x6c, 0x69, 0x65, 0x6e, 0x74, 0x12, 0x28, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x63,
 	0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74,
@@ -64,6 +64,13 @@ var file_queuer_clients_v1_service_proto_rawDesc = []byte{
 	0x2e, 0x76, 0x31, 0x2e, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x43, 0x6c, 0x69, 0x65,
 	0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x16, 0x82, 0xd3, 0xe4, 0x93,
 	0x02, 0x10, 0x3a, 0x01, 0x2a, 0x22, 0x0b, 0x2f, 0x76, 0x31, 0x2f, 0x63, 0x6c, 0x69, 0x65, 0x6e,
+	0x74, 0x73, 0x12, 0x6e, 0x0a, 0x0a, 0x47, 0x65, 0x74, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73,
+	0x12, 0x24, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74,
+	0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x25, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e,
+	0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x74, 0x43, 0x6c,
+	0x69, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x13, 0x82,
+	0xd3, 0xe4, 0x93, 0x02, 0x0d, 0x12, 0x0b, 0x2f, 0x76, 0x31, 0x2f, 0x63, 0x6c, 0x69, 0x65, 0x6e,
 	0x74, 0x73, 0x12, 0x9d, 0x01, 0x0a, 0x12, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x43, 0x6c,
 	0x69, 0x65, 0x6e, 0x74, 0x53, 0x74, 0x61, 0x74, 0x73, 0x12, 0x2c, 0x2e, 0x71, 0x75, 0x65, 0x75,
 	0x65, 0x72, 0x2e, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x50, 0x75,
@@ -112,32 +119,36 @@ var file_queuer_clients_v1_service_proto_rawDesc = []byte{
 
 var file_queuer_clients_v1_service_proto_goTypes = []interface{}{
 	(*RegisterClientRequest)(nil),       // 0: queuer.clients.v1.RegisterClientRequest
-	(*PublishClientStatsRequest)(nil),   // 1: queuer.clients.v1.PublishClientStatsRequest
-	(*SubscribeToCommandsRequest)(nil),  // 2: queuer.clients.v1.SubscribeToCommandsRequest
-	(*AckCommandRequest)(nil),           // 3: queuer.clients.v1.AckCommandRequest
-	(*GetSubscribedQueuesRequest)(nil),  // 4: queuer.clients.v1.GetSubscribedQueuesRequest
-	(*RegisterClientResponse)(nil),      // 5: queuer.clients.v1.RegisterClientResponse
-	(*PublishClientStatsResponse)(nil),  // 6: queuer.clients.v1.PublishClientStatsResponse
-	(*SubscribeToCommandsResponse)(nil), // 7: queuer.clients.v1.SubscribeToCommandsResponse
-	(*AckCommandResponse)(nil),          // 8: queuer.clients.v1.AckCommandResponse
-	(*GetSubscribedQueuesResponse)(nil), // 9: queuer.clients.v1.GetSubscribedQueuesResponse
+	(*GetClientsRequest)(nil),           // 1: queuer.clients.v1.GetClientsRequest
+	(*PublishClientStatsRequest)(nil),   // 2: queuer.clients.v1.PublishClientStatsRequest
+	(*SubscribeToCommandsRequest)(nil),  // 3: queuer.clients.v1.SubscribeToCommandsRequest
+	(*AckCommandRequest)(nil),           // 4: queuer.clients.v1.AckCommandRequest
+	(*GetSubscribedQueuesRequest)(nil),  // 5: queuer.clients.v1.GetSubscribedQueuesRequest
+	(*RegisterClientResponse)(nil),      // 6: queuer.clients.v1.RegisterClientResponse
+	(*GetClientsResponse)(nil),          // 7: queuer.clients.v1.GetClientsResponse
+	(*PublishClientStatsResponse)(nil),  // 8: queuer.clients.v1.PublishClientStatsResponse
+	(*SubscribeToCommandsResponse)(nil), // 9: queuer.clients.v1.SubscribeToCommandsResponse
+	(*AckCommandResponse)(nil),          // 10: queuer.clients.v1.AckCommandResponse
+	(*GetSubscribedQueuesResponse)(nil), // 11: queuer.clients.v1.GetSubscribedQueuesResponse
 }
 var file_queuer_clients_v1_service_proto_depIdxs = []int32{
-	0, // 0: queuer.clients.v1.ClientService.RegisterClient:input_type -> queuer.clients.v1.RegisterClientRequest
-	1, // 1: queuer.clients.v1.ClientService.PublishClientStats:input_type -> queuer.clients.v1.PublishClientStatsRequest
-	2, // 2: queuer.clients.v1.ClientService.SubscribeToCommands:input_type -> queuer.clients.v1.SubscribeToCommandsRequest
-	3, // 3: queuer.clients.v1.ClientService.AckCommand:input_type -> queuer.clients.v1.AckCommandRequest
-	4, // 4: queuer.clients.v1.ClientService.GetSubscribedQueues:input_type -> queuer.clients.v1.GetSubscribedQueuesRequest
-	5, // 5: queuer.clients.v1.ClientService.RegisterClient:output_type -> queuer.clients.v1.RegisterClientResponse
-	6, // 6: queuer.clients.v1.ClientService.PublishClientStats:output_type -> queuer.clients.v1.PublishClientStatsResponse
-	7, // 7: queuer.clients.v1.ClientService.SubscribeToCommands:output_type -> queuer.clients.v1.SubscribeToCommandsResponse
-	8, // 8: queuer.clients.v1.ClientService.AckCommand:output_type -> queuer.clients.v1.AckCommandResponse
-	9, // 9: queuer.clients.v1.ClientService.GetSubscribedQueues:output_type -> queuer.clients.v1.GetSubscribedQueuesResponse
-	5, // [5:10] is the sub-list for method output_type
-	0, // [0:5] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	0,  // 0: queuer.clients.v1.ClientService.RegisterClient:input_type -> queuer.clients.v1.RegisterClientRequest
+	1,  // 1: queuer.clients.v1.ClientService.GetClients:input_type -> queuer.clients.v1.GetClientsRequest
+	2,  // 2: queuer.clients.v1.ClientService.PublishClientStats:input_type -> queuer.clients.v1.PublishClientStatsRequest
+	3,  // 3: queuer.clients.v1.ClientService.SubscribeToCommands:input_type -> queuer.clients.v1.SubscribeToCommandsRequest
+	4,  // 4: queuer.clients.v1.ClientService.AckCommand:input_type -> queuer.clients.v1.AckCommandRequest
+	5,  // 5: queuer.clients.v1.ClientService.GetSubscribedQueues:input_type -> queuer.clients.v1.GetSubscribedQueuesRequest
+	6,  // 6: queuer.clients.v1.ClientService.RegisterClient:output_type -> queuer.clients.v1.RegisterClientResponse
+	7,  // 7: queuer.clients.v1.ClientService.GetClients:output_type -> queuer.clients.v1.GetClientsResponse
+	8,  // 8: queuer.clients.v1.ClientService.PublishClientStats:output_type -> queuer.clients.v1.PublishClientStatsResponse
+	9,  // 9: queuer.clients.v1.ClientService.SubscribeToCommands:output_type -> queuer.clients.v1.SubscribeToCommandsResponse
+	10, // 10: queuer.clients.v1.ClientService.AckCommand:output_type -> queuer.clients.v1.AckCommandResponse
+	11, // 11: queuer.clients.v1.ClientService.GetSubscribedQueues:output_type -> queuer.clients.v1.GetSubscribedQueuesResponse
+	6,  // [6:12] is the sub-list for method output_type
+	0,  // [0:6] is the sub-list for method input_type
+	0,  // [0:0] is the sub-list for extension type_name
+	0,  // [0:0] is the sub-list for extension extendee
+	0,  // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_queuer_clients_v1_service_proto_init() }

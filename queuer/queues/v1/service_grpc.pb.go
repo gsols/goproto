@@ -19,14 +19,17 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	QueueService_CreateQueue_FullMethodName    = "/queuer.queues.v1.QueueService/CreateQueue"
-	QueueService_GetQueue_FullMethodName       = "/queuer.queues.v1.QueueService/GetQueue"
-	QueueService_DeleteQueue_FullMethodName    = "/queuer.queues.v1.QueueService/DeleteQueue"
-	QueueService_FlushQueue_FullMethodName     = "/queuer.queues.v1.QueueService/FlushQueue"
-	QueueService_PublishMessage_FullMethodName = "/queuer.queues.v1.QueueService/PublishMessage"
-	QueueService_Subscribe_FullMethodName      = "/queuer.queues.v1.QueueService/Subscribe"
-	QueueService_Unsubscribe_FullMethodName    = "/queuer.queues.v1.QueueService/Unsubscribe"
-	QueueService_UpdateState_FullMethodName    = "/queuer.queues.v1.QueueService/UpdateState"
+	QueueService_CreateQueue_FullMethodName      = "/queuer.queues.v1.QueueService/CreateQueue"
+	QueueService_GetQueue_FullMethodName         = "/queuer.queues.v1.QueueService/GetQueue"
+	QueueService_DeleteQueue_FullMethodName      = "/queuer.queues.v1.QueueService/DeleteQueue"
+	QueueService_FlushQueue_FullMethodName       = "/queuer.queues.v1.QueueService/FlushQueue"
+	QueueService_PublishMessage_FullMethodName   = "/queuer.queues.v1.QueueService/PublishMessage"
+	QueueService_Subscribe_FullMethodName        = "/queuer.queues.v1.QueueService/Subscribe"
+	QueueService_Unsubscribe_FullMethodName      = "/queuer.queues.v1.QueueService/Unsubscribe"
+	QueueService_UpdateState_FullMethodName      = "/queuer.queues.v1.QueueService/UpdateState"
+	QueueService_GetClients_FullMethodName       = "/queuer.queues.v1.QueueService/GetClients"
+	QueueService_RegisterClient_FullMethodName   = "/queuer.queues.v1.QueueService/RegisterClient"
+	QueueService_UnregisterClient_FullMethodName = "/queuer.queues.v1.QueueService/UnregisterClient"
 )
 
 // QueueServiceClient is the client API for QueueService service.
@@ -41,6 +44,9 @@ type QueueServiceClient interface {
 	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (QueueService_SubscribeClient, error)
 	Unsubscribe(ctx context.Context, in *UnsubscribeRequest, opts ...grpc.CallOption) (*UnsubscribeResponse, error)
 	UpdateState(ctx context.Context, in *UpdateStateRequest, opts ...grpc.CallOption) (*UpdateStateResponse, error)
+	GetClients(ctx context.Context, in *GetClientsRequest, opts ...grpc.CallOption) (*GetClientsResponse, error)
+	RegisterClient(ctx context.Context, in *RegisterClientRequest, opts ...grpc.CallOption) (*RegisterClientResponse, error)
+	UnregisterClient(ctx context.Context, in *UnregisterClientRequest, opts ...grpc.CallOption) (*UnregisterClientResponse, error)
 }
 
 type queueServiceClient struct {
@@ -146,6 +152,33 @@ func (c *queueServiceClient) UpdateState(ctx context.Context, in *UpdateStateReq
 	return out, nil
 }
 
+func (c *queueServiceClient) GetClients(ctx context.Context, in *GetClientsRequest, opts ...grpc.CallOption) (*GetClientsResponse, error) {
+	out := new(GetClientsResponse)
+	err := c.cc.Invoke(ctx, QueueService_GetClients_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queueServiceClient) RegisterClient(ctx context.Context, in *RegisterClientRequest, opts ...grpc.CallOption) (*RegisterClientResponse, error) {
+	out := new(RegisterClientResponse)
+	err := c.cc.Invoke(ctx, QueueService_RegisterClient_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *queueServiceClient) UnregisterClient(ctx context.Context, in *UnregisterClientRequest, opts ...grpc.CallOption) (*UnregisterClientResponse, error) {
+	out := new(UnregisterClientResponse)
+	err := c.cc.Invoke(ctx, QueueService_UnregisterClient_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // QueueServiceServer is the server API for QueueService service.
 // All implementations must embed UnimplementedQueueServiceServer
 // for forward compatibility
@@ -158,6 +191,9 @@ type QueueServiceServer interface {
 	Subscribe(*SubscribeRequest, QueueService_SubscribeServer) error
 	Unsubscribe(context.Context, *UnsubscribeRequest) (*UnsubscribeResponse, error)
 	UpdateState(context.Context, *UpdateStateRequest) (*UpdateStateResponse, error)
+	GetClients(context.Context, *GetClientsRequest) (*GetClientsResponse, error)
+	RegisterClient(context.Context, *RegisterClientRequest) (*RegisterClientResponse, error)
+	UnregisterClient(context.Context, *UnregisterClientRequest) (*UnregisterClientResponse, error)
 	mustEmbedUnimplementedQueueServiceServer()
 }
 
@@ -188,6 +224,15 @@ func (UnimplementedQueueServiceServer) Unsubscribe(context.Context, *Unsubscribe
 }
 func (UnimplementedQueueServiceServer) UpdateState(context.Context, *UpdateStateRequest) (*UpdateStateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateState not implemented")
+}
+func (UnimplementedQueueServiceServer) GetClients(context.Context, *GetClientsRequest) (*GetClientsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClients not implemented")
+}
+func (UnimplementedQueueServiceServer) RegisterClient(context.Context, *RegisterClientRequest) (*RegisterClientResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterClient not implemented")
+}
+func (UnimplementedQueueServiceServer) UnregisterClient(context.Context, *UnregisterClientRequest) (*UnregisterClientResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnregisterClient not implemented")
 }
 func (UnimplementedQueueServiceServer) mustEmbedUnimplementedQueueServiceServer() {}
 
@@ -349,6 +394,60 @@ func _QueueService_UpdateState_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _QueueService_GetClients_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetClientsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueueServiceServer).GetClients(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QueueService_GetClients_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueueServiceServer).GetClients(ctx, req.(*GetClientsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _QueueService_RegisterClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterClientRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueueServiceServer).RegisterClient(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QueueService_RegisterClient_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueueServiceServer).RegisterClient(ctx, req.(*RegisterClientRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _QueueService_UnregisterClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnregisterClientRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueueServiceServer).UnregisterClient(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: QueueService_UnregisterClient_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueueServiceServer).UnregisterClient(ctx, req.(*UnregisterClientRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // QueueService_ServiceDesc is the grpc.ServiceDesc for QueueService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -383,6 +482,18 @@ var QueueService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateState",
 			Handler:    _QueueService_UpdateState_Handler,
+		},
+		{
+			MethodName: "GetClients",
+			Handler:    _QueueService_GetClients_Handler,
+		},
+		{
+			MethodName: "RegisterClient",
+			Handler:    _QueueService_RegisterClient_Handler,
+		},
+		{
+			MethodName: "UnregisterClient",
+			Handler:    _QueueService_UnregisterClient_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
