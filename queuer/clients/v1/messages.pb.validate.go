@@ -39,6 +39,9 @@ var (
 	_ = v1.CommandStatus(0)
 )
 
+// define the regex for a UUID once up-front
+var _messages_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on RegisterClientRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -90,8 +93,28 @@ func (m *RegisterClientRequest) validate(all bool) error {
 		}
 	}
 
+	if err := m._validateUuid(m.GetOwnerId()); err != nil {
+		err = RegisterClientRequestValidationError{
+			field:  "OwnerId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if len(errors) > 0 {
 		return RegisterClientRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *RegisterClientRequest) _validateUuid(uuid string) error {
+	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
 	}
 
 	return nil
