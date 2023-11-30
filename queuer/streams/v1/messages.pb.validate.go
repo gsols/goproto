@@ -1761,22 +1761,22 @@ var _ interface {
 	ErrorName() string
 } = UpdateStateResponseValidationError{}
 
-// Validate checks the field values on RegisterClientRequest with the rules
+// Validate checks the field values on RegisterConsumerRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *RegisterClientRequest) Validate() error {
+func (m *RegisterConsumerRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on RegisterClientRequest with the rules
-// defined in the proto definition for this message. If any rules are
+// ValidateAll checks the field values on RegisterConsumerRequest with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// RegisterClientRequestMultiError, or nil if none found.
-func (m *RegisterClientRequest) ValidateAll() error {
+// RegisterConsumerRequestMultiError, or nil if none found.
+func (m *RegisterConsumerRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *RegisterClientRequest) validate(all bool) error {
+func (m *RegisterConsumerRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1784,7 +1784,7 @@ func (m *RegisterClientRequest) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetStreamId()); err != nil {
-		err = RegisterClientRequestValidationError{
+		err = RegisterConsumerRequestValidationError{
 			field:  "StreamId",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -1795,9 +1795,9 @@ func (m *RegisterClientRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if err := m._validateUuid(m.GetClientId()); err != nil {
-		err = RegisterClientRequestValidationError{
-			field:  "ClientId",
+	if err := m._validateUuid(m.GetConsumerId()); err != nil {
+		err = RegisterConsumerRequestValidationError{
+			field:  "ConsumerId",
 			reason: "value must be a valid UUID",
 			cause:  err,
 		}
@@ -1808,13 +1808,13 @@ func (m *RegisterClientRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return RegisterClientRequestMultiError(errors)
+		return RegisterConsumerRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *RegisterClientRequest) _validateUuid(uuid string) error {
+func (m *RegisterConsumerRequest) _validateUuid(uuid string) error {
 	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -1822,13 +1822,13 @@ func (m *RegisterClientRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// RegisterClientRequestMultiError is an error wrapping multiple validation
-// errors returned by RegisterClientRequest.ValidateAll() if the designated
+// RegisterConsumerRequestMultiError is an error wrapping multiple validation
+// errors returned by RegisterConsumerRequest.ValidateAll() if the designated
 // constraints aren't met.
-type RegisterClientRequestMultiError []error
+type RegisterConsumerRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m RegisterClientRequestMultiError) Error() string {
+func (m RegisterConsumerRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1837,11 +1837,11 @@ func (m RegisterClientRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m RegisterClientRequestMultiError) AllErrors() []error { return m }
+func (m RegisterConsumerRequestMultiError) AllErrors() []error { return m }
 
-// RegisterClientRequestValidationError is the validation error returned by
-// RegisterClientRequest.Validate if the designated constraints aren't met.
-type RegisterClientRequestValidationError struct {
+// RegisterConsumerRequestValidationError is the validation error returned by
+// RegisterConsumerRequest.Validate if the designated constraints aren't met.
+type RegisterConsumerRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1849,24 +1849,24 @@ type RegisterClientRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e RegisterClientRequestValidationError) Field() string { return e.field }
+func (e RegisterConsumerRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e RegisterClientRequestValidationError) Reason() string { return e.reason }
+func (e RegisterConsumerRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e RegisterClientRequestValidationError) Cause() error { return e.cause }
+func (e RegisterConsumerRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e RegisterClientRequestValidationError) Key() bool { return e.key }
+func (e RegisterConsumerRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e RegisterClientRequestValidationError) ErrorName() string {
-	return "RegisterClientRequestValidationError"
+func (e RegisterConsumerRequestValidationError) ErrorName() string {
+	return "RegisterConsumerRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e RegisterClientRequestValidationError) Error() string {
+func (e RegisterConsumerRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1878,14 +1878,14 @@ func (e RegisterClientRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sRegisterClientRequest.%s: %s%s",
+		"invalid %sRegisterConsumerRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = RegisterClientRequestValidationError{}
+var _ error = RegisterConsumerRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1893,24 +1893,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = RegisterClientRequestValidationError{}
+} = RegisterConsumerRequestValidationError{}
 
-// Validate checks the field values on RegisterClientResponse with the rules
+// Validate checks the field values on RegisterConsumerResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *RegisterClientResponse) Validate() error {
+func (m *RegisterConsumerResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on RegisterClientResponse with the rules
-// defined in the proto definition for this message. If any rules are
+// ValidateAll checks the field values on RegisterConsumerResponse with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// RegisterClientResponseMultiError, or nil if none found.
-func (m *RegisterClientResponse) ValidateAll() error {
+// RegisterConsumerResponseMultiError, or nil if none found.
+func (m *RegisterConsumerResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *RegisterClientResponse) validate(all bool) error {
+func (m *RegisterConsumerResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1920,19 +1920,19 @@ func (m *RegisterClientResponse) validate(all bool) error {
 	// no validation rules for Success
 
 	if len(errors) > 0 {
-		return RegisterClientResponseMultiError(errors)
+		return RegisterConsumerResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// RegisterClientResponseMultiError is an error wrapping multiple validation
-// errors returned by RegisterClientResponse.ValidateAll() if the designated
+// RegisterConsumerResponseMultiError is an error wrapping multiple validation
+// errors returned by RegisterConsumerResponse.ValidateAll() if the designated
 // constraints aren't met.
-type RegisterClientResponseMultiError []error
+type RegisterConsumerResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m RegisterClientResponseMultiError) Error() string {
+func (m RegisterConsumerResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1941,11 +1941,11 @@ func (m RegisterClientResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m RegisterClientResponseMultiError) AllErrors() []error { return m }
+func (m RegisterConsumerResponseMultiError) AllErrors() []error { return m }
 
-// RegisterClientResponseValidationError is the validation error returned by
-// RegisterClientResponse.Validate if the designated constraints aren't met.
-type RegisterClientResponseValidationError struct {
+// RegisterConsumerResponseValidationError is the validation error returned by
+// RegisterConsumerResponse.Validate if the designated constraints aren't met.
+type RegisterConsumerResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1953,24 +1953,24 @@ type RegisterClientResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e RegisterClientResponseValidationError) Field() string { return e.field }
+func (e RegisterConsumerResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e RegisterClientResponseValidationError) Reason() string { return e.reason }
+func (e RegisterConsumerResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e RegisterClientResponseValidationError) Cause() error { return e.cause }
+func (e RegisterConsumerResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e RegisterClientResponseValidationError) Key() bool { return e.key }
+func (e RegisterConsumerResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e RegisterClientResponseValidationError) ErrorName() string {
-	return "RegisterClientResponseValidationError"
+func (e RegisterConsumerResponseValidationError) ErrorName() string {
+	return "RegisterConsumerResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e RegisterClientResponseValidationError) Error() string {
+func (e RegisterConsumerResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1982,14 +1982,14 @@ func (e RegisterClientResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sRegisterClientResponse.%s: %s%s",
+		"invalid %sRegisterConsumerResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = RegisterClientResponseValidationError{}
+var _ error = RegisterConsumerResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -1997,24 +1997,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = RegisterClientResponseValidationError{}
+} = RegisterConsumerResponseValidationError{}
 
-// Validate checks the field values on GetClientsRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *GetClientsRequest) Validate() error {
+// Validate checks the field values on GetConsumersRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetConsumersRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GetClientsRequest with the rules
+// ValidateAll checks the field values on GetConsumersRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// GetClientsRequestMultiError, or nil if none found.
-func (m *GetClientsRequest) ValidateAll() error {
+// GetConsumersRequestMultiError, or nil if none found.
+func (m *GetConsumersRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GetClientsRequest) validate(all bool) error {
+func (m *GetConsumersRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -2022,7 +2022,7 @@ func (m *GetClientsRequest) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetStreamId()); err != nil {
-		err = GetClientsRequestValidationError{
+		err = GetConsumersRequestValidationError{
 			field:  "StreamId",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -2034,13 +2034,13 @@ func (m *GetClientsRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return GetClientsRequestMultiError(errors)
+		return GetConsumersRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *GetClientsRequest) _validateUuid(uuid string) error {
+func (m *GetConsumersRequest) _validateUuid(uuid string) error {
 	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -2048,13 +2048,13 @@ func (m *GetClientsRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// GetClientsRequestMultiError is an error wrapping multiple validation errors
-// returned by GetClientsRequest.ValidateAll() if the designated constraints
-// aren't met.
-type GetClientsRequestMultiError []error
+// GetConsumersRequestMultiError is an error wrapping multiple validation
+// errors returned by GetConsumersRequest.ValidateAll() if the designated
+// constraints aren't met.
+type GetConsumersRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GetClientsRequestMultiError) Error() string {
+func (m GetConsumersRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -2063,11 +2063,11 @@ func (m GetClientsRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GetClientsRequestMultiError) AllErrors() []error { return m }
+func (m GetConsumersRequestMultiError) AllErrors() []error { return m }
 
-// GetClientsRequestValidationError is the validation error returned by
-// GetClientsRequest.Validate if the designated constraints aren't met.
-type GetClientsRequestValidationError struct {
+// GetConsumersRequestValidationError is the validation error returned by
+// GetConsumersRequest.Validate if the designated constraints aren't met.
+type GetConsumersRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2075,24 +2075,24 @@ type GetClientsRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetClientsRequestValidationError) Field() string { return e.field }
+func (e GetConsumersRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetClientsRequestValidationError) Reason() string { return e.reason }
+func (e GetConsumersRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetClientsRequestValidationError) Cause() error { return e.cause }
+func (e GetConsumersRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetClientsRequestValidationError) Key() bool { return e.key }
+func (e GetConsumersRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetClientsRequestValidationError) ErrorName() string {
-	return "GetClientsRequestValidationError"
+func (e GetConsumersRequestValidationError) ErrorName() string {
+	return "GetConsumersRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GetClientsRequestValidationError) Error() string {
+func (e GetConsumersRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2104,14 +2104,14 @@ func (e GetClientsRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetClientsRequest.%s: %s%s",
+		"invalid %sGetConsumersRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetClientsRequestValidationError{}
+var _ error = GetConsumersRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -2119,47 +2119,47 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetClientsRequestValidationError{}
+} = GetConsumersRequestValidationError{}
 
-// Validate checks the field values on GetClientsResponse with the rules
+// Validate checks the field values on GetConsumersResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GetClientsResponse) Validate() error {
+func (m *GetConsumersResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GetClientsResponse with the rules
+// ValidateAll checks the field values on GetConsumersResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// GetClientsResponseMultiError, or nil if none found.
-func (m *GetClientsResponse) ValidateAll() error {
+// GetConsumersResponseMultiError, or nil if none found.
+func (m *GetConsumersResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GetClientsResponse) validate(all bool) error {
+func (m *GetConsumersResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
-	for idx, item := range m.GetClients() {
+	for idx, item := range m.GetConsumers() {
 		_, _ = idx, item
 
 		if all {
 			switch v := interface{}(item).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, GetClientsResponseValidationError{
-						field:  fmt.Sprintf("Clients[%v]", idx),
+					errors = append(errors, GetConsumersResponseValidationError{
+						field:  fmt.Sprintf("Consumers[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
-					errors = append(errors, GetClientsResponseValidationError{
-						field:  fmt.Sprintf("Clients[%v]", idx),
+					errors = append(errors, GetConsumersResponseValidationError{
+						field:  fmt.Sprintf("Consumers[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -2167,8 +2167,8 @@ func (m *GetClientsResponse) validate(all bool) error {
 			}
 		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return GetClientsResponseValidationError{
-					field:  fmt.Sprintf("Clients[%v]", idx),
+				return GetConsumersResponseValidationError{
+					field:  fmt.Sprintf("Consumers[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -2178,19 +2178,19 @@ func (m *GetClientsResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return GetClientsResponseMultiError(errors)
+		return GetConsumersResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// GetClientsResponseMultiError is an error wrapping multiple validation errors
-// returned by GetClientsResponse.ValidateAll() if the designated constraints
-// aren't met.
-type GetClientsResponseMultiError []error
+// GetConsumersResponseMultiError is an error wrapping multiple validation
+// errors returned by GetConsumersResponse.ValidateAll() if the designated
+// constraints aren't met.
+type GetConsumersResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GetClientsResponseMultiError) Error() string {
+func (m GetConsumersResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -2199,11 +2199,11 @@ func (m GetClientsResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GetClientsResponseMultiError) AllErrors() []error { return m }
+func (m GetConsumersResponseMultiError) AllErrors() []error { return m }
 
-// GetClientsResponseValidationError is the validation error returned by
-// GetClientsResponse.Validate if the designated constraints aren't met.
-type GetClientsResponseValidationError struct {
+// GetConsumersResponseValidationError is the validation error returned by
+// GetConsumersResponse.Validate if the designated constraints aren't met.
+type GetConsumersResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2211,24 +2211,24 @@ type GetClientsResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetClientsResponseValidationError) Field() string { return e.field }
+func (e GetConsumersResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetClientsResponseValidationError) Reason() string { return e.reason }
+func (e GetConsumersResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetClientsResponseValidationError) Cause() error { return e.cause }
+func (e GetConsumersResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetClientsResponseValidationError) Key() bool { return e.key }
+func (e GetConsumersResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetClientsResponseValidationError) ErrorName() string {
-	return "GetClientsResponseValidationError"
+func (e GetConsumersResponseValidationError) ErrorName() string {
+	return "GetConsumersResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GetClientsResponseValidationError) Error() string {
+func (e GetConsumersResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2240,14 +2240,14 @@ func (e GetClientsResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetClientsResponse.%s: %s%s",
+		"invalid %sGetConsumersResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetClientsResponseValidationError{}
+var _ error = GetConsumersResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -2255,24 +2255,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetClientsResponseValidationError{}
+} = GetConsumersResponseValidationError{}
 
-// Validate checks the field values on UnregisterClientRequest with the rules
+// Validate checks the field values on UnregisterConsumerRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *UnregisterClientRequest) Validate() error {
+func (m *UnregisterConsumerRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on UnregisterClientRequest with the
+// ValidateAll checks the field values on UnregisterConsumerRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// UnregisterClientRequestMultiError, or nil if none found.
-func (m *UnregisterClientRequest) ValidateAll() error {
+// UnregisterConsumerRequestMultiError, or nil if none found.
+func (m *UnregisterConsumerRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *UnregisterClientRequest) validate(all bool) error {
+func (m *UnregisterConsumerRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -2280,7 +2280,7 @@ func (m *UnregisterClientRequest) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetStreamId()); err != nil {
-		err = UnregisterClientRequestValidationError{
+		err = UnregisterConsumerRequestValidationError{
 			field:  "StreamId",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -2291,9 +2291,9 @@ func (m *UnregisterClientRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if err := m._validateUuid(m.GetClientId()); err != nil {
-		err = UnregisterClientRequestValidationError{
-			field:  "ClientId",
+	if err := m._validateUuid(m.GetConsumerId()); err != nil {
+		err = UnregisterConsumerRequestValidationError{
+			field:  "ConsumerId",
 			reason: "value must be a valid UUID",
 			cause:  err,
 		}
@@ -2304,13 +2304,13 @@ func (m *UnregisterClientRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return UnregisterClientRequestMultiError(errors)
+		return UnregisterConsumerRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *UnregisterClientRequest) _validateUuid(uuid string) error {
+func (m *UnregisterConsumerRequest) _validateUuid(uuid string) error {
 	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -2318,13 +2318,13 @@ func (m *UnregisterClientRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// UnregisterClientRequestMultiError is an error wrapping multiple validation
-// errors returned by UnregisterClientRequest.ValidateAll() if the designated
-// constraints aren't met.
-type UnregisterClientRequestMultiError []error
+// UnregisterConsumerRequestMultiError is an error wrapping multiple validation
+// errors returned by UnregisterConsumerRequest.ValidateAll() if the
+// designated constraints aren't met.
+type UnregisterConsumerRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m UnregisterClientRequestMultiError) Error() string {
+func (m UnregisterConsumerRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -2333,11 +2333,11 @@ func (m UnregisterClientRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m UnregisterClientRequestMultiError) AllErrors() []error { return m }
+func (m UnregisterConsumerRequestMultiError) AllErrors() []error { return m }
 
-// UnregisterClientRequestValidationError is the validation error returned by
-// UnregisterClientRequest.Validate if the designated constraints aren't met.
-type UnregisterClientRequestValidationError struct {
+// UnregisterConsumerRequestValidationError is the validation error returned by
+// UnregisterConsumerRequest.Validate if the designated constraints aren't met.
+type UnregisterConsumerRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2345,24 +2345,24 @@ type UnregisterClientRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e UnregisterClientRequestValidationError) Field() string { return e.field }
+func (e UnregisterConsumerRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e UnregisterClientRequestValidationError) Reason() string { return e.reason }
+func (e UnregisterConsumerRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e UnregisterClientRequestValidationError) Cause() error { return e.cause }
+func (e UnregisterConsumerRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e UnregisterClientRequestValidationError) Key() bool { return e.key }
+func (e UnregisterConsumerRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e UnregisterClientRequestValidationError) ErrorName() string {
-	return "UnregisterClientRequestValidationError"
+func (e UnregisterConsumerRequestValidationError) ErrorName() string {
+	return "UnregisterConsumerRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e UnregisterClientRequestValidationError) Error() string {
+func (e UnregisterConsumerRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2374,14 +2374,14 @@ func (e UnregisterClientRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sUnregisterClientRequest.%s: %s%s",
+		"invalid %sUnregisterConsumerRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = UnregisterClientRequestValidationError{}
+var _ error = UnregisterConsumerRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -2389,24 +2389,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = UnregisterClientRequestValidationError{}
+} = UnregisterConsumerRequestValidationError{}
 
-// Validate checks the field values on UnregisterClientResponse with the rules
-// defined in the proto definition for this message. If any rules are
+// Validate checks the field values on UnregisterConsumerResponse with the
+// rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *UnregisterClientResponse) Validate() error {
+func (m *UnregisterConsumerResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on UnregisterClientResponse with the
+// ValidateAll checks the field values on UnregisterConsumerResponse with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// UnregisterClientResponseMultiError, or nil if none found.
-func (m *UnregisterClientResponse) ValidateAll() error {
+// UnregisterConsumerResponseMultiError, or nil if none found.
+func (m *UnregisterConsumerResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *UnregisterClientResponse) validate(all bool) error {
+func (m *UnregisterConsumerResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -2416,19 +2416,19 @@ func (m *UnregisterClientResponse) validate(all bool) error {
 	// no validation rules for Success
 
 	if len(errors) > 0 {
-		return UnregisterClientResponseMultiError(errors)
+		return UnregisterConsumerResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// UnregisterClientResponseMultiError is an error wrapping multiple validation
-// errors returned by UnregisterClientResponse.ValidateAll() if the designated
-// constraints aren't met.
-type UnregisterClientResponseMultiError []error
+// UnregisterConsumerResponseMultiError is an error wrapping multiple
+// validation errors returned by UnregisterConsumerResponse.ValidateAll() if
+// the designated constraints aren't met.
+type UnregisterConsumerResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m UnregisterClientResponseMultiError) Error() string {
+func (m UnregisterConsumerResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -2437,11 +2437,11 @@ func (m UnregisterClientResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m UnregisterClientResponseMultiError) AllErrors() []error { return m }
+func (m UnregisterConsumerResponseMultiError) AllErrors() []error { return m }
 
-// UnregisterClientResponseValidationError is the validation error returned by
-// UnregisterClientResponse.Validate if the designated constraints aren't met.
-type UnregisterClientResponseValidationError struct {
+// UnregisterConsumerResponseValidationError is the validation error returned
+// by UnregisterConsumerResponse.Validate if the designated constraints aren't met.
+type UnregisterConsumerResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -2449,24 +2449,24 @@ type UnregisterClientResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e UnregisterClientResponseValidationError) Field() string { return e.field }
+func (e UnregisterConsumerResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e UnregisterClientResponseValidationError) Reason() string { return e.reason }
+func (e UnregisterConsumerResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e UnregisterClientResponseValidationError) Cause() error { return e.cause }
+func (e UnregisterConsumerResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e UnregisterClientResponseValidationError) Key() bool { return e.key }
+func (e UnregisterConsumerResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e UnregisterClientResponseValidationError) ErrorName() string {
-	return "UnregisterClientResponseValidationError"
+func (e UnregisterConsumerResponseValidationError) ErrorName() string {
+	return "UnregisterConsumerResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e UnregisterClientResponseValidationError) Error() string {
+func (e UnregisterConsumerResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -2478,14 +2478,14 @@ func (e UnregisterClientResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sUnregisterClientResponse.%s: %s%s",
+		"invalid %sUnregisterConsumerResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = UnregisterClientResponseValidationError{}
+var _ error = UnregisterConsumerResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -2493,4 +2493,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = UnregisterClientResponseValidationError{}
+} = UnregisterConsumerResponseValidationError{}
