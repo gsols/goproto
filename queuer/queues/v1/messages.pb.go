@@ -606,100 +606,6 @@ func (x *SubscribeResponse) GetMessage() *v1.Message {
 	return nil
 }
 
-type UnsubscribeRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	QueueId string `protobuf:"bytes,1,opt,name=queue_id,json=queueId,proto3" json:"queue_id,omitempty"`
-}
-
-func (x *UnsubscribeRequest) Reset() {
-	*x = UnsubscribeRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_queues_v1_messages_proto_msgTypes[12]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *UnsubscribeRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UnsubscribeRequest) ProtoMessage() {}
-
-func (x *UnsubscribeRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_queues_v1_messages_proto_msgTypes[12]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UnsubscribeRequest.ProtoReflect.Descriptor instead.
-func (*UnsubscribeRequest) Descriptor() ([]byte, []int) {
-	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *UnsubscribeRequest) GetQueueId() string {
-	if x != nil {
-		return x.QueueId
-	}
-	return ""
-}
-
-type UnsubscribeResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Success bool `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
-}
-
-func (x *UnsubscribeResponse) Reset() {
-	*x = UnsubscribeResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_queues_v1_messages_proto_msgTypes[13]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *UnsubscribeResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*UnsubscribeResponse) ProtoMessage() {}
-
-func (x *UnsubscribeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_queues_v1_messages_proto_msgTypes[13]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use UnsubscribeResponse.ProtoReflect.Descriptor instead.
-func (*UnsubscribeResponse) Descriptor() ([]byte, []int) {
-	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *UnsubscribeResponse) GetSuccess() bool {
-	if x != nil {
-		return x.Success
-	}
-	return false
-}
-
 type UpdateStateRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -712,7 +618,7 @@ type UpdateStateRequest struct {
 func (x *UpdateStateRequest) Reset() {
 	*x = UpdateStateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_queues_v1_messages_proto_msgTypes[14]
+		mi := &file_queuer_queues_v1_messages_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -725,7 +631,7 @@ func (x *UpdateStateRequest) String() string {
 func (*UpdateStateRequest) ProtoMessage() {}
 
 func (x *UpdateStateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_queues_v1_messages_proto_msgTypes[14]
+	mi := &file_queuer_queues_v1_messages_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -738,7 +644,7 @@ func (x *UpdateStateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateStateRequest.ProtoReflect.Descriptor instead.
 func (*UpdateStateRequest) Descriptor() ([]byte, []int) {
-	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{14}
+	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *UpdateStateRequest) GetQueueId() string {
@@ -766,7 +672,7 @@ type UpdateStateResponse struct {
 func (x *UpdateStateResponse) Reset() {
 	*x = UpdateStateResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_queues_v1_messages_proto_msgTypes[15]
+		mi := &file_queuer_queues_v1_messages_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -779,7 +685,7 @@ func (x *UpdateStateResponse) String() string {
 func (*UpdateStateResponse) ProtoMessage() {}
 
 func (x *UpdateStateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_queues_v1_messages_proto_msgTypes[15]
+	mi := &file_queuer_queues_v1_messages_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -792,7 +698,7 @@ func (x *UpdateStateResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateStateResponse.ProtoReflect.Descriptor instead.
 func (*UpdateStateResponse) Descriptor() ([]byte, []int) {
-	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{15}
+	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *UpdateStateResponse) GetSuccess() bool {
@@ -814,7 +720,7 @@ type RegisterClientRequest struct {
 func (x *RegisterClientRequest) Reset() {
 	*x = RegisterClientRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_queues_v1_messages_proto_msgTypes[16]
+		mi := &file_queuer_queues_v1_messages_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -827,7 +733,7 @@ func (x *RegisterClientRequest) String() string {
 func (*RegisterClientRequest) ProtoMessage() {}
 
 func (x *RegisterClientRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_queues_v1_messages_proto_msgTypes[16]
+	mi := &file_queuer_queues_v1_messages_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -840,7 +746,7 @@ func (x *RegisterClientRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterClientRequest.ProtoReflect.Descriptor instead.
 func (*RegisterClientRequest) Descriptor() ([]byte, []int) {
-	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{16}
+	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *RegisterClientRequest) GetQueueId() string {
@@ -868,7 +774,7 @@ type RegisterClientResponse struct {
 func (x *RegisterClientResponse) Reset() {
 	*x = RegisterClientResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_queues_v1_messages_proto_msgTypes[17]
+		mi := &file_queuer_queues_v1_messages_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -881,7 +787,7 @@ func (x *RegisterClientResponse) String() string {
 func (*RegisterClientResponse) ProtoMessage() {}
 
 func (x *RegisterClientResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_queues_v1_messages_proto_msgTypes[17]
+	mi := &file_queuer_queues_v1_messages_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -894,7 +800,7 @@ func (x *RegisterClientResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterClientResponse.ProtoReflect.Descriptor instead.
 func (*RegisterClientResponse) Descriptor() ([]byte, []int) {
-	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{17}
+	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *RegisterClientResponse) GetSuccess() bool {
@@ -915,7 +821,7 @@ type GetClientsRequest struct {
 func (x *GetClientsRequest) Reset() {
 	*x = GetClientsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_queues_v1_messages_proto_msgTypes[18]
+		mi := &file_queuer_queues_v1_messages_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -928,7 +834,7 @@ func (x *GetClientsRequest) String() string {
 func (*GetClientsRequest) ProtoMessage() {}
 
 func (x *GetClientsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_queues_v1_messages_proto_msgTypes[18]
+	mi := &file_queuer_queues_v1_messages_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -941,7 +847,7 @@ func (x *GetClientsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetClientsRequest.ProtoReflect.Descriptor instead.
 func (*GetClientsRequest) Descriptor() ([]byte, []int) {
-	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{18}
+	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *GetClientsRequest) GetQueueId() string {
@@ -962,7 +868,7 @@ type GetClientsResponse struct {
 func (x *GetClientsResponse) Reset() {
 	*x = GetClientsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_queues_v1_messages_proto_msgTypes[19]
+		mi := &file_queuer_queues_v1_messages_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -975,7 +881,7 @@ func (x *GetClientsResponse) String() string {
 func (*GetClientsResponse) ProtoMessage() {}
 
 func (x *GetClientsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_queues_v1_messages_proto_msgTypes[19]
+	mi := &file_queuer_queues_v1_messages_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -988,7 +894,7 @@ func (x *GetClientsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetClientsResponse.ProtoReflect.Descriptor instead.
 func (*GetClientsResponse) Descriptor() ([]byte, []int) {
-	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{19}
+	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *GetClientsResponse) GetClients() []*v1.Client {
@@ -1010,7 +916,7 @@ type UnregisterClientRequest struct {
 func (x *UnregisterClientRequest) Reset() {
 	*x = UnregisterClientRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_queues_v1_messages_proto_msgTypes[20]
+		mi := &file_queuer_queues_v1_messages_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1023,7 +929,7 @@ func (x *UnregisterClientRequest) String() string {
 func (*UnregisterClientRequest) ProtoMessage() {}
 
 func (x *UnregisterClientRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_queues_v1_messages_proto_msgTypes[20]
+	mi := &file_queuer_queues_v1_messages_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1036,7 +942,7 @@ func (x *UnregisterClientRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UnregisterClientRequest.ProtoReflect.Descriptor instead.
 func (*UnregisterClientRequest) Descriptor() ([]byte, []int) {
-	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{20}
+	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *UnregisterClientRequest) GetQueueId() string {
@@ -1064,7 +970,7 @@ type UnregisterClientResponse struct {
 func (x *UnregisterClientResponse) Reset() {
 	*x = UnregisterClientResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_queues_v1_messages_proto_msgTypes[21]
+		mi := &file_queuer_queues_v1_messages_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1077,7 +983,7 @@ func (x *UnregisterClientResponse) String() string {
 func (*UnregisterClientResponse) ProtoMessage() {}
 
 func (x *UnregisterClientResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_queues_v1_messages_proto_msgTypes[21]
+	mi := &file_queuer_queues_v1_messages_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1090,7 +996,7 @@ func (x *UnregisterClientResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UnregisterClientResponse.ProtoReflect.Descriptor instead.
 func (*UnregisterClientResponse) Descriptor() ([]byte, []int) {
-	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{21}
+	return file_queuer_queues_v1_messages_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *UnregisterClientResponse) GetSuccess() bool {
@@ -1176,55 +1082,48 @@ var file_queuer_queues_v1_messages_proto_rawDesc = []byte{
 	0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x71,
 	0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x76,
 	0x31, 0x2e, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61,
-	0x67, 0x65, 0x22, 0x39, 0x0a, 0x12, 0x55, 0x6e, 0x73, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x62,
+	0x67, 0x65, 0x22, 0x6f, 0x0a, 0x12, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x74, 0x61, 0x74,
 	0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x23, 0x0a, 0x08, 0x71, 0x75, 0x65, 0x75,
 	0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x72,
-	0x03, 0xb0, 0x01, 0x01, 0x52, 0x07, 0x71, 0x75, 0x65, 0x75, 0x65, 0x49, 0x64, 0x22, 0x2f, 0x0a,
-	0x13, 0x55, 0x6e, 0x73, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x22, 0x6f,
-	0x0a, 0x12, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71,
-	0x75, 0x65, 0x73, 0x74, 0x12, 0x23, 0x0a, 0x08, 0x71, 0x75, 0x65, 0x75, 0x65, 0x5f, 0x69, 0x64,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01,
-	0x52, 0x07, 0x71, 0x75, 0x65, 0x75, 0x65, 0x49, 0x64, 0x12, 0x34, 0x0a, 0x05, 0x73, 0x74, 0x61,
-	0x74, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1e, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65,
-	0x72, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x51, 0x75,
-	0x65, 0x75, 0x65, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x22,
-	0x2f, 0x0a, 0x13, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73,
-	0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73,
-	0x22, 0x62, 0x0a, 0x15, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x43, 0x6c, 0x69, 0x65,
-	0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x23, 0x0a, 0x08, 0x71, 0x75, 0x65,
-	0x75, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x08, 0xfa, 0x42, 0x05,
-	0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x07, 0x71, 0x75, 0x65, 0x75, 0x65, 0x49, 0x64, 0x12, 0x24,
-	0x0a, 0x09, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x09, 0x42, 0x07, 0xfa, 0x42, 0x04, 0x72, 0x02, 0x10, 0x01, 0x52, 0x08, 0x63, 0x6c, 0x69, 0x65,
-	0x6e, 0x74, 0x49, 0x64, 0x22, 0x32, 0x0a, 0x16, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72,
-	0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18,
-	0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52,
-	0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x22, 0x38, 0x0a, 0x11, 0x47, 0x65, 0x74, 0x43,
-	0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x23, 0x0a,
+	0x03, 0xb0, 0x01, 0x01, 0x52, 0x07, 0x71, 0x75, 0x65, 0x75, 0x65, 0x49, 0x64, 0x12, 0x34, 0x0a,
+	0x05, 0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1e, 0x2e, 0x71,
+	0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x76,
+	0x31, 0x2e, 0x51, 0x75, 0x65, 0x75, 0x65, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x05, 0x73, 0x74,
+	0x61, 0x74, 0x65, 0x22, 0x2f, 0x0a, 0x13, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x53, 0x74, 0x61,
+	0x74, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75,
+	0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63,
+	0x63, 0x65, 0x73, 0x73, 0x22, 0x62, 0x0a, 0x15, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72,
+	0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x23, 0x0a,
 	0x08, 0x71, 0x75, 0x65, 0x75, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42,
 	0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x07, 0x71, 0x75, 0x65, 0x75, 0x65,
-	0x49, 0x64, 0x22, 0x4a, 0x0a, 0x12, 0x47, 0x65, 0x74, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x34, 0x0a, 0x07, 0x63, 0x6c, 0x69, 0x65,
-	0x6e, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x71, 0x75, 0x65, 0x75,
-	0x65, 0x72, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x43,
-	0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x07, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x22, 0x64,
-	0x0a, 0x17, 0x55, 0x6e, 0x72, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x43, 0x6c, 0x69, 0x65,
-	0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x23, 0x0a, 0x08, 0x71, 0x75, 0x65,
-	0x75, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x08, 0xfa, 0x42, 0x05,
-	0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x07, 0x71, 0x75, 0x65, 0x75, 0x65, 0x49, 0x64, 0x12, 0x24,
-	0x0a, 0x09, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x09, 0x42, 0x07, 0xfa, 0x42, 0x04, 0x72, 0x02, 0x10, 0x01, 0x52, 0x08, 0x63, 0x6c, 0x69, 0x65,
-	0x6e, 0x74, 0x49, 0x64, 0x22, 0x34, 0x0a, 0x18, 0x55, 0x6e, 0x72, 0x65, 0x67, 0x69, 0x73, 0x74,
-	0x65, 0x72, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x42, 0x2e, 0x5a, 0x2c, 0x67, 0x69,
-	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67, 0x73, 0x6f, 0x6c, 0x73, 0x2f, 0x67,
-	0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2f, 0x71, 0x75,
-	0x65, 0x75, 0x65, 0x73, 0x2f, 0x76, 0x31, 0x3b, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x49, 0x64, 0x12, 0x24, 0x0a, 0x09, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x07, 0xfa, 0x42, 0x04, 0x72, 0x02, 0x10, 0x01, 0x52, 0x08,
+	0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x22, 0x32, 0x0a, 0x16, 0x52, 0x65, 0x67, 0x69,
+	0x73, 0x74, 0x65, 0x72, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x22, 0x38, 0x0a, 0x11,
+	0x47, 0x65, 0x74, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x23, 0x0a, 0x08, 0x71, 0x75, 0x65, 0x75, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x07, 0x71,
+	0x75, 0x65, 0x75, 0x65, 0x49, 0x64, 0x22, 0x4a, 0x0a, 0x12, 0x47, 0x65, 0x74, 0x43, 0x6c, 0x69,
+	0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x34, 0x0a, 0x07,
+	0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1a, 0x2e,
+	0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e,
+	0x76, 0x31, 0x2e, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x07, 0x63, 0x6c, 0x69, 0x65, 0x6e,
+	0x74, 0x73, 0x22, 0x64, 0x0a, 0x17, 0x55, 0x6e, 0x72, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72,
+	0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x23, 0x0a,
+	0x08, 0x71, 0x75, 0x65, 0x75, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42,
+	0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x07, 0x71, 0x75, 0x65, 0x75, 0x65,
+	0x49, 0x64, 0x12, 0x24, 0x0a, 0x09, 0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x64, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x07, 0xfa, 0x42, 0x04, 0x72, 0x02, 0x10, 0x01, 0x52, 0x08,
+	0x63, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x49, 0x64, 0x22, 0x34, 0x0a, 0x18, 0x55, 0x6e, 0x72, 0x65,
+	0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x43, 0x6c, 0x69, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x42, 0x2e,
+	0x5a, 0x2c, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67, 0x73, 0x6f,
+	0x6c, 0x73, 0x2f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x71, 0x75, 0x65, 0x75, 0x65,
+	0x72, 0x2f, 0x71, 0x75, 0x65, 0x75, 0x65, 0x73, 0x2f, 0x76, 0x31, 0x3b, 0x76, 0x31, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1239,7 +1138,7 @@ func file_queuer_queues_v1_messages_proto_rawDescGZIP() []byte {
 	return file_queuer_queues_v1_messages_proto_rawDescData
 }
 
-var file_queuer_queues_v1_messages_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
+var file_queuer_queues_v1_messages_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_queuer_queues_v1_messages_proto_goTypes = []interface{}{
 	(*CreateQueueRequest)(nil),       // 0: queuer.queues.v1.CreateQueueRequest
 	(*CreateQueueResponse)(nil),      // 1: queuer.queues.v1.CreateQueueResponse
@@ -1253,28 +1152,26 @@ var file_queuer_queues_v1_messages_proto_goTypes = []interface{}{
 	(*PublishMessageResponse)(nil),   // 9: queuer.queues.v1.PublishMessageResponse
 	(*SubscribeRequest)(nil),         // 10: queuer.queues.v1.SubscribeRequest
 	(*SubscribeResponse)(nil),        // 11: queuer.queues.v1.SubscribeResponse
-	(*UnsubscribeRequest)(nil),       // 12: queuer.queues.v1.UnsubscribeRequest
-	(*UnsubscribeResponse)(nil),      // 13: queuer.queues.v1.UnsubscribeResponse
-	(*UpdateStateRequest)(nil),       // 14: queuer.queues.v1.UpdateStateRequest
-	(*UpdateStateResponse)(nil),      // 15: queuer.queues.v1.UpdateStateResponse
-	(*RegisterClientRequest)(nil),    // 16: queuer.queues.v1.RegisterClientRequest
-	(*RegisterClientResponse)(nil),   // 17: queuer.queues.v1.RegisterClientResponse
-	(*GetClientsRequest)(nil),        // 18: queuer.queues.v1.GetClientsRequest
-	(*GetClientsResponse)(nil),       // 19: queuer.queues.v1.GetClientsResponse
-	(*UnregisterClientRequest)(nil),  // 20: queuer.queues.v1.UnregisterClientRequest
-	(*UnregisterClientResponse)(nil), // 21: queuer.queues.v1.UnregisterClientResponse
-	(*v1.Queue)(nil),                 // 22: queuer.entities.v1.Queue
-	(*v1.Message)(nil),               // 23: queuer.entities.v1.Message
-	(v1.QueueState)(0),               // 24: queuer.entities.v1.QueueState
-	(*v1.Client)(nil),                // 25: queuer.entities.v1.Client
+	(*UpdateStateRequest)(nil),       // 12: queuer.queues.v1.UpdateStateRequest
+	(*UpdateStateResponse)(nil),      // 13: queuer.queues.v1.UpdateStateResponse
+	(*RegisterClientRequest)(nil),    // 14: queuer.queues.v1.RegisterClientRequest
+	(*RegisterClientResponse)(nil),   // 15: queuer.queues.v1.RegisterClientResponse
+	(*GetClientsRequest)(nil),        // 16: queuer.queues.v1.GetClientsRequest
+	(*GetClientsResponse)(nil),       // 17: queuer.queues.v1.GetClientsResponse
+	(*UnregisterClientRequest)(nil),  // 18: queuer.queues.v1.UnregisterClientRequest
+	(*UnregisterClientResponse)(nil), // 19: queuer.queues.v1.UnregisterClientResponse
+	(*v1.Queue)(nil),                 // 20: queuer.entities.v1.Queue
+	(*v1.Message)(nil),               // 21: queuer.entities.v1.Message
+	(v1.QueueState)(0),               // 22: queuer.entities.v1.QueueState
+	(*v1.Client)(nil),                // 23: queuer.entities.v1.Client
 }
 var file_queuer_queues_v1_messages_proto_depIdxs = []int32{
-	22, // 0: queuer.queues.v1.CreateQueueResponse.queue:type_name -> queuer.entities.v1.Queue
-	22, // 1: queuer.queues.v1.GetQueueResponse.queue:type_name -> queuer.entities.v1.Queue
-	23, // 2: queuer.queues.v1.PublishMessageRequest.message:type_name -> queuer.entities.v1.Message
-	23, // 3: queuer.queues.v1.SubscribeResponse.message:type_name -> queuer.entities.v1.Message
-	24, // 4: queuer.queues.v1.UpdateStateRequest.state:type_name -> queuer.entities.v1.QueueState
-	25, // 5: queuer.queues.v1.GetClientsResponse.clients:type_name -> queuer.entities.v1.Client
+	20, // 0: queuer.queues.v1.CreateQueueResponse.queue:type_name -> queuer.entities.v1.Queue
+	20, // 1: queuer.queues.v1.GetQueueResponse.queue:type_name -> queuer.entities.v1.Queue
+	21, // 2: queuer.queues.v1.PublishMessageRequest.message:type_name -> queuer.entities.v1.Message
+	21, // 3: queuer.queues.v1.SubscribeResponse.message:type_name -> queuer.entities.v1.Message
+	22, // 4: queuer.queues.v1.UpdateStateRequest.state:type_name -> queuer.entities.v1.QueueState
+	23, // 5: queuer.queues.v1.GetClientsResponse.clients:type_name -> queuer.entities.v1.Client
 	6,  // [6:6] is the sub-list for method output_type
 	6,  // [6:6] is the sub-list for method input_type
 	6,  // [6:6] is the sub-list for extension type_name
@@ -1433,30 +1330,6 @@ func file_queuer_queues_v1_messages_proto_init() {
 			}
 		}
 		file_queuer_queues_v1_messages_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UnsubscribeRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_queuer_queues_v1_messages_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UnsubscribeResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_queuer_queues_v1_messages_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateStateRequest); i {
 			case 0:
 				return &v.state
@@ -1468,7 +1341,7 @@ func file_queuer_queues_v1_messages_proto_init() {
 				return nil
 			}
 		}
-		file_queuer_queues_v1_messages_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+		file_queuer_queues_v1_messages_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpdateStateResponse); i {
 			case 0:
 				return &v.state
@@ -1480,7 +1353,7 @@ func file_queuer_queues_v1_messages_proto_init() {
 				return nil
 			}
 		}
-		file_queuer_queues_v1_messages_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+		file_queuer_queues_v1_messages_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RegisterClientRequest); i {
 			case 0:
 				return &v.state
@@ -1492,7 +1365,7 @@ func file_queuer_queues_v1_messages_proto_init() {
 				return nil
 			}
 		}
-		file_queuer_queues_v1_messages_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+		file_queuer_queues_v1_messages_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RegisterClientResponse); i {
 			case 0:
 				return &v.state
@@ -1504,7 +1377,7 @@ func file_queuer_queues_v1_messages_proto_init() {
 				return nil
 			}
 		}
-		file_queuer_queues_v1_messages_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+		file_queuer_queues_v1_messages_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetClientsRequest); i {
 			case 0:
 				return &v.state
@@ -1516,7 +1389,7 @@ func file_queuer_queues_v1_messages_proto_init() {
 				return nil
 			}
 		}
-		file_queuer_queues_v1_messages_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+		file_queuer_queues_v1_messages_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetClientsResponse); i {
 			case 0:
 				return &v.state
@@ -1528,7 +1401,7 @@ func file_queuer_queues_v1_messages_proto_init() {
 				return nil
 			}
 		}
-		file_queuer_queues_v1_messages_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+		file_queuer_queues_v1_messages_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UnregisterClientRequest); i {
 			case 0:
 				return &v.state
@@ -1540,7 +1413,7 @@ func file_queuer_queues_v1_messages_proto_init() {
 				return nil
 			}
 		}
-		file_queuer_queues_v1_messages_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+		file_queuer_queues_v1_messages_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UnregisterClientResponse); i {
 			case 0:
 				return &v.state
@@ -1559,7 +1432,7 @@ func file_queuer_queues_v1_messages_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_queuer_queues_v1_messages_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   22,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

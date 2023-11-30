@@ -25,7 +25,6 @@ const (
 	QueueService_FlushQueue_FullMethodName       = "/queuer.queues.v1.QueueService/FlushQueue"
 	QueueService_PublishMessage_FullMethodName   = "/queuer.queues.v1.QueueService/PublishMessage"
 	QueueService_Subscribe_FullMethodName        = "/queuer.queues.v1.QueueService/Subscribe"
-	QueueService_Unsubscribe_FullMethodName      = "/queuer.queues.v1.QueueService/Unsubscribe"
 	QueueService_UpdateState_FullMethodName      = "/queuer.queues.v1.QueueService/UpdateState"
 	QueueService_GetClients_FullMethodName       = "/queuer.queues.v1.QueueService/GetClients"
 	QueueService_RegisterClient_FullMethodName   = "/queuer.queues.v1.QueueService/RegisterClient"
@@ -42,7 +41,6 @@ type QueueServiceClient interface {
 	FlushQueue(ctx context.Context, in *FlushQueueRequest, opts ...grpc.CallOption) (*FlushQueueResponse, error)
 	PublishMessage(ctx context.Context, in *PublishMessageRequest, opts ...grpc.CallOption) (*PublishMessageResponse, error)
 	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (QueueService_SubscribeClient, error)
-	Unsubscribe(ctx context.Context, in *UnsubscribeRequest, opts ...grpc.CallOption) (*UnsubscribeResponse, error)
 	UpdateState(ctx context.Context, in *UpdateStateRequest, opts ...grpc.CallOption) (*UpdateStateResponse, error)
 	GetClients(ctx context.Context, in *GetClientsRequest, opts ...grpc.CallOption) (*GetClientsResponse, error)
 	RegisterClient(ctx context.Context, in *RegisterClientRequest, opts ...grpc.CallOption) (*RegisterClientResponse, error)
@@ -134,15 +132,6 @@ func (x *queueServiceSubscribeClient) Recv() (*SubscribeResponse, error) {
 	return m, nil
 }
 
-func (c *queueServiceClient) Unsubscribe(ctx context.Context, in *UnsubscribeRequest, opts ...grpc.CallOption) (*UnsubscribeResponse, error) {
-	out := new(UnsubscribeResponse)
-	err := c.cc.Invoke(ctx, QueueService_Unsubscribe_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *queueServiceClient) UpdateState(ctx context.Context, in *UpdateStateRequest, opts ...grpc.CallOption) (*UpdateStateResponse, error) {
 	out := new(UpdateStateResponse)
 	err := c.cc.Invoke(ctx, QueueService_UpdateState_FullMethodName, in, out, opts...)
@@ -189,7 +178,6 @@ type QueueServiceServer interface {
 	FlushQueue(context.Context, *FlushQueueRequest) (*FlushQueueResponse, error)
 	PublishMessage(context.Context, *PublishMessageRequest) (*PublishMessageResponse, error)
 	Subscribe(*SubscribeRequest, QueueService_SubscribeServer) error
-	Unsubscribe(context.Context, *UnsubscribeRequest) (*UnsubscribeResponse, error)
 	UpdateState(context.Context, *UpdateStateRequest) (*UpdateStateResponse, error)
 	GetClients(context.Context, *GetClientsRequest) (*GetClientsResponse, error)
 	RegisterClient(context.Context, *RegisterClientRequest) (*RegisterClientResponse, error)
@@ -218,9 +206,6 @@ func (UnimplementedQueueServiceServer) PublishMessage(context.Context, *PublishM
 }
 func (UnimplementedQueueServiceServer) Subscribe(*SubscribeRequest, QueueService_SubscribeServer) error {
 	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
-}
-func (UnimplementedQueueServiceServer) Unsubscribe(context.Context, *UnsubscribeRequest) (*UnsubscribeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Unsubscribe not implemented")
 }
 func (UnimplementedQueueServiceServer) UpdateState(context.Context, *UpdateStateRequest) (*UpdateStateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateState not implemented")
@@ -358,24 +343,6 @@ func (x *queueServiceSubscribeServer) Send(m *SubscribeResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _QueueService_Unsubscribe_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UnsubscribeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(QueueServiceServer).Unsubscribe(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: QueueService_Unsubscribe_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(QueueServiceServer).Unsubscribe(ctx, req.(*UnsubscribeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _QueueService_UpdateState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateStateRequest)
 	if err := dec(in); err != nil {
@@ -474,10 +441,6 @@ var QueueService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PublishMessage",
 			Handler:    _QueueService_PublishMessage_Handler,
-		},
-		{
-			MethodName: "Unsubscribe",
-			Handler:    _QueueService_Unsubscribe_Handler,
 		},
 		{
 			MethodName: "UpdateState",
