@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.16](https://github.com/gsols/goproto/compare/v0.1.15...v0.1.16) (2023-11-30)
+
+
+### Features
+
+* change client to consumers [gsols/proto-apis@3c1b8d7db015289085bee0e046c507cb81788735] ([1f76ebd](https://github.com/gsols/goproto/commit/1f76ebdb22c84eb9dcd82e10886e4c664ebf4de4))
+* only manual dispatch ([1558870](https://github.com/gsols/goproto/commit/1558870358d0dd61a52c73872d2f7e03a94b6da6))
+
 ## [0.1.15](https://github.com/gsols/goproto/compare/v0.1.14...v0.1.15) (2023-11-30)
 
 
