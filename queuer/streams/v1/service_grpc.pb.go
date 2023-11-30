@@ -19,16 +19,16 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	StreamService_CreateStream_FullMethodName     = "/queuer.streams.v1.StreamService/CreateStream"
-	StreamService_GetStream_FullMethodName        = "/queuer.streams.v1.StreamService/GetStream"
-	StreamService_DeleteStream_FullMethodName     = "/queuer.streams.v1.StreamService/DeleteStream"
-	StreamService_FlushStream_FullMethodName      = "/queuer.streams.v1.StreamService/FlushStream"
-	StreamService_PublishMessage_FullMethodName   = "/queuer.streams.v1.StreamService/PublishMessage"
-	StreamService_Subscribe_FullMethodName        = "/queuer.streams.v1.StreamService/Subscribe"
-	StreamService_UpdateState_FullMethodName      = "/queuer.streams.v1.StreamService/UpdateState"
-	StreamService_GetClients_FullMethodName       = "/queuer.streams.v1.StreamService/GetClients"
-	StreamService_RegisterClient_FullMethodName   = "/queuer.streams.v1.StreamService/RegisterClient"
-	StreamService_UnregisterClient_FullMethodName = "/queuer.streams.v1.StreamService/UnregisterClient"
+	StreamService_CreateStream_FullMethodName       = "/queuer.streams.v1.StreamService/CreateStream"
+	StreamService_GetStream_FullMethodName          = "/queuer.streams.v1.StreamService/GetStream"
+	StreamService_DeleteStream_FullMethodName       = "/queuer.streams.v1.StreamService/DeleteStream"
+	StreamService_FlushStream_FullMethodName        = "/queuer.streams.v1.StreamService/FlushStream"
+	StreamService_PublishMessage_FullMethodName     = "/queuer.streams.v1.StreamService/PublishMessage"
+	StreamService_Subscribe_FullMethodName          = "/queuer.streams.v1.StreamService/Subscribe"
+	StreamService_UpdateState_FullMethodName        = "/queuer.streams.v1.StreamService/UpdateState"
+	StreamService_GetConsumers_FullMethodName       = "/queuer.streams.v1.StreamService/GetConsumers"
+	StreamService_RegisterConsumer_FullMethodName   = "/queuer.streams.v1.StreamService/RegisterConsumer"
+	StreamService_UnregisterConsumer_FullMethodName = "/queuer.streams.v1.StreamService/UnregisterConsumer"
 )
 
 // StreamServiceClient is the client API for StreamService service.
@@ -42,9 +42,9 @@ type StreamServiceClient interface {
 	PublishMessage(ctx context.Context, in *PublishMessageRequest, opts ...grpc.CallOption) (*PublishMessageResponse, error)
 	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (StreamService_SubscribeClient, error)
 	UpdateState(ctx context.Context, in *UpdateStateRequest, opts ...grpc.CallOption) (*UpdateStateResponse, error)
-	GetClients(ctx context.Context, in *GetClientsRequest, opts ...grpc.CallOption) (*GetClientsResponse, error)
-	RegisterClient(ctx context.Context, in *RegisterClientRequest, opts ...grpc.CallOption) (*RegisterClientResponse, error)
-	UnregisterClient(ctx context.Context, in *UnregisterClientRequest, opts ...grpc.CallOption) (*UnregisterClientResponse, error)
+	GetConsumers(ctx context.Context, in *GetConsumersRequest, opts ...grpc.CallOption) (*GetConsumersResponse, error)
+	RegisterConsumer(ctx context.Context, in *RegisterConsumerRequest, opts ...grpc.CallOption) (*RegisterConsumerResponse, error)
+	UnregisterConsumer(ctx context.Context, in *UnregisterConsumerRequest, opts ...grpc.CallOption) (*UnregisterConsumerResponse, error)
 }
 
 type streamServiceClient struct {
@@ -141,27 +141,27 @@ func (c *streamServiceClient) UpdateState(ctx context.Context, in *UpdateStateRe
 	return out, nil
 }
 
-func (c *streamServiceClient) GetClients(ctx context.Context, in *GetClientsRequest, opts ...grpc.CallOption) (*GetClientsResponse, error) {
-	out := new(GetClientsResponse)
-	err := c.cc.Invoke(ctx, StreamService_GetClients_FullMethodName, in, out, opts...)
+func (c *streamServiceClient) GetConsumers(ctx context.Context, in *GetConsumersRequest, opts ...grpc.CallOption) (*GetConsumersResponse, error) {
+	out := new(GetConsumersResponse)
+	err := c.cc.Invoke(ctx, StreamService_GetConsumers_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *streamServiceClient) RegisterClient(ctx context.Context, in *RegisterClientRequest, opts ...grpc.CallOption) (*RegisterClientResponse, error) {
-	out := new(RegisterClientResponse)
-	err := c.cc.Invoke(ctx, StreamService_RegisterClient_FullMethodName, in, out, opts...)
+func (c *streamServiceClient) RegisterConsumer(ctx context.Context, in *RegisterConsumerRequest, opts ...grpc.CallOption) (*RegisterConsumerResponse, error) {
+	out := new(RegisterConsumerResponse)
+	err := c.cc.Invoke(ctx, StreamService_RegisterConsumer_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *streamServiceClient) UnregisterClient(ctx context.Context, in *UnregisterClientRequest, opts ...grpc.CallOption) (*UnregisterClientResponse, error) {
-	out := new(UnregisterClientResponse)
-	err := c.cc.Invoke(ctx, StreamService_UnregisterClient_FullMethodName, in, out, opts...)
+func (c *streamServiceClient) UnregisterConsumer(ctx context.Context, in *UnregisterConsumerRequest, opts ...grpc.CallOption) (*UnregisterConsumerResponse, error) {
+	out := new(UnregisterConsumerResponse)
+	err := c.cc.Invoke(ctx, StreamService_UnregisterConsumer_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -179,9 +179,9 @@ type StreamServiceServer interface {
 	PublishMessage(context.Context, *PublishMessageRequest) (*PublishMessageResponse, error)
 	Subscribe(*SubscribeRequest, StreamService_SubscribeServer) error
 	UpdateState(context.Context, *UpdateStateRequest) (*UpdateStateResponse, error)
-	GetClients(context.Context, *GetClientsRequest) (*GetClientsResponse, error)
-	RegisterClient(context.Context, *RegisterClientRequest) (*RegisterClientResponse, error)
-	UnregisterClient(context.Context, *UnregisterClientRequest) (*UnregisterClientResponse, error)
+	GetConsumers(context.Context, *GetConsumersRequest) (*GetConsumersResponse, error)
+	RegisterConsumer(context.Context, *RegisterConsumerRequest) (*RegisterConsumerResponse, error)
+	UnregisterConsumer(context.Context, *UnregisterConsumerRequest) (*UnregisterConsumerResponse, error)
 	mustEmbedUnimplementedStreamServiceServer()
 }
 
@@ -210,14 +210,14 @@ func (UnimplementedStreamServiceServer) Subscribe(*SubscribeRequest, StreamServi
 func (UnimplementedStreamServiceServer) UpdateState(context.Context, *UpdateStateRequest) (*UpdateStateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateState not implemented")
 }
-func (UnimplementedStreamServiceServer) GetClients(context.Context, *GetClientsRequest) (*GetClientsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetClients not implemented")
+func (UnimplementedStreamServiceServer) GetConsumers(context.Context, *GetConsumersRequest) (*GetConsumersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetConsumers not implemented")
 }
-func (UnimplementedStreamServiceServer) RegisterClient(context.Context, *RegisterClientRequest) (*RegisterClientResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RegisterClient not implemented")
+func (UnimplementedStreamServiceServer) RegisterConsumer(context.Context, *RegisterConsumerRequest) (*RegisterConsumerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterConsumer not implemented")
 }
-func (UnimplementedStreamServiceServer) UnregisterClient(context.Context, *UnregisterClientRequest) (*UnregisterClientResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UnregisterClient not implemented")
+func (UnimplementedStreamServiceServer) UnregisterConsumer(context.Context, *UnregisterConsumerRequest) (*UnregisterConsumerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UnregisterConsumer not implemented")
 }
 func (UnimplementedStreamServiceServer) mustEmbedUnimplementedStreamServiceServer() {}
 
@@ -361,56 +361,56 @@ func _StreamService_UpdateState_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _StreamService_GetClients_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetClientsRequest)
+func _StreamService_GetConsumers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetConsumersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StreamServiceServer).GetClients(ctx, in)
+		return srv.(StreamServiceServer).GetConsumers(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: StreamService_GetClients_FullMethodName,
+		FullMethod: StreamService_GetConsumers_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StreamServiceServer).GetClients(ctx, req.(*GetClientsRequest))
+		return srv.(StreamServiceServer).GetConsumers(ctx, req.(*GetConsumersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _StreamService_RegisterClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegisterClientRequest)
+func _StreamService_RegisterConsumer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterConsumerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StreamServiceServer).RegisterClient(ctx, in)
+		return srv.(StreamServiceServer).RegisterConsumer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: StreamService_RegisterClient_FullMethodName,
+		FullMethod: StreamService_RegisterConsumer_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StreamServiceServer).RegisterClient(ctx, req.(*RegisterClientRequest))
+		return srv.(StreamServiceServer).RegisterConsumer(ctx, req.(*RegisterConsumerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _StreamService_UnregisterClient_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UnregisterClientRequest)
+func _StreamService_UnregisterConsumer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UnregisterConsumerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StreamServiceServer).UnregisterClient(ctx, in)
+		return srv.(StreamServiceServer).UnregisterConsumer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: StreamService_UnregisterClient_FullMethodName,
+		FullMethod: StreamService_UnregisterConsumer_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StreamServiceServer).UnregisterClient(ctx, req.(*UnregisterClientRequest))
+		return srv.(StreamServiceServer).UnregisterConsumer(ctx, req.(*UnregisterConsumerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -447,16 +447,16 @@ var StreamService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _StreamService_UpdateState_Handler,
 		},
 		{
-			MethodName: "GetClients",
-			Handler:    _StreamService_GetClients_Handler,
+			MethodName: "GetConsumers",
+			Handler:    _StreamService_GetConsumers_Handler,
 		},
 		{
-			MethodName: "RegisterClient",
-			Handler:    _StreamService_RegisterClient_Handler,
+			MethodName: "RegisterConsumer",
+			Handler:    _StreamService_RegisterConsumer_Handler,
 		},
 		{
-			MethodName: "UnregisterClient",
-			Handler:    _StreamService_UnregisterClient_Handler,
+			MethodName: "UnregisterConsumer",
+			Handler:    _StreamService_UnregisterConsumer_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
