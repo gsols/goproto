@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.15](https://github.com/gsols/goproto/compare/v0.1.14...v0.1.15) (2023-11-30)
+
+
+### Features
+
+* change validation rules [gsols/proto-apis@529647bb8d624bbd1dcda874b8f1b81f1b43641a] ([11b4464](https://github.com/gsols/goproto/commit/11b44644fb3331928a3b2fa281fdaf47ccb7c8f7))
+* use link ([5701639](https://github.com/gsols/goproto/commit/5701639e68abaf47719a63528601d2bbc0c5f403))
+
 ## [0.1.14](https://github.com/gsols/goproto/compare/v0.1.13...v0.1.14) (2023-11-30)
 
 
