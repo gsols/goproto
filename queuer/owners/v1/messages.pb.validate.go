@@ -304,9 +304,9 @@ func (m *GetOwnerRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetId()); err != nil {
+	if err := m._validateUuid(m.GetOwnerId()); err != nil {
 		err = GetOwnerRequestValidationError{
-			field:  "Id",
+			field:  "OwnerId",
 			reason: "value must be a valid UUID",
 			cause:  err,
 		}
@@ -531,22 +531,22 @@ var _ interface {
 	ErrorName() string
 } = GetOwnerResponseValidationError{}
 
-// Validate checks the field values on ListQueuesRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *ListQueuesRequest) Validate() error {
+// Validate checks the field values on ListStreamsRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *ListStreamsRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on ListQueuesRequest with the rules
+// ValidateAll checks the field values on ListStreamsRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// ListQueuesRequestMultiError, or nil if none found.
-func (m *ListQueuesRequest) ValidateAll() error {
+// ListStreamsRequestMultiError, or nil if none found.
+func (m *ListStreamsRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ListQueuesRequest) validate(all bool) error {
+func (m *ListStreamsRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -554,7 +554,7 @@ func (m *ListQueuesRequest) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetOwnerId()); err != nil {
-		err = ListQueuesRequestValidationError{
+		err = ListStreamsRequestValidationError{
 			field:  "OwnerId",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -566,7 +566,7 @@ func (m *ListQueuesRequest) validate(all bool) error {
 	}
 
 	if m.GetPageSize() <= 0 {
-		err := ListQueuesRequestValidationError{
+		err := ListStreamsRequestValidationError{
 			field:  "PageSize",
 			reason: "value must be greater than 0",
 		}
@@ -579,13 +579,13 @@ func (m *ListQueuesRequest) validate(all bool) error {
 	// no validation rules for PageToken
 
 	if len(errors) > 0 {
-		return ListQueuesRequestMultiError(errors)
+		return ListStreamsRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *ListQueuesRequest) _validateUuid(uuid string) error {
+func (m *ListStreamsRequest) _validateUuid(uuid string) error {
 	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -593,13 +593,13 @@ func (m *ListQueuesRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// ListQueuesRequestMultiError is an error wrapping multiple validation errors
-// returned by ListQueuesRequest.ValidateAll() if the designated constraints
+// ListStreamsRequestMultiError is an error wrapping multiple validation errors
+// returned by ListStreamsRequest.ValidateAll() if the designated constraints
 // aren't met.
-type ListQueuesRequestMultiError []error
+type ListStreamsRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ListQueuesRequestMultiError) Error() string {
+func (m ListStreamsRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -608,11 +608,11 @@ func (m ListQueuesRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ListQueuesRequestMultiError) AllErrors() []error { return m }
+func (m ListStreamsRequestMultiError) AllErrors() []error { return m }
 
-// ListQueuesRequestValidationError is the validation error returned by
-// ListQueuesRequest.Validate if the designated constraints aren't met.
-type ListQueuesRequestValidationError struct {
+// ListStreamsRequestValidationError is the validation error returned by
+// ListStreamsRequest.Validate if the designated constraints aren't met.
+type ListStreamsRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -620,24 +620,24 @@ type ListQueuesRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e ListQueuesRequestValidationError) Field() string { return e.field }
+func (e ListStreamsRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ListQueuesRequestValidationError) Reason() string { return e.reason }
+func (e ListStreamsRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ListQueuesRequestValidationError) Cause() error { return e.cause }
+func (e ListStreamsRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ListQueuesRequestValidationError) Key() bool { return e.key }
+func (e ListStreamsRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ListQueuesRequestValidationError) ErrorName() string {
-	return "ListQueuesRequestValidationError"
+func (e ListStreamsRequestValidationError) ErrorName() string {
+	return "ListStreamsRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e ListQueuesRequestValidationError) Error() string {
+func (e ListStreamsRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -649,14 +649,14 @@ func (e ListQueuesRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sListQueuesRequest.%s: %s%s",
+		"invalid %sListStreamsRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ListQueuesRequestValidationError{}
+var _ error = ListStreamsRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -664,47 +664,47 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ListQueuesRequestValidationError{}
+} = ListStreamsRequestValidationError{}
 
-// Validate checks the field values on ListQueuesResponse with the rules
+// Validate checks the field values on ListStreamsResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *ListQueuesResponse) Validate() error {
+func (m *ListStreamsResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on ListQueuesResponse with the rules
+// ValidateAll checks the field values on ListStreamsResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// ListQueuesResponseMultiError, or nil if none found.
-func (m *ListQueuesResponse) ValidateAll() error {
+// ListStreamsResponseMultiError, or nil if none found.
+func (m *ListStreamsResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ListQueuesResponse) validate(all bool) error {
+func (m *ListStreamsResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
-	for idx, item := range m.GetQueues() {
+	for idx, item := range m.GetStreams() {
 		_, _ = idx, item
 
 		if all {
 			switch v := interface{}(item).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, ListQueuesResponseValidationError{
-						field:  fmt.Sprintf("Queues[%v]", idx),
+					errors = append(errors, ListStreamsResponseValidationError{
+						field:  fmt.Sprintf("Streams[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
-					errors = append(errors, ListQueuesResponseValidationError{
-						field:  fmt.Sprintf("Queues[%v]", idx),
+					errors = append(errors, ListStreamsResponseValidationError{
+						field:  fmt.Sprintf("Streams[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -712,8 +712,8 @@ func (m *ListQueuesResponse) validate(all bool) error {
 			}
 		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return ListQueuesResponseValidationError{
-					field:  fmt.Sprintf("Queues[%v]", idx),
+				return ListStreamsResponseValidationError{
+					field:  fmt.Sprintf("Streams[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -723,19 +723,19 @@ func (m *ListQueuesResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return ListQueuesResponseMultiError(errors)
+		return ListStreamsResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// ListQueuesResponseMultiError is an error wrapping multiple validation errors
-// returned by ListQueuesResponse.ValidateAll() if the designated constraints
-// aren't met.
-type ListQueuesResponseMultiError []error
+// ListStreamsResponseMultiError is an error wrapping multiple validation
+// errors returned by ListStreamsResponse.ValidateAll() if the designated
+// constraints aren't met.
+type ListStreamsResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ListQueuesResponseMultiError) Error() string {
+func (m ListStreamsResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -744,11 +744,11 @@ func (m ListQueuesResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ListQueuesResponseMultiError) AllErrors() []error { return m }
+func (m ListStreamsResponseMultiError) AllErrors() []error { return m }
 
-// ListQueuesResponseValidationError is the validation error returned by
-// ListQueuesResponse.Validate if the designated constraints aren't met.
-type ListQueuesResponseValidationError struct {
+// ListStreamsResponseValidationError is the validation error returned by
+// ListStreamsResponse.Validate if the designated constraints aren't met.
+type ListStreamsResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -756,24 +756,24 @@ type ListQueuesResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e ListQueuesResponseValidationError) Field() string { return e.field }
+func (e ListStreamsResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ListQueuesResponseValidationError) Reason() string { return e.reason }
+func (e ListStreamsResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ListQueuesResponseValidationError) Cause() error { return e.cause }
+func (e ListStreamsResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ListQueuesResponseValidationError) Key() bool { return e.key }
+func (e ListStreamsResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ListQueuesResponseValidationError) ErrorName() string {
-	return "ListQueuesResponseValidationError"
+func (e ListStreamsResponseValidationError) ErrorName() string {
+	return "ListStreamsResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e ListQueuesResponseValidationError) Error() string {
+func (e ListStreamsResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -785,14 +785,14 @@ func (e ListQueuesResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sListQueuesResponse.%s: %s%s",
+		"invalid %sListStreamsResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ListQueuesResponseValidationError{}
+var _ error = ListStreamsResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -800,4 +800,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ListQueuesResponseValidationError{}
+} = ListStreamsResponseValidationError{}

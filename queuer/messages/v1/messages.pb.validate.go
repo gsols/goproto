@@ -60,9 +60,9 @@ func (m *GetNextRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetQueueId()); err != nil {
+	if err := m._validateUuid(m.GetStreamId()); err != nil {
 		err = GetNextRequestValidationError{
-			field:  "QueueId",
+			field:  "StreamId",
 			reason: "value must be a valid UUID",
 			cause:  err,
 		}
@@ -309,9 +309,9 @@ func (m *ConfirmRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetQueueId()); err != nil {
+	if err := m._validateUuid(m.GetStreamId()); err != nil {
 		err = ConfirmRequestValidationError{
-			field:  "QueueId",
+			field:  "StreamId",
 			reason: "value must be a valid UUID",
 			cause:  err,
 		}

@@ -1284,22 +1284,22 @@ var _ interface {
 	ErrorName() string
 } = AckCommandResponseValidationError{}
 
-// Validate checks the field values on GetSubscribedQueuesRequest with the
+// Validate checks the field values on GetSubscribedStreamsRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GetSubscribedQueuesRequest) Validate() error {
+func (m *GetSubscribedStreamsRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GetSubscribedQueuesRequest with the
+// ValidateAll checks the field values on GetSubscribedStreamsRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// GetSubscribedQueuesRequestMultiError, or nil if none found.
-func (m *GetSubscribedQueuesRequest) ValidateAll() error {
+// GetSubscribedStreamsRequestMultiError, or nil if none found.
+func (m *GetSubscribedStreamsRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GetSubscribedQueuesRequest) validate(all bool) error {
+func (m *GetSubscribedStreamsRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -1307,7 +1307,7 @@ func (m *GetSubscribedQueuesRequest) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetClientId()); err != nil {
-		err = GetSubscribedQueuesRequestValidationError{
+		err = GetSubscribedStreamsRequestValidationError{
 			field:  "ClientId",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -1319,13 +1319,13 @@ func (m *GetSubscribedQueuesRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return GetSubscribedQueuesRequestMultiError(errors)
+		return GetSubscribedStreamsRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *GetSubscribedQueuesRequest) _validateUuid(uuid string) error {
+func (m *GetSubscribedStreamsRequest) _validateUuid(uuid string) error {
 	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -1333,13 +1333,13 @@ func (m *GetSubscribedQueuesRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// GetSubscribedQueuesRequestMultiError is an error wrapping multiple
-// validation errors returned by GetSubscribedQueuesRequest.ValidateAll() if
+// GetSubscribedStreamsRequestMultiError is an error wrapping multiple
+// validation errors returned by GetSubscribedStreamsRequest.ValidateAll() if
 // the designated constraints aren't met.
-type GetSubscribedQueuesRequestMultiError []error
+type GetSubscribedStreamsRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GetSubscribedQueuesRequestMultiError) Error() string {
+func (m GetSubscribedStreamsRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1348,11 +1348,12 @@ func (m GetSubscribedQueuesRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GetSubscribedQueuesRequestMultiError) AllErrors() []error { return m }
+func (m GetSubscribedStreamsRequestMultiError) AllErrors() []error { return m }
 
-// GetSubscribedQueuesRequestValidationError is the validation error returned
-// by GetSubscribedQueuesRequest.Validate if the designated constraints aren't met.
-type GetSubscribedQueuesRequestValidationError struct {
+// GetSubscribedStreamsRequestValidationError is the validation error returned
+// by GetSubscribedStreamsRequest.Validate if the designated constraints
+// aren't met.
+type GetSubscribedStreamsRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1360,24 +1361,24 @@ type GetSubscribedQueuesRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetSubscribedQueuesRequestValidationError) Field() string { return e.field }
+func (e GetSubscribedStreamsRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetSubscribedQueuesRequestValidationError) Reason() string { return e.reason }
+func (e GetSubscribedStreamsRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetSubscribedQueuesRequestValidationError) Cause() error { return e.cause }
+func (e GetSubscribedStreamsRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetSubscribedQueuesRequestValidationError) Key() bool { return e.key }
+func (e GetSubscribedStreamsRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetSubscribedQueuesRequestValidationError) ErrorName() string {
-	return "GetSubscribedQueuesRequestValidationError"
+func (e GetSubscribedStreamsRequestValidationError) ErrorName() string {
+	return "GetSubscribedStreamsRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GetSubscribedQueuesRequestValidationError) Error() string {
+func (e GetSubscribedStreamsRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1389,14 +1390,14 @@ func (e GetSubscribedQueuesRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetSubscribedQueuesRequest.%s: %s%s",
+		"invalid %sGetSubscribedStreamsRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetSubscribedQueuesRequestValidationError{}
+var _ error = GetSubscribedStreamsRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -1404,47 +1405,47 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetSubscribedQueuesRequestValidationError{}
+} = GetSubscribedStreamsRequestValidationError{}
 
-// Validate checks the field values on GetSubscribedQueuesResponse with the
+// Validate checks the field values on GetSubscribedStreamsResponse with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *GetSubscribedQueuesResponse) Validate() error {
+func (m *GetSubscribedStreamsResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on GetSubscribedQueuesResponse with the
+// ValidateAll checks the field values on GetSubscribedStreamsResponse with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// GetSubscribedQueuesResponseMultiError, or nil if none found.
-func (m *GetSubscribedQueuesResponse) ValidateAll() error {
+// GetSubscribedStreamsResponseMultiError, or nil if none found.
+func (m *GetSubscribedStreamsResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *GetSubscribedQueuesResponse) validate(all bool) error {
+func (m *GetSubscribedStreamsResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
-	for idx, item := range m.GetQueues() {
+	for idx, item := range m.GetStreams() {
 		_, _ = idx, item
 
 		if all {
 			switch v := interface{}(item).(type) {
 			case interface{ ValidateAll() error }:
 				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, GetSubscribedQueuesResponseValidationError{
-						field:  fmt.Sprintf("Queues[%v]", idx),
+					errors = append(errors, GetSubscribedStreamsResponseValidationError{
+						field:  fmt.Sprintf("Streams[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
 				}
 			case interface{ Validate() error }:
 				if err := v.Validate(); err != nil {
-					errors = append(errors, GetSubscribedQueuesResponseValidationError{
-						field:  fmt.Sprintf("Queues[%v]", idx),
+					errors = append(errors, GetSubscribedStreamsResponseValidationError{
+						field:  fmt.Sprintf("Streams[%v]", idx),
 						reason: "embedded message failed validation",
 						cause:  err,
 					})
@@ -1452,8 +1453,8 @@ func (m *GetSubscribedQueuesResponse) validate(all bool) error {
 			}
 		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return GetSubscribedQueuesResponseValidationError{
-					field:  fmt.Sprintf("Queues[%v]", idx),
+				return GetSubscribedStreamsResponseValidationError{
+					field:  fmt.Sprintf("Streams[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}
@@ -1463,19 +1464,19 @@ func (m *GetSubscribedQueuesResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return GetSubscribedQueuesResponseMultiError(errors)
+		return GetSubscribedStreamsResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// GetSubscribedQueuesResponseMultiError is an error wrapping multiple
-// validation errors returned by GetSubscribedQueuesResponse.ValidateAll() if
+// GetSubscribedStreamsResponseMultiError is an error wrapping multiple
+// validation errors returned by GetSubscribedStreamsResponse.ValidateAll() if
 // the designated constraints aren't met.
-type GetSubscribedQueuesResponseMultiError []error
+type GetSubscribedStreamsResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m GetSubscribedQueuesResponseMultiError) Error() string {
+func (m GetSubscribedStreamsResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -1484,12 +1485,12 @@ func (m GetSubscribedQueuesResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m GetSubscribedQueuesResponseMultiError) AllErrors() []error { return m }
+func (m GetSubscribedStreamsResponseMultiError) AllErrors() []error { return m }
 
-// GetSubscribedQueuesResponseValidationError is the validation error returned
-// by GetSubscribedQueuesResponse.Validate if the designated constraints
+// GetSubscribedStreamsResponseValidationError is the validation error returned
+// by GetSubscribedStreamsResponse.Validate if the designated constraints
 // aren't met.
-type GetSubscribedQueuesResponseValidationError struct {
+type GetSubscribedStreamsResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -1497,24 +1498,24 @@ type GetSubscribedQueuesResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetSubscribedQueuesResponseValidationError) Field() string { return e.field }
+func (e GetSubscribedStreamsResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetSubscribedQueuesResponseValidationError) Reason() string { return e.reason }
+func (e GetSubscribedStreamsResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetSubscribedQueuesResponseValidationError) Cause() error { return e.cause }
+func (e GetSubscribedStreamsResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetSubscribedQueuesResponseValidationError) Key() bool { return e.key }
+func (e GetSubscribedStreamsResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetSubscribedQueuesResponseValidationError) ErrorName() string {
-	return "GetSubscribedQueuesResponseValidationError"
+func (e GetSubscribedStreamsResponseValidationError) ErrorName() string {
+	return "GetSubscribedStreamsResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e GetSubscribedQueuesResponseValidationError) Error() string {
+func (e GetSubscribedStreamsResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -1526,14 +1527,14 @@ func (e GetSubscribedQueuesResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetSubscribedQueuesResponse.%s: %s%s",
+		"invalid %sGetSubscribedStreamsResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetSubscribedQueuesResponseValidationError{}
+var _ error = GetSubscribedStreamsResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -1541,4 +1542,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetSubscribedQueuesResponseValidationError{}
+} = GetSubscribedStreamsResponseValidationError{}

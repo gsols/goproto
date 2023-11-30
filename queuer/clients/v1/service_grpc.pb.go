@@ -19,12 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ClientService_RegisterClient_FullMethodName      = "/queuer.clients.v1.ClientService/RegisterClient"
-	ClientService_GetClients_FullMethodName          = "/queuer.clients.v1.ClientService/GetClients"
-	ClientService_PublishClientStats_FullMethodName  = "/queuer.clients.v1.ClientService/PublishClientStats"
-	ClientService_SubscribeToCommands_FullMethodName = "/queuer.clients.v1.ClientService/SubscribeToCommands"
-	ClientService_AckCommand_FullMethodName          = "/queuer.clients.v1.ClientService/AckCommand"
-	ClientService_GetSubscribedQueues_FullMethodName = "/queuer.clients.v1.ClientService/GetSubscribedQueues"
+	ClientService_RegisterClient_FullMethodName       = "/queuer.clients.v1.ClientService/RegisterClient"
+	ClientService_GetClients_FullMethodName           = "/queuer.clients.v1.ClientService/GetClients"
+	ClientService_PublishClientStats_FullMethodName   = "/queuer.clients.v1.ClientService/PublishClientStats"
+	ClientService_SubscribeToCommands_FullMethodName  = "/queuer.clients.v1.ClientService/SubscribeToCommands"
+	ClientService_AckCommand_FullMethodName           = "/queuer.clients.v1.ClientService/AckCommand"
+	ClientService_GetSubscribedStreams_FullMethodName = "/queuer.clients.v1.ClientService/GetSubscribedStreams"
 )
 
 // ClientServiceClient is the client API for ClientService service.
@@ -36,7 +36,7 @@ type ClientServiceClient interface {
 	PublishClientStats(ctx context.Context, opts ...grpc.CallOption) (ClientService_PublishClientStatsClient, error)
 	SubscribeToCommands(ctx context.Context, in *SubscribeToCommandsRequest, opts ...grpc.CallOption) (ClientService_SubscribeToCommandsClient, error)
 	AckCommand(ctx context.Context, in *AckCommandRequest, opts ...grpc.CallOption) (*AckCommandResponse, error)
-	GetSubscribedQueues(ctx context.Context, in *GetSubscribedQueuesRequest, opts ...grpc.CallOption) (*GetSubscribedQueuesResponse, error)
+	GetSubscribedStreams(ctx context.Context, in *GetSubscribedStreamsRequest, opts ...grpc.CallOption) (*GetSubscribedStreamsResponse, error)
 }
 
 type clientServiceClient struct {
@@ -140,9 +140,9 @@ func (c *clientServiceClient) AckCommand(ctx context.Context, in *AckCommandRequ
 	return out, nil
 }
 
-func (c *clientServiceClient) GetSubscribedQueues(ctx context.Context, in *GetSubscribedQueuesRequest, opts ...grpc.CallOption) (*GetSubscribedQueuesResponse, error) {
-	out := new(GetSubscribedQueuesResponse)
-	err := c.cc.Invoke(ctx, ClientService_GetSubscribedQueues_FullMethodName, in, out, opts...)
+func (c *clientServiceClient) GetSubscribedStreams(ctx context.Context, in *GetSubscribedStreamsRequest, opts ...grpc.CallOption) (*GetSubscribedStreamsResponse, error) {
+	out := new(GetSubscribedStreamsResponse)
+	err := c.cc.Invoke(ctx, ClientService_GetSubscribedStreams_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +158,7 @@ type ClientServiceServer interface {
 	PublishClientStats(ClientService_PublishClientStatsServer) error
 	SubscribeToCommands(*SubscribeToCommandsRequest, ClientService_SubscribeToCommandsServer) error
 	AckCommand(context.Context, *AckCommandRequest) (*AckCommandResponse, error)
-	GetSubscribedQueues(context.Context, *GetSubscribedQueuesRequest) (*GetSubscribedQueuesResponse, error)
+	GetSubscribedStreams(context.Context, *GetSubscribedStreamsRequest) (*GetSubscribedStreamsResponse, error)
 	mustEmbedUnimplementedClientServiceServer()
 }
 
@@ -181,8 +181,8 @@ func (UnimplementedClientServiceServer) SubscribeToCommands(*SubscribeToCommands
 func (UnimplementedClientServiceServer) AckCommand(context.Context, *AckCommandRequest) (*AckCommandResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AckCommand not implemented")
 }
-func (UnimplementedClientServiceServer) GetSubscribedQueues(context.Context, *GetSubscribedQueuesRequest) (*GetSubscribedQueuesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetSubscribedQueues not implemented")
+func (UnimplementedClientServiceServer) GetSubscribedStreams(context.Context, *GetSubscribedStreamsRequest) (*GetSubscribedStreamsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSubscribedStreams not implemented")
 }
 func (UnimplementedClientServiceServer) mustEmbedUnimplementedClientServiceServer() {}
 
@@ -298,20 +298,20 @@ func _ClientService_AckCommand_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ClientService_GetSubscribedQueues_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetSubscribedQueuesRequest)
+func _ClientService_GetSubscribedStreams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSubscribedStreamsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ClientServiceServer).GetSubscribedQueues(ctx, in)
+		return srv.(ClientServiceServer).GetSubscribedStreams(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ClientService_GetSubscribedQueues_FullMethodName,
+		FullMethod: ClientService_GetSubscribedStreams_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ClientServiceServer).GetSubscribedQueues(ctx, req.(*GetSubscribedQueuesRequest))
+		return srv.(ClientServiceServer).GetSubscribedStreams(ctx, req.(*GetSubscribedStreamsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -336,8 +336,8 @@ var ClientService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ClientService_AckCommand_Handler,
 		},
 		{
-			MethodName: "GetSubscribedQueues",
-			Handler:    _ClientService_GetSubscribedQueues_Handler,
+			MethodName: "GetSubscribedStreams",
+			Handler:    _ClientService_GetSubscribedStreams_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

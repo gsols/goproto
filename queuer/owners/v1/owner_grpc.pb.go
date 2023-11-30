@@ -21,7 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	OwnerService_CreateOwner_FullMethodName = "/queuer.owners.v1.OwnerService/CreateOwner"
 	OwnerService_GetOwner_FullMethodName    = "/queuer.owners.v1.OwnerService/GetOwner"
-	OwnerService_ListQueues_FullMethodName  = "/queuer.owners.v1.OwnerService/ListQueues"
+	OwnerService_ListStreams_FullMethodName = "/queuer.owners.v1.OwnerService/ListStreams"
 )
 
 // OwnerServiceClient is the client API for OwnerService service.
@@ -30,7 +30,7 @@ const (
 type OwnerServiceClient interface {
 	CreateOwner(ctx context.Context, in *CreateOwnerRequest, opts ...grpc.CallOption) (*CreateOwnerResponse, error)
 	GetOwner(ctx context.Context, in *GetOwnerRequest, opts ...grpc.CallOption) (*GetOwnerResponse, error)
-	ListQueues(ctx context.Context, in *ListQueuesRequest, opts ...grpc.CallOption) (*ListQueuesResponse, error)
+	ListStreams(ctx context.Context, in *ListStreamsRequest, opts ...grpc.CallOption) (*ListStreamsResponse, error)
 }
 
 type ownerServiceClient struct {
@@ -59,9 +59,9 @@ func (c *ownerServiceClient) GetOwner(ctx context.Context, in *GetOwnerRequest, 
 	return out, nil
 }
 
-func (c *ownerServiceClient) ListQueues(ctx context.Context, in *ListQueuesRequest, opts ...grpc.CallOption) (*ListQueuesResponse, error) {
-	out := new(ListQueuesResponse)
-	err := c.cc.Invoke(ctx, OwnerService_ListQueues_FullMethodName, in, out, opts...)
+func (c *ownerServiceClient) ListStreams(ctx context.Context, in *ListStreamsRequest, opts ...grpc.CallOption) (*ListStreamsResponse, error) {
+	out := new(ListStreamsResponse)
+	err := c.cc.Invoke(ctx, OwnerService_ListStreams_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +74,7 @@ func (c *ownerServiceClient) ListQueues(ctx context.Context, in *ListQueuesReque
 type OwnerServiceServer interface {
 	CreateOwner(context.Context, *CreateOwnerRequest) (*CreateOwnerResponse, error)
 	GetOwner(context.Context, *GetOwnerRequest) (*GetOwnerResponse, error)
-	ListQueues(context.Context, *ListQueuesRequest) (*ListQueuesResponse, error)
+	ListStreams(context.Context, *ListStreamsRequest) (*ListStreamsResponse, error)
 	mustEmbedUnimplementedOwnerServiceServer()
 }
 
@@ -88,8 +88,8 @@ func (UnimplementedOwnerServiceServer) CreateOwner(context.Context, *CreateOwner
 func (UnimplementedOwnerServiceServer) GetOwner(context.Context, *GetOwnerRequest) (*GetOwnerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOwner not implemented")
 }
-func (UnimplementedOwnerServiceServer) ListQueues(context.Context, *ListQueuesRequest) (*ListQueuesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListQueues not implemented")
+func (UnimplementedOwnerServiceServer) ListStreams(context.Context, *ListStreamsRequest) (*ListStreamsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListStreams not implemented")
 }
 func (UnimplementedOwnerServiceServer) mustEmbedUnimplementedOwnerServiceServer() {}
 
@@ -140,20 +140,20 @@ func _OwnerService_GetOwner_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OwnerService_ListQueues_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListQueuesRequest)
+func _OwnerService_ListStreams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListStreamsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OwnerServiceServer).ListQueues(ctx, in)
+		return srv.(OwnerServiceServer).ListStreams(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: OwnerService_ListQueues_FullMethodName,
+		FullMethod: OwnerService_ListStreams_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OwnerServiceServer).ListQueues(ctx, req.(*ListQueuesRequest))
+		return srv.(OwnerServiceServer).ListStreams(ctx, req.(*ListStreamsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -174,8 +174,8 @@ var OwnerService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _OwnerService_GetOwner_Handler,
 		},
 		{
-			MethodName: "ListQueues",
-			Handler:    _OwnerService_ListQueues_Handler,
+			MethodName: "ListStreams",
+			Handler:    _OwnerService_ListStreams_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
