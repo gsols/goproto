@@ -35,6 +35,9 @@ var (
 	_ = sort.Sort
 )
 
+// define the regex for a UUID once up-front
+var _queue_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
 // Validate checks the field values on Queue with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
@@ -56,10 +59,11 @@ func (m *Queue) validate(all bool) error {
 
 	var errors []error
 
-	if l := utf8.RuneCountInString(m.GetId()); l < 1 || l > 100 {
-		err := QueueValidationError{
+	if err := m._validateUuid(m.GetId()); err != nil {
+		err = QueueValidationError{
 			field:  "Id",
-			reason: "value length must be between 1 and 100 runes, inclusive",
+			reason: "value must be a valid UUID",
+			cause:  err,
 		}
 		if !all {
 			return err
@@ -78,37 +82,16 @@ func (m *Queue) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if all {
-		switch v := interface{}(m.GetOwner()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, QueueValidationError{
-					field:  "Owner",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, QueueValidationError{
-					field:  "Owner",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetOwner()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return QueueValidationError{
-				field:  "Owner",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
 	if len(errors) > 0 {
 		return QueueMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *Queue) _validateUuid(uuid string) error {
+	if matched := _queue_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
 	}
 
 	return nil
