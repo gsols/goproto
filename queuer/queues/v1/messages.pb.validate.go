@@ -1180,10 +1180,28 @@ func (m *PublishMessageResponse) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for MessageId
+	if err := m._validateUuid(m.GetMessageId()); err != nil {
+		err = PublishMessageResponseValidationError{
+			field:  "MessageId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return PublishMessageResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *PublishMessageResponse) _validateUuid(uuid string) error {
+	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
 	}
 
 	return nil
@@ -1775,10 +1793,11 @@ func (m *RegisterClientRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetClientId()) < 1 {
-		err := RegisterClientRequestValidationError{
+	if err := m._validateUuid(m.GetClientId()); err != nil {
+		err = RegisterClientRequestValidationError{
 			field:  "ClientId",
-			reason: "value length must be at least 1 runes",
+			reason: "value must be a valid UUID",
+			cause:  err,
 		}
 		if !all {
 			return err
@@ -2270,10 +2289,11 @@ func (m *UnregisterClientRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetClientId()) < 1 {
-		err := UnregisterClientRequestValidationError{
+	if err := m._validateUuid(m.GetClientId()); err != nil {
+		err = UnregisterClientRequestValidationError{
 			field:  "ClientId",
-			reason: "value length must be at least 1 runes",
+			reason: "value must be a valid UUID",
+			cause:  err,
 		}
 		if !all {
 			return err

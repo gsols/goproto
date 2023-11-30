@@ -557,7 +557,17 @@ func (m *PublishClientStatsRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for ClientId
+	if err := m._validateUuid(m.GetClientId()); err != nil {
+		err = PublishClientStatsRequestValidationError{
+			field:  "ClientId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if all {
 		switch v := interface{}(m.GetStats()).(type) {
@@ -590,6 +600,14 @@ func (m *PublishClientStatsRequest) validate(all bool) error {
 
 	if len(errors) > 0 {
 		return PublishClientStatsRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *PublishClientStatsRequest) _validateUuid(uuid string) error {
+	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
 	}
 
 	return nil
@@ -794,10 +812,28 @@ func (m *SubscribeToCommandsRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for ClientId
+	if err := m._validateUuid(m.GetClientId()); err != nil {
+		err = SubscribeToCommandsRequestValidationError{
+			field:  "ClientId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return SubscribeToCommandsRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *SubscribeToCommandsRequest) _validateUuid(uuid string) error {
+	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
 	}
 
 	return nil
@@ -1030,14 +1066,42 @@ func (m *AckCommandRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for ClientId
+	if err := m._validateUuid(m.GetClientId()); err != nil {
+		err = AckCommandRequestValidationError{
+			field:  "ClientId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
-	// no validation rules for CommandId
+	if err := m._validateUuid(m.GetCommandId()); err != nil {
+		err = AckCommandRequestValidationError{
+			field:  "CommandId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	// no validation rules for Status
 
 	if len(errors) > 0 {
 		return AckCommandRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *AckCommandRequest) _validateUuid(uuid string) error {
+	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
 	}
 
 	return nil
@@ -1242,10 +1306,28 @@ func (m *GetSubscribedQueuesRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for ClientId
+	if err := m._validateUuid(m.GetClientId()); err != nil {
+		err = GetSubscribedQueuesRequestValidationError{
+			field:  "ClientId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return GetSubscribedQueuesRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *GetSubscribedQueuesRequest) _validateUuid(uuid string) error {
+	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
 	}
 
 	return nil
