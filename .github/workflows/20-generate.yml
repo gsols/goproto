@@ -75,7 +75,7 @@ jobs:
       - name: Get commits since last COMMIT_HASH in submodule
         run: |
           cd src
-          echo "COMMIT_MSG=$(git log --no-merges --pretty=format:"proto-apis@%H %s" --reverse $COMMIT_HASH..HEAD)" >> $GITHUB_ENV
+          echo "COMMIT_MSG=$(git log --no-merges --pretty=format:"%s [gsols/proto-apis@%H]" --reverse $COMMIT_HASH..HEAD)" >> $GITHUB_ENV
           cd ..
 
       - name: Create Pull Request
