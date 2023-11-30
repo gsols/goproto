@@ -57,6 +57,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
+      - name: Get current submodule hash
+        run: echo "COMMIT_HASH=$(git rev-parse HEAD:src)" >> $GITHUB_ENV
+
       - name: Update submodules
         run: git submodule update --init --recursive --remote
 
@@ -69,9 +72,15 @@ jobs:
       - name: Generate proto files
         run: make proto
 
+      - name: Get commits since last COMMIT_HASH in submodule
+        run: |
+          cd src
+          echo "COMMIT_MSG=$(git log --no-merges --pretty=format:"%H" --reverse $COMMIT_HASH..HEAD)" >> $GITHUB_ENV
+          cd ..
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          commit-message: "feat: build proto files using  for go"
-          title: "FEAT: build proto files using for go"
-          body: "FEAT: build proto files using ${{ github.sha }} for go."
+          commit-message: "${{env.COMMIT_MSG}}"
+          title: "Build proto files using remote submodule"
+          body: "${{env.COMMIT_MSG}}"
