@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.17](https://github.com/gsols/goproto/compare/v0.1.16...v0.1.17) (2023-12-02)
+
+
+### Features
+
+* reorder procedures [gsols/proto-apis@f221b7d1246f6dc9823bfbb158672f717f4ddc05] ([3672ddd](https://github.com/gsols/goproto/commit/3672ddd0ec429adc954909c17de35b05563f4e33))
+
 ## [0.1.16](https://github.com/gsols/goproto/compare/v0.1.15...v0.1.16) (2023-11-30)
 
 
