@@ -19,9 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	OwnerService_CreateOwner_FullMethodName = "/queuer.owners.v1.OwnerService/CreateOwner"
-	OwnerService_GetOwner_FullMethodName    = "/queuer.owners.v1.OwnerService/GetOwner"
-	OwnerService_ListStreams_FullMethodName = "/queuer.owners.v1.OwnerService/ListStreams"
+	OwnerService_CreateOwner_FullMethodName      = "/queuer.owners.v1.OwnerService/CreateOwner"
+	OwnerService_GetOwner_FullMethodName         = "/queuer.owners.v1.OwnerService/GetOwner"
+	OwnerService_RegisterConsumer_FullMethodName = "/queuer.owners.v1.OwnerService/RegisterConsumer"
+	OwnerService_GetConsumers_FullMethodName     = "/queuer.owners.v1.OwnerService/GetConsumers"
+	OwnerService_ListStreams_FullMethodName      = "/queuer.owners.v1.OwnerService/ListStreams"
 )
 
 // OwnerServiceClient is the client API for OwnerService service.
@@ -30,6 +32,8 @@ const (
 type OwnerServiceClient interface {
 	CreateOwner(ctx context.Context, in *CreateOwnerRequest, opts ...grpc.CallOption) (*CreateOwnerResponse, error)
 	GetOwner(ctx context.Context, in *GetOwnerRequest, opts ...grpc.CallOption) (*GetOwnerResponse, error)
+	RegisterConsumer(ctx context.Context, in *RegisterConsumerRequest, opts ...grpc.CallOption) (*RegisterConsumerResponse, error)
+	GetConsumers(ctx context.Context, in *GetConsumersRequest, opts ...grpc.CallOption) (*GetConsumersResponse, error)
 	ListStreams(ctx context.Context, in *ListStreamsRequest, opts ...grpc.CallOption) (*ListStreamsResponse, error)
 }
 
@@ -59,6 +63,24 @@ func (c *ownerServiceClient) GetOwner(ctx context.Context, in *GetOwnerRequest, 
 	return out, nil
 }
 
+func (c *ownerServiceClient) RegisterConsumer(ctx context.Context, in *RegisterConsumerRequest, opts ...grpc.CallOption) (*RegisterConsumerResponse, error) {
+	out := new(RegisterConsumerResponse)
+	err := c.cc.Invoke(ctx, OwnerService_RegisterConsumer_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ownerServiceClient) GetConsumers(ctx context.Context, in *GetConsumersRequest, opts ...grpc.CallOption) (*GetConsumersResponse, error) {
+	out := new(GetConsumersResponse)
+	err := c.cc.Invoke(ctx, OwnerService_GetConsumers_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *ownerServiceClient) ListStreams(ctx context.Context, in *ListStreamsRequest, opts ...grpc.CallOption) (*ListStreamsResponse, error) {
 	out := new(ListStreamsResponse)
 	err := c.cc.Invoke(ctx, OwnerService_ListStreams_FullMethodName, in, out, opts...)
@@ -74,6 +96,8 @@ func (c *ownerServiceClient) ListStreams(ctx context.Context, in *ListStreamsReq
 type OwnerServiceServer interface {
 	CreateOwner(context.Context, *CreateOwnerRequest) (*CreateOwnerResponse, error)
 	GetOwner(context.Context, *GetOwnerRequest) (*GetOwnerResponse, error)
+	RegisterConsumer(context.Context, *RegisterConsumerRequest) (*RegisterConsumerResponse, error)
+	GetConsumers(context.Context, *GetConsumersRequest) (*GetConsumersResponse, error)
 	ListStreams(context.Context, *ListStreamsRequest) (*ListStreamsResponse, error)
 	mustEmbedUnimplementedOwnerServiceServer()
 }
@@ -87,6 +111,12 @@ func (UnimplementedOwnerServiceServer) CreateOwner(context.Context, *CreateOwner
 }
 func (UnimplementedOwnerServiceServer) GetOwner(context.Context, *GetOwnerRequest) (*GetOwnerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOwner not implemented")
+}
+func (UnimplementedOwnerServiceServer) RegisterConsumer(context.Context, *RegisterConsumerRequest) (*RegisterConsumerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterConsumer not implemented")
+}
+func (UnimplementedOwnerServiceServer) GetConsumers(context.Context, *GetConsumersRequest) (*GetConsumersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetConsumers not implemented")
 }
 func (UnimplementedOwnerServiceServer) ListStreams(context.Context, *ListStreamsRequest) (*ListStreamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListStreams not implemented")
@@ -140,6 +170,42 @@ func _OwnerService_GetOwner_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OwnerService_RegisterConsumer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterConsumerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OwnerServiceServer).RegisterConsumer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OwnerService_RegisterConsumer_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OwnerServiceServer).RegisterConsumer(ctx, req.(*RegisterConsumerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OwnerService_GetConsumers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetConsumersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OwnerServiceServer).GetConsumers(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OwnerService_GetConsumers_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OwnerServiceServer).GetConsumers(ctx, req.(*GetConsumersRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OwnerService_ListStreams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListStreamsRequest)
 	if err := dec(in); err != nil {
@@ -172,6 +238,14 @@ var OwnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOwner",
 			Handler:    _OwnerService_GetOwner_Handler,
+		},
+		{
+			MethodName: "RegisterConsumer",
+			Handler:    _OwnerService_RegisterConsumer_Handler,
+		},
+		{
+			MethodName: "GetConsumers",
+			Handler:    _OwnerService_GetConsumers_Handler,
 		},
 		{
 			MethodName: "ListStreams",
