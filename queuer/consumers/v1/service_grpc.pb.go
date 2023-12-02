@@ -19,8 +19,6 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ConsumerService_RegisterConsumer_FullMethodName     = "/queuer.consumers.v1.ConsumerService/RegisterConsumer"
-	ConsumerService_GetConsumers_FullMethodName         = "/queuer.consumers.v1.ConsumerService/GetConsumers"
 	ConsumerService_PublishConsumerStats_FullMethodName = "/queuer.consumers.v1.ConsumerService/PublishConsumerStats"
 	ConsumerService_SubscribeToCommands_FullMethodName  = "/queuer.consumers.v1.ConsumerService/SubscribeToCommands"
 	ConsumerService_AckCommand_FullMethodName           = "/queuer.consumers.v1.ConsumerService/AckCommand"
@@ -31,8 +29,6 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConsumerServiceClient interface {
-	RegisterConsumer(ctx context.Context, in *RegisterConsumerRequest, opts ...grpc.CallOption) (*RegisterConsumerResponse, error)
-	GetConsumers(ctx context.Context, in *GetConsumersRequest, opts ...grpc.CallOption) (*GetConsumersResponse, error)
 	PublishConsumerStats(ctx context.Context, opts ...grpc.CallOption) (ConsumerService_PublishConsumerStatsClient, error)
 	SubscribeToCommands(ctx context.Context, in *SubscribeToCommandsRequest, opts ...grpc.CallOption) (ConsumerService_SubscribeToCommandsClient, error)
 	AckCommand(ctx context.Context, in *AckCommandRequest, opts ...grpc.CallOption) (*AckCommandResponse, error)
@@ -45,24 +41,6 @@ type consumerServiceClient struct {
 
 func NewConsumerServiceClient(cc grpc.ClientConnInterface) ConsumerServiceClient {
 	return &consumerServiceClient{cc}
-}
-
-func (c *consumerServiceClient) RegisterConsumer(ctx context.Context, in *RegisterConsumerRequest, opts ...grpc.CallOption) (*RegisterConsumerResponse, error) {
-	out := new(RegisterConsumerResponse)
-	err := c.cc.Invoke(ctx, ConsumerService_RegisterConsumer_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *consumerServiceClient) GetConsumers(ctx context.Context, in *GetConsumersRequest, opts ...grpc.CallOption) (*GetConsumersResponse, error) {
-	out := new(GetConsumersResponse)
-	err := c.cc.Invoke(ctx, ConsumerService_GetConsumers_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *consumerServiceClient) PublishConsumerStats(ctx context.Context, opts ...grpc.CallOption) (ConsumerService_PublishConsumerStatsClient, error) {
@@ -153,8 +131,6 @@ func (c *consumerServiceClient) GetSubscribedStreams(ctx context.Context, in *Ge
 // All implementations must embed UnimplementedConsumerServiceServer
 // for forward compatibility
 type ConsumerServiceServer interface {
-	RegisterConsumer(context.Context, *RegisterConsumerRequest) (*RegisterConsumerResponse, error)
-	GetConsumers(context.Context, *GetConsumersRequest) (*GetConsumersResponse, error)
 	PublishConsumerStats(ConsumerService_PublishConsumerStatsServer) error
 	SubscribeToCommands(*SubscribeToCommandsRequest, ConsumerService_SubscribeToCommandsServer) error
 	AckCommand(context.Context, *AckCommandRequest) (*AckCommandResponse, error)
@@ -166,12 +142,6 @@ type ConsumerServiceServer interface {
 type UnimplementedConsumerServiceServer struct {
 }
 
-func (UnimplementedConsumerServiceServer) RegisterConsumer(context.Context, *RegisterConsumerRequest) (*RegisterConsumerResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RegisterConsumer not implemented")
-}
-func (UnimplementedConsumerServiceServer) GetConsumers(context.Context, *GetConsumersRequest) (*GetConsumersResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetConsumers not implemented")
-}
 func (UnimplementedConsumerServiceServer) PublishConsumerStats(ConsumerService_PublishConsumerStatsServer) error {
 	return status.Errorf(codes.Unimplemented, "method PublishConsumerStats not implemented")
 }
@@ -195,42 +165,6 @@ type UnsafeConsumerServiceServer interface {
 
 func RegisterConsumerServiceServer(s grpc.ServiceRegistrar, srv ConsumerServiceServer) {
 	s.RegisterService(&ConsumerService_ServiceDesc, srv)
-}
-
-func _ConsumerService_RegisterConsumer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegisterConsumerRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ConsumerServiceServer).RegisterConsumer(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ConsumerService_RegisterConsumer_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConsumerServiceServer).RegisterConsumer(ctx, req.(*RegisterConsumerRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _ConsumerService_GetConsumers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetConsumersRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ConsumerServiceServer).GetConsumers(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ConsumerService_GetConsumers_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConsumerServiceServer).GetConsumers(ctx, req.(*GetConsumersRequest))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _ConsumerService_PublishConsumerStats_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -323,14 +257,6 @@ var ConsumerService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "queuer.consumers.v1.ConsumerService",
 	HandlerType: (*ConsumerServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "RegisterConsumer",
-			Handler:    _ConsumerService_RegisterConsumer_Handler,
-		},
-		{
-			MethodName: "GetConsumers",
-			Handler:    _ConsumerService_GetConsumers_Handler,
-		},
 		{
 			MethodName: "AckCommand",
 			Handler:    _ConsumerService_AckCommand_Handler,
