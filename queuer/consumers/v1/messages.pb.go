@@ -128,210 +128,6 @@ func (x *PublishConsumerStatsResponse) GetSuccess() bool {
 	return false
 }
 
-type SubscribeToCommandsRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	ConsumerId string `protobuf:"bytes,1,opt,name=consumer_id,json=consumerId,proto3" json:"consumer_id,omitempty"`
-}
-
-func (x *SubscribeToCommandsRequest) Reset() {
-	*x = SubscribeToCommandsRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_consumers_v1_messages_proto_msgTypes[2]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *SubscribeToCommandsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SubscribeToCommandsRequest) ProtoMessage() {}
-
-func (x *SubscribeToCommandsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_consumers_v1_messages_proto_msgTypes[2]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SubscribeToCommandsRequest.ProtoReflect.Descriptor instead.
-func (*SubscribeToCommandsRequest) Descriptor() ([]byte, []int) {
-	return file_queuer_consumers_v1_messages_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *SubscribeToCommandsRequest) GetConsumerId() string {
-	if x != nil {
-		return x.ConsumerId
-	}
-	return ""
-}
-
-type SubscribeToCommandsResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Command *v1.Command `protobuf:"bytes,1,opt,name=command,proto3" json:"command,omitempty"`
-}
-
-func (x *SubscribeToCommandsResponse) Reset() {
-	*x = SubscribeToCommandsResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_consumers_v1_messages_proto_msgTypes[3]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *SubscribeToCommandsResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*SubscribeToCommandsResponse) ProtoMessage() {}
-
-func (x *SubscribeToCommandsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_consumers_v1_messages_proto_msgTypes[3]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use SubscribeToCommandsResponse.ProtoReflect.Descriptor instead.
-func (*SubscribeToCommandsResponse) Descriptor() ([]byte, []int) {
-	return file_queuer_consumers_v1_messages_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *SubscribeToCommandsResponse) GetCommand() *v1.Command {
-	if x != nil {
-		return x.Command
-	}
-	return nil
-}
-
-type AckCommandRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	ConsumerId string           `protobuf:"bytes,1,opt,name=consumer_id,json=consumerId,proto3" json:"consumer_id,omitempty"`
-	CommandId  string           `protobuf:"bytes,2,opt,name=command_id,json=commandId,proto3" json:"command_id,omitempty"`
-	Status     v1.CommandStatus `protobuf:"varint,3,opt,name=status,proto3,enum=queuer.entities.v1.CommandStatus" json:"status,omitempty"`
-}
-
-func (x *AckCommandRequest) Reset() {
-	*x = AckCommandRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_consumers_v1_messages_proto_msgTypes[4]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *AckCommandRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AckCommandRequest) ProtoMessage() {}
-
-func (x *AckCommandRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_consumers_v1_messages_proto_msgTypes[4]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AckCommandRequest.ProtoReflect.Descriptor instead.
-func (*AckCommandRequest) Descriptor() ([]byte, []int) {
-	return file_queuer_consumers_v1_messages_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *AckCommandRequest) GetConsumerId() string {
-	if x != nil {
-		return x.ConsumerId
-	}
-	return ""
-}
-
-func (x *AckCommandRequest) GetCommandId() string {
-	if x != nil {
-		return x.CommandId
-	}
-	return ""
-}
-
-func (x *AckCommandRequest) GetStatus() v1.CommandStatus {
-	if x != nil {
-		return x.Status
-	}
-	return v1.CommandStatus(0)
-}
-
-type AckCommandResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Success bool `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
-}
-
-func (x *AckCommandResponse) Reset() {
-	*x = AckCommandResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_consumers_v1_messages_proto_msgTypes[5]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *AckCommandResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AckCommandResponse) ProtoMessage() {}
-
-func (x *AckCommandResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_consumers_v1_messages_proto_msgTypes[5]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AckCommandResponse.ProtoReflect.Descriptor instead.
-func (*AckCommandResponse) Descriptor() ([]byte, []int) {
-	return file_queuer_consumers_v1_messages_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *AckCommandResponse) GetSuccess() bool {
-	if x != nil {
-		return x.Success
-	}
-	return false
-}
-
 type GetSubscribedStreamsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -343,7 +139,7 @@ type GetSubscribedStreamsRequest struct {
 func (x *GetSubscribedStreamsRequest) Reset() {
 	*x = GetSubscribedStreamsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_consumers_v1_messages_proto_msgTypes[6]
+		mi := &file_queuer_consumers_v1_messages_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -356,7 +152,7 @@ func (x *GetSubscribedStreamsRequest) String() string {
 func (*GetSubscribedStreamsRequest) ProtoMessage() {}
 
 func (x *GetSubscribedStreamsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_consumers_v1_messages_proto_msgTypes[6]
+	mi := &file_queuer_consumers_v1_messages_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -369,7 +165,7 @@ func (x *GetSubscribedStreamsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSubscribedStreamsRequest.ProtoReflect.Descriptor instead.
 func (*GetSubscribedStreamsRequest) Descriptor() ([]byte, []int) {
-	return file_queuer_consumers_v1_messages_proto_rawDescGZIP(), []int{6}
+	return file_queuer_consumers_v1_messages_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GetSubscribedStreamsRequest) GetConsumerId() string {
@@ -390,7 +186,7 @@ type GetSubscribedStreamsResponse struct {
 func (x *GetSubscribedStreamsResponse) Reset() {
 	*x = GetSubscribedStreamsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_consumers_v1_messages_proto_msgTypes[7]
+		mi := &file_queuer_consumers_v1_messages_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -403,7 +199,7 @@ func (x *GetSubscribedStreamsResponse) String() string {
 func (*GetSubscribedStreamsResponse) ProtoMessage() {}
 
 func (x *GetSubscribedStreamsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_consumers_v1_messages_proto_msgTypes[7]
+	mi := &file_queuer_consumers_v1_messages_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -416,7 +212,7 @@ func (x *GetSubscribedStreamsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSubscribedStreamsResponse.ProtoReflect.Descriptor instead.
 func (*GetSubscribedStreamsResponse) Descriptor() ([]byte, []int) {
-	return file_queuer_consumers_v1_messages_proto_rawDescGZIP(), []int{7}
+	return file_queuer_consumers_v1_messages_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *GetSubscribedStreamsResponse) GetStreams() []*v1.Stream {
@@ -465,44 +261,21 @@ var file_queuer_consumers_v1_messages_proto_rawDesc = []byte{
 	0x74, 0x73, 0x22, 0x38, 0x0a, 0x1c, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x43, 0x6f, 0x6e,
 	0x73, 0x75, 0x6d, 0x65, 0x72, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
 	0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x22, 0x47, 0x0a, 0x1a,
-	0x53, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x54, 0x6f, 0x43, 0x6f, 0x6d, 0x6d, 0x61,
-	0x6e, 0x64, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x29, 0x0a, 0x0b, 0x63, 0x6f,
-	0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42,
-	0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x0a, 0x63, 0x6f, 0x6e, 0x73, 0x75,
-	0x6d, 0x65, 0x72, 0x49, 0x64, 0x22, 0x54, 0x0a, 0x1b, 0x53, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69,
-	0x62, 0x65, 0x54, 0x6f, 0x43, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x73, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x35, 0x0a, 0x07, 0x63, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x65,
-	0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x61,
-	0x6e, 0x64, 0x52, 0x07, 0x63, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x22, 0xa2, 0x01, 0x0a, 0x11,
-	0x41, 0x63, 0x6b, 0x43, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x12, 0x29, 0x0a, 0x0b, 0x63, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72, 0x5f, 0x69, 0x64,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01,
-	0x52, 0x0a, 0x63, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72, 0x49, 0x64, 0x12, 0x27, 0x0a, 0x0a,
-	0x63, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
-	0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x09, 0x63, 0x6f, 0x6d, 0x6d,
-	0x61, 0x6e, 0x64, 0x49, 0x64, 0x12, 0x39, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x21, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x65,
-	0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6f, 0x6d, 0x6d, 0x61,
-	0x6e, 0x64, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73,
-	0x22, 0x2e, 0x0a, 0x12, 0x41, 0x63, 0x6b, 0x43, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73,
-	0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73,
-	0x22, 0x48, 0x0a, 0x1b, 0x47, 0x65, 0x74, 0x53, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65,
-	0x64, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
-	0x29, 0x0a, 0x0b, 0x63, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x0a,
-	0x63, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72, 0x49, 0x64, 0x22, 0x54, 0x0a, 0x1c, 0x47, 0x65,
-	0x74, 0x53, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x64, 0x53, 0x74, 0x72, 0x65, 0x61,
-	0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x34, 0x0a, 0x07, 0x73, 0x74,
-	0x72, 0x65, 0x61, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x71, 0x75,
-	0x65, 0x75, 0x65, 0x72, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x76, 0x31,
-	0x2e, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x52, 0x07, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x73,
-	0x42, 0x31, 0x5a, 0x2f, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67,
-	0x73, 0x6f, 0x6c, 0x73, 0x2f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x71, 0x75, 0x65,
-	0x75, 0x65, 0x72, 0x2f, 0x63, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72, 0x73, 0x2f, 0x76, 0x31,
-	0x3b, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x22, 0x48, 0x0a, 0x1b,
+	0x47, 0x65, 0x74, 0x53, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x64, 0x53, 0x74, 0x72,
+	0x65, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x29, 0x0a, 0x0b, 0x63,
+	0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x0a, 0x63, 0x6f, 0x6e, 0x73,
+	0x75, 0x6d, 0x65, 0x72, 0x49, 0x64, 0x22, 0x54, 0x0a, 0x1c, 0x47, 0x65, 0x74, 0x53, 0x75, 0x62,
+	0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x64, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x34, 0x0a, 0x07, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d,
+	0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72,
+	0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x72,
+	0x65, 0x61, 0x6d, 0x52, 0x07, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x73, 0x42, 0x31, 0x5a, 0x2f,
+	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x67, 0x73, 0x6f, 0x6c, 0x73,
+	0x2f, 0x67, 0x6f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2f,
+	0x63, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72, 0x73, 0x2f, 0x76, 0x31, 0x3b, 0x76, 0x31, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -517,31 +290,23 @@ func file_queuer_consumers_v1_messages_proto_rawDescGZIP() []byte {
 	return file_queuer_consumers_v1_messages_proto_rawDescData
 }
 
-var file_queuer_consumers_v1_messages_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_queuer_consumers_v1_messages_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_queuer_consumers_v1_messages_proto_goTypes = []interface{}{
 	(*PublishConsumerStatsRequest)(nil),  // 0: queuer.consumers.v1.PublishConsumerStatsRequest
 	(*PublishConsumerStatsResponse)(nil), // 1: queuer.consumers.v1.PublishConsumerStatsResponse
-	(*SubscribeToCommandsRequest)(nil),   // 2: queuer.consumers.v1.SubscribeToCommandsRequest
-	(*SubscribeToCommandsResponse)(nil),  // 3: queuer.consumers.v1.SubscribeToCommandsResponse
-	(*AckCommandRequest)(nil),            // 4: queuer.consumers.v1.AckCommandRequest
-	(*AckCommandResponse)(nil),           // 5: queuer.consumers.v1.AckCommandResponse
-	(*GetSubscribedStreamsRequest)(nil),  // 6: queuer.consumers.v1.GetSubscribedStreamsRequest
-	(*GetSubscribedStreamsResponse)(nil), // 7: queuer.consumers.v1.GetSubscribedStreamsResponse
-	(*v1.Stats)(nil),                     // 8: queuer.entities.v1.Stats
-	(*v1.Command)(nil),                   // 9: queuer.entities.v1.Command
-	(v1.CommandStatus)(0),                // 10: queuer.entities.v1.CommandStatus
-	(*v1.Stream)(nil),                    // 11: queuer.entities.v1.Stream
+	(*GetSubscribedStreamsRequest)(nil),  // 2: queuer.consumers.v1.GetSubscribedStreamsRequest
+	(*GetSubscribedStreamsResponse)(nil), // 3: queuer.consumers.v1.GetSubscribedStreamsResponse
+	(*v1.Stats)(nil),                     // 4: queuer.entities.v1.Stats
+	(*v1.Stream)(nil),                    // 5: queuer.entities.v1.Stream
 }
 var file_queuer_consumers_v1_messages_proto_depIdxs = []int32{
-	8,  // 0: queuer.consumers.v1.PublishConsumerStatsRequest.stats:type_name -> queuer.entities.v1.Stats
-	9,  // 1: queuer.consumers.v1.SubscribeToCommandsResponse.command:type_name -> queuer.entities.v1.Command
-	10, // 2: queuer.consumers.v1.AckCommandRequest.status:type_name -> queuer.entities.v1.CommandStatus
-	11, // 3: queuer.consumers.v1.GetSubscribedStreamsResponse.streams:type_name -> queuer.entities.v1.Stream
-	4,  // [4:4] is the sub-list for method output_type
-	4,  // [4:4] is the sub-list for method input_type
-	4,  // [4:4] is the sub-list for extension type_name
-	4,  // [4:4] is the sub-list for extension extendee
-	0,  // [0:4] is the sub-list for field type_name
+	4, // 0: queuer.consumers.v1.PublishConsumerStatsRequest.stats:type_name -> queuer.entities.v1.Stats
+	5, // 1: queuer.consumers.v1.GetSubscribedStreamsResponse.streams:type_name -> queuer.entities.v1.Stream
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_queuer_consumers_v1_messages_proto_init() }
@@ -575,54 +340,6 @@ func file_queuer_consumers_v1_messages_proto_init() {
 			}
 		}
 		file_queuer_consumers_v1_messages_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SubscribeToCommandsRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_queuer_consumers_v1_messages_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SubscribeToCommandsResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_queuer_consumers_v1_messages_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AckCommandRequest); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_queuer_consumers_v1_messages_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AckCommandResponse); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_queuer_consumers_v1_messages_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetSubscribedStreamsRequest); i {
 			case 0:
 				return &v.state
@@ -634,7 +351,7 @@ func file_queuer_consumers_v1_messages_proto_init() {
 				return nil
 			}
 		}
-		file_queuer_consumers_v1_messages_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+		file_queuer_consumers_v1_messages_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetSubscribedStreamsResponse); i {
 			case 0:
 				return &v.state
@@ -653,7 +370,7 @@ func file_queuer_consumers_v1_messages_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_queuer_consumers_v1_messages_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
