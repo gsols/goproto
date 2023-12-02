@@ -20,8 +20,6 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	ConsumerService_PublishConsumerStats_FullMethodName = "/queuer.consumers.v1.ConsumerService/PublishConsumerStats"
-	ConsumerService_SubscribeToCommands_FullMethodName  = "/queuer.consumers.v1.ConsumerService/SubscribeToCommands"
-	ConsumerService_AckCommand_FullMethodName           = "/queuer.consumers.v1.ConsumerService/AckCommand"
 	ConsumerService_GetSubscribedStreams_FullMethodName = "/queuer.consumers.v1.ConsumerService/GetSubscribedStreams"
 )
 
@@ -30,8 +28,6 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConsumerServiceClient interface {
 	PublishConsumerStats(ctx context.Context, opts ...grpc.CallOption) (ConsumerService_PublishConsumerStatsClient, error)
-	SubscribeToCommands(ctx context.Context, in *SubscribeToCommandsRequest, opts ...grpc.CallOption) (ConsumerService_SubscribeToCommandsClient, error)
-	AckCommand(ctx context.Context, in *AckCommandRequest, opts ...grpc.CallOption) (*AckCommandResponse, error)
 	GetSubscribedStreams(ctx context.Context, in *GetSubscribedStreamsRequest, opts ...grpc.CallOption) (*GetSubscribedStreamsResponse, error)
 }
 
@@ -77,47 +73,6 @@ func (x *consumerServicePublishConsumerStatsClient) CloseAndRecv() (*PublishCons
 	return m, nil
 }
 
-func (c *consumerServiceClient) SubscribeToCommands(ctx context.Context, in *SubscribeToCommandsRequest, opts ...grpc.CallOption) (ConsumerService_SubscribeToCommandsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ConsumerService_ServiceDesc.Streams[1], ConsumerService_SubscribeToCommands_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &consumerServiceSubscribeToCommandsClient{stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
-}
-
-type ConsumerService_SubscribeToCommandsClient interface {
-	Recv() (*SubscribeToCommandsResponse, error)
-	grpc.ClientStream
-}
-
-type consumerServiceSubscribeToCommandsClient struct {
-	grpc.ClientStream
-}
-
-func (x *consumerServiceSubscribeToCommandsClient) Recv() (*SubscribeToCommandsResponse, error) {
-	m := new(SubscribeToCommandsResponse)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
-func (c *consumerServiceClient) AckCommand(ctx context.Context, in *AckCommandRequest, opts ...grpc.CallOption) (*AckCommandResponse, error) {
-	out := new(AckCommandResponse)
-	err := c.cc.Invoke(ctx, ConsumerService_AckCommand_FullMethodName, in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *consumerServiceClient) GetSubscribedStreams(ctx context.Context, in *GetSubscribedStreamsRequest, opts ...grpc.CallOption) (*GetSubscribedStreamsResponse, error) {
 	out := new(GetSubscribedStreamsResponse)
 	err := c.cc.Invoke(ctx, ConsumerService_GetSubscribedStreams_FullMethodName, in, out, opts...)
@@ -132,8 +87,6 @@ func (c *consumerServiceClient) GetSubscribedStreams(ctx context.Context, in *Ge
 // for forward compatibility
 type ConsumerServiceServer interface {
 	PublishConsumerStats(ConsumerService_PublishConsumerStatsServer) error
-	SubscribeToCommands(*SubscribeToCommandsRequest, ConsumerService_SubscribeToCommandsServer) error
-	AckCommand(context.Context, *AckCommandRequest) (*AckCommandResponse, error)
 	GetSubscribedStreams(context.Context, *GetSubscribedStreamsRequest) (*GetSubscribedStreamsResponse, error)
 	mustEmbedUnimplementedConsumerServiceServer()
 }
@@ -144,12 +97,6 @@ type UnimplementedConsumerServiceServer struct {
 
 func (UnimplementedConsumerServiceServer) PublishConsumerStats(ConsumerService_PublishConsumerStatsServer) error {
 	return status.Errorf(codes.Unimplemented, "method PublishConsumerStats not implemented")
-}
-func (UnimplementedConsumerServiceServer) SubscribeToCommands(*SubscribeToCommandsRequest, ConsumerService_SubscribeToCommandsServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToCommands not implemented")
-}
-func (UnimplementedConsumerServiceServer) AckCommand(context.Context, *AckCommandRequest) (*AckCommandResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AckCommand not implemented")
 }
 func (UnimplementedConsumerServiceServer) GetSubscribedStreams(context.Context, *GetSubscribedStreamsRequest) (*GetSubscribedStreamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSubscribedStreams not implemented")
@@ -193,45 +140,6 @@ func (x *consumerServicePublishConsumerStatsServer) Recv() (*PublishConsumerStat
 	return m, nil
 }
 
-func _ConsumerService_SubscribeToCommands_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeToCommandsRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
-	}
-	return srv.(ConsumerServiceServer).SubscribeToCommands(m, &consumerServiceSubscribeToCommandsServer{stream})
-}
-
-type ConsumerService_SubscribeToCommandsServer interface {
-	Send(*SubscribeToCommandsResponse) error
-	grpc.ServerStream
-}
-
-type consumerServiceSubscribeToCommandsServer struct {
-	grpc.ServerStream
-}
-
-func (x *consumerServiceSubscribeToCommandsServer) Send(m *SubscribeToCommandsResponse) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func _ConsumerService_AckCommand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AckCommandRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(ConsumerServiceServer).AckCommand(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: ConsumerService_AckCommand_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConsumerServiceServer).AckCommand(ctx, req.(*AckCommandRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _ConsumerService_GetSubscribedStreams_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetSubscribedStreamsRequest)
 	if err := dec(in); err != nil {
@@ -258,10 +166,6 @@ var ConsumerService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ConsumerServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "AckCommand",
-			Handler:    _ConsumerService_AckCommand_Handler,
-		},
-		{
 			MethodName: "GetSubscribedStreams",
 			Handler:    _ConsumerService_GetSubscribedStreams_Handler,
 		},
@@ -271,11 +175,6 @@ var ConsumerService_ServiceDesc = grpc.ServiceDesc{
 			StreamName:    "PublishConsumerStats",
 			Handler:       _ConsumerService_PublishConsumerStats_Handler,
 			ClientStreams: true,
-		},
-		{
-			StreamName:    "SubscribeToCommands",
-			Handler:       _ConsumerService_SubscribeToCommands_Handler,
-			ServerStreams: true,
 		},
 	},
 	Metadata: "queuer/consumers/v1/service.proto",
