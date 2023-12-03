@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.18](https://github.com/gsols/goproto/compare/v0.1.17...v0.1.18) (2023-12-03)
+
+
+### Bug Fixes
+
+* missing import [gsols/proto-apis@8ccb629af316ac8bd69ed1889904bdd0cfac0857] ([65e7ce8](https://github.com/gsols/goproto/commit/65e7ce809a6f0d762124e90e5b04528fdbb5fe3a))
+* package name [gsols/proto-apis@f96153da466c3dd3047db4b615b78adfe30e1739] ([dae0f02](https://github.com/gsols/goproto/commit/dae0f02a69c561d6d54af19067883dc6baa5d2b6))
+
 ## [0.1.17](https://github.com/gsols/goproto/compare/v0.1.16...v0.1.17) (2023-12-02)
 
 
