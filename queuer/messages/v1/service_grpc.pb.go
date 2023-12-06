@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	MessageService_Confirm_FullMethodName = "/queuer.messages.v1.MessageService/Confirm"
+	MessageService_Acknowledge_FullMethodName = "/queuer.messages.v1.MessageService/Acknowledge"
 )
 
 // MessageServiceClient is the client API for MessageService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type MessageServiceClient interface {
-	Confirm(ctx context.Context, in *ConfirmRequest, opts ...grpc.CallOption) (*ConfirmResponse, error)
+	Acknowledge(ctx context.Context, in *AcknowledgeRequest, opts ...grpc.CallOption) (*AcknowledgeResponse, error)
 }
 
 type messageServiceClient struct {
@@ -37,9 +37,9 @@ func NewMessageServiceClient(cc grpc.ClientConnInterface) MessageServiceClient {
 	return &messageServiceClient{cc}
 }
 
-func (c *messageServiceClient) Confirm(ctx context.Context, in *ConfirmRequest, opts ...grpc.CallOption) (*ConfirmResponse, error) {
-	out := new(ConfirmResponse)
-	err := c.cc.Invoke(ctx, MessageService_Confirm_FullMethodName, in, out, opts...)
+func (c *messageServiceClient) Acknowledge(ctx context.Context, in *AcknowledgeRequest, opts ...grpc.CallOption) (*AcknowledgeResponse, error) {
+	out := new(AcknowledgeResponse)
+	err := c.cc.Invoke(ctx, MessageService_Acknowledge_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +50,7 @@ func (c *messageServiceClient) Confirm(ctx context.Context, in *ConfirmRequest, 
 // All implementations must embed UnimplementedMessageServiceServer
 // for forward compatibility
 type MessageServiceServer interface {
-	Confirm(context.Context, *ConfirmRequest) (*ConfirmResponse, error)
+	Acknowledge(context.Context, *AcknowledgeRequest) (*AcknowledgeResponse, error)
 	mustEmbedUnimplementedMessageServiceServer()
 }
 
@@ -58,8 +58,8 @@ type MessageServiceServer interface {
 type UnimplementedMessageServiceServer struct {
 }
 
-func (UnimplementedMessageServiceServer) Confirm(context.Context, *ConfirmRequest) (*ConfirmResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Confirm not implemented")
+func (UnimplementedMessageServiceServer) Acknowledge(context.Context, *AcknowledgeRequest) (*AcknowledgeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Acknowledge not implemented")
 }
 func (UnimplementedMessageServiceServer) mustEmbedUnimplementedMessageServiceServer() {}
 
@@ -74,20 +74,20 @@ func RegisterMessageServiceServer(s grpc.ServiceRegistrar, srv MessageServiceSer
 	s.RegisterService(&MessageService_ServiceDesc, srv)
 }
 
-func _MessageService_Confirm_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ConfirmRequest)
+func _MessageService_Acknowledge_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AcknowledgeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MessageServiceServer).Confirm(ctx, in)
+		return srv.(MessageServiceServer).Acknowledge(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: MessageService_Confirm_FullMethodName,
+		FullMethod: MessageService_Acknowledge_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MessageServiceServer).Confirm(ctx, req.(*ConfirmRequest))
+		return srv.(MessageServiceServer).Acknowledge(ctx, req.(*AcknowledgeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -100,8 +100,8 @@ var MessageService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*MessageServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Confirm",
-			Handler:    _MessageService_Confirm_Handler,
+			MethodName: "Acknowledge",
+			Handler:    _MessageService_Acknowledge_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
