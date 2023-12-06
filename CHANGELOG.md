@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.19](https://github.com/gsols/goproto/compare/v0.1.18...v0.1.19) (2023-12-06)
+
+
+### Features
+
+* change procedure name [gsols/proto-apis@2b7c8f20d6769ec5b221fcc98650555a75148d02] ([980b00d](https://github.com/gsols/goproto/commit/980b00d73459589ceb56088ddd9eace9d701141b))
+
 ## [0.1.18](https://github.com/gsols/goproto/compare/v0.1.17...v0.1.18) (2023-12-03)
 
 
