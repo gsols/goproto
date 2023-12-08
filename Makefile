@@ -28,7 +28,7 @@ $(foreach dep, $(GO_DEPENDENCIES), $(eval $(call make-go-dependency, $(dep))))
 
 .PHONY: proto/buf.lock
 proto/buf.lock: bin/buf
-	@bin/buf mod update src
+	@bin/buf mod update proto
 
 protolint: proto/buf.lock bin/protoc-gen-buf-lint ## Lints your protobuf files
 	bin/buf lint
