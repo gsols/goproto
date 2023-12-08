@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.22](https://github.com/gsols/goproto/compare/v0.1.21...v0.1.22) (2023-12-08)
+
+
+### Features
+
+* remove branch attribute ([6f1df63](https://github.com/gsols/goproto/commit/6f1df63fd5597a2c994f4e2ed5acd75e49158182))
+
 ## [0.1.21](https://github.com/gsols/goproto/compare/v0.1.20...v0.1.21) (2023-12-08)
 
 
