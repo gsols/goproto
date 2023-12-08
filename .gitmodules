@@ -1,4 +1,3 @@
 [submodule "proto"]
 	path = proto
 	url = https://github.com/gsols/proto-apis.git
-	branch = main
