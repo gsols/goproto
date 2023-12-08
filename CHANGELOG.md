@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.1.21](https://github.com/gsols/goproto/compare/v0.1.20...v0.1.21) (2023-12-08)
+
+
+### Features
+
+* add setup protoc ([71e483a](https://github.com/gsols/goproto/commit/71e483a753030a5cf233459ea6d0d6224b79f7d0))
+* rename subdmodule ([5746e65](https://github.com/gsols/goproto/commit/5746e6517db5514afce9fd4279b839e0b9fe1880))
+
+
+### Bug Fixes
+
+* missing options declaration [gsols/proto-apis@707cb4452f7b3561f44e94f57c5bdc5bbea0bc2c] ([b924d9d](https://github.com/gsols/goproto/commit/b924d9d1574e4bd25c75cac3ee1a410986062158))
+* missing rename ([79ae503](https://github.com/gsols/goproto/commit/79ae5034cd4d9d2951d6cb760cdaafbc73ed9bfe))
+* missing submodule name renaming ([af946ba](https://github.com/gsols/goproto/commit/af946ba62cc7dc2246595ad27aef85ac5f171c18))
+
 ## [0.1.20](https://github.com/gsols/goproto/compare/v0.1.19...v0.1.20) (2023-12-06)
 
 
