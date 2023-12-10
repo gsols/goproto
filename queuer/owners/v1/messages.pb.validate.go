@@ -823,33 +823,16 @@ func (m *RegisterConsumerRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if all {
-		switch v := interface{}(m.GetConsumer()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, RegisterConsumerRequestValidationError{
-					field:  "Consumer",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, RegisterConsumerRequestValidationError{
-					field:  "Consumer",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
+	if err := m._validateUuid(m.GetConsumerId()); err != nil {
+		err = RegisterConsumerRequestValidationError{
+			field:  "ConsumerId",
+			reason: "value must be a valid UUID",
+			cause:  err,
 		}
-	} else if v, ok := interface{}(m.GetConsumer()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return RegisterConsumerRequestValidationError{
-				field:  "Consumer",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
+		if !all {
+			return err
 		}
+		errors = append(errors, err)
 	}
 
 	if len(errors) > 0 {
@@ -962,34 +945,7 @@ func (m *RegisterConsumerResponse) validate(all bool) error {
 
 	var errors []error
 
-	if all {
-		switch v := interface{}(m.GetResult()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, RegisterConsumerResponseValidationError{
-					field:  "Result",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, RegisterConsumerResponseValidationError{
-					field:  "Result",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetResult()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return RegisterConsumerResponseValidationError{
-				field:  "Result",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
+	// no validation rules for IssuedToken
 
 	if len(errors) > 0 {
 		return RegisterConsumerResponseMultiError(errors)

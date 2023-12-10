@@ -31,8 +31,7 @@ type PublishConsumerStatsRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ConsumerId string    `protobuf:"bytes,1,opt,name=consumer_id,json=consumerId,proto3" json:"consumer_id,omitempty"`
-	Stats      *v1.Stats `protobuf:"bytes,2,opt,name=stats,proto3" json:"stats,omitempty"`
+	Stats *v1.Stats `protobuf:"bytes,1,opt,name=stats,proto3" json:"stats,omitempty"`
 }
 
 func (x *PublishConsumerStatsRequest) Reset() {
@@ -65,13 +64,6 @@ func (x *PublishConsumerStatsRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use PublishConsumerStatsRequest.ProtoReflect.Descriptor instead.
 func (*PublishConsumerStatsRequest) Descriptor() ([]byte, []int) {
 	return file_queuer_consumers_v1_messages_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *PublishConsumerStatsRequest) GetConsumerId() string {
-	if x != nil {
-		return x.ConsumerId
-	}
-	return ""
 }
 
 func (x *PublishConsumerStatsRequest) GetStats() *v1.Stats {
@@ -128,18 +120,118 @@ func (x *PublishConsumerStatsResponse) GetResult() *v1.Result {
 	return nil
 }
 
-type GetSubscribedStreamsRequest struct {
+type RegisterConsumerInfoRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ConsumerId string `protobuf:"bytes,1,opt,name=consumer_id,json=consumerId,proto3" json:"consumer_id,omitempty"`
+	ConsumerId   string           `protobuf:"bytes,1,opt,name=consumer_id,json=consumerId,proto3" json:"consumer_id,omitempty"`
+	ConsumerInfo *v1.ConsumerInfo `protobuf:"bytes,2,opt,name=consumer_info,json=consumerInfo,proto3" json:"consumer_info,omitempty"`
+}
+
+func (x *RegisterConsumerInfoRequest) Reset() {
+	*x = RegisterConsumerInfoRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_queuer_consumers_v1_messages_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RegisterConsumerInfoRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterConsumerInfoRequest) ProtoMessage() {}
+
+func (x *RegisterConsumerInfoRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_queuer_consumers_v1_messages_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterConsumerInfoRequest.ProtoReflect.Descriptor instead.
+func (*RegisterConsumerInfoRequest) Descriptor() ([]byte, []int) {
+	return file_queuer_consumers_v1_messages_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *RegisterConsumerInfoRequest) GetConsumerId() string {
+	if x != nil {
+		return x.ConsumerId
+	}
+	return ""
+}
+
+func (x *RegisterConsumerInfoRequest) GetConsumerInfo() *v1.ConsumerInfo {
+	if x != nil {
+		return x.ConsumerInfo
+	}
+	return nil
+}
+
+type RegisterConsumerInfoResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Result *v1.Result `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+}
+
+func (x *RegisterConsumerInfoResponse) Reset() {
+	*x = RegisterConsumerInfoResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_queuer_consumers_v1_messages_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *RegisterConsumerInfoResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterConsumerInfoResponse) ProtoMessage() {}
+
+func (x *RegisterConsumerInfoResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_queuer_consumers_v1_messages_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterConsumerInfoResponse.ProtoReflect.Descriptor instead.
+func (*RegisterConsumerInfoResponse) Descriptor() ([]byte, []int) {
+	return file_queuer_consumers_v1_messages_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *RegisterConsumerInfoResponse) GetResult() *v1.Result {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+type GetSubscribedStreamsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
 }
 
 func (x *GetSubscribedStreamsRequest) Reset() {
 	*x = GetSubscribedStreamsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_consumers_v1_messages_proto_msgTypes[2]
+		mi := &file_queuer_consumers_v1_messages_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -152,7 +244,7 @@ func (x *GetSubscribedStreamsRequest) String() string {
 func (*GetSubscribedStreamsRequest) ProtoMessage() {}
 
 func (x *GetSubscribedStreamsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_consumers_v1_messages_proto_msgTypes[2]
+	mi := &file_queuer_consumers_v1_messages_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -165,14 +257,7 @@ func (x *GetSubscribedStreamsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSubscribedStreamsRequest.ProtoReflect.Descriptor instead.
 func (*GetSubscribedStreamsRequest) Descriptor() ([]byte, []int) {
-	return file_queuer_consumers_v1_messages_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *GetSubscribedStreamsRequest) GetConsumerId() string {
-	if x != nil {
-		return x.ConsumerId
-	}
-	return ""
+	return file_queuer_consumers_v1_messages_proto_rawDescGZIP(), []int{4}
 }
 
 type GetSubscribedStreamsResponse struct {
@@ -186,7 +271,7 @@ type GetSubscribedStreamsResponse struct {
 func (x *GetSubscribedStreamsResponse) Reset() {
 	*x = GetSubscribedStreamsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_queuer_consumers_v1_messages_proto_msgTypes[3]
+		mi := &file_queuer_consumers_v1_messages_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -199,7 +284,7 @@ func (x *GetSubscribedStreamsResponse) String() string {
 func (*GetSubscribedStreamsResponse) ProtoMessage() {}
 
 func (x *GetSubscribedStreamsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_queuer_consumers_v1_messages_proto_msgTypes[3]
+	mi := &file_queuer_consumers_v1_messages_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -212,7 +297,7 @@ func (x *GetSubscribedStreamsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSubscribedStreamsResponse.ProtoReflect.Descriptor instead.
 func (*GetSubscribedStreamsResponse) Descriptor() ([]byte, []int) {
-	return file_queuer_consumers_v1_messages_proto_rawDescGZIP(), []int{3}
+	return file_queuer_consumers_v1_messages_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetSubscribedStreamsResponse) GetStreams() []*v1.Stream {
@@ -252,25 +337,34 @@ var file_queuer_consumers_v1_messages_proto_rawDesc = []byte{
 	0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2f, 0x76, 0x31, 0x2f, 0x73, 0x74, 0x61, 0x74,
 	0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1f, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2f,
 	0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2f, 0x76, 0x31, 0x2f, 0x72, 0x65, 0x73, 0x75,
-	0x6c, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x79, 0x0a, 0x1b, 0x50, 0x75, 0x62, 0x6c,
+	0x6c, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x4e, 0x0a, 0x1b, 0x50, 0x75, 0x62, 0x6c,
 	0x69, 0x73, 0x68, 0x43, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72, 0x53, 0x74, 0x61, 0x74, 0x73,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x29, 0x0a, 0x0b, 0x63, 0x6f, 0x6e, 0x73, 0x75,
-	0x6d, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x08, 0xfa, 0x42,
-	0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x0a, 0x63, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72,
-	0x49, 0x64, 0x12, 0x2f, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28,
-	0x0b, 0x32, 0x19, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74,
-	0x69, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52, 0x05, 0x73, 0x74,
-	0x61, 0x74, 0x73, 0x22, 0x52, 0x0a, 0x1c, 0x50, 0x75, 0x62, 0x6c, 0x69, 0x73, 0x68, 0x43, 0x6f,
-	0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72, 0x53, 0x74, 0x61, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x12, 0x32, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x65, 0x6e, 0x74,
-	0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52,
-	0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x48, 0x0a, 0x1b, 0x47, 0x65, 0x74, 0x53, 0x75,
-	0x62, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x64, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x73, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x29, 0x0a, 0x0b, 0x63, 0x6f, 0x6e, 0x73, 0x75, 0x6d,
-	0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x08, 0xfa, 0x42, 0x05,
-	0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x0a, 0x63, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72, 0x49,
-	0x64, 0x22, 0x54, 0x0a, 0x1c, 0x47, 0x65, 0x74, 0x53, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x62,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x2f, 0x0a, 0x05, 0x73, 0x74, 0x61, 0x74, 0x73,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e,
+	0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x74,
+	0x73, 0x52, 0x05, 0x73, 0x74, 0x61, 0x74, 0x73, 0x22, 0x52, 0x0a, 0x1c, 0x50, 0x75, 0x62, 0x6c,
+	0x69, 0x73, 0x68, 0x43, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72, 0x53, 0x74, 0x61, 0x74, 0x73,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x32, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75,
+	0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65,
+	0x72, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x2e, 0x76, 0x31, 0x2e, 0x52, 0x65,
+	0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x8f, 0x01, 0x0a,
+	0x1b, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65,
+	0x72, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x29, 0x0a, 0x0b,
+	0x63, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x0a, 0x63, 0x6f, 0x6e,
+	0x73, 0x75, 0x6d, 0x65, 0x72, 0x49, 0x64, 0x12, 0x45, 0x0a, 0x0d, 0x63, 0x6f, 0x6e, 0x73, 0x75,
+	0x6d, 0x65, 0x72, 0x5f, 0x69, 0x6e, 0x66, 0x6f, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20,
+	0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73,
+	0x2e, 0x76, 0x31, 0x2e, 0x43, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f,
+	0x52, 0x0c, 0x63, 0x6f, 0x6e, 0x73, 0x75, 0x6d, 0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x52,
+	0x0a, 0x1c, 0x52, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x73, 0x75, 0x6d,
+	0x65, 0x72, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x32,
+	0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a,
+	0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73,
+	0x2e, 0x76, 0x31, 0x2e, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75,
+	0x6c, 0x74, 0x22, 0x1d, 0x0a, 0x1b, 0x47, 0x65, 0x74, 0x53, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69,
+	0x62, 0x65, 0x64, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x22, 0x54, 0x0a, 0x1c, 0x47, 0x65, 0x74, 0x53, 0x75, 0x62, 0x73, 0x63, 0x72, 0x69, 0x62,
 	0x65, 0x64, 0x53, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
 	0x65, 0x12, 0x34, 0x0a, 0x07, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x03,
 	0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x71, 0x75, 0x65, 0x75, 0x65, 0x72, 0x2e, 0x65, 0x6e, 0x74, 0x69,
@@ -299,25 +393,30 @@ func file_queuer_consumers_v1_messages_proto_rawDescGZIP() []byte {
 	return file_queuer_consumers_v1_messages_proto_rawDescData
 }
 
-var file_queuer_consumers_v1_messages_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_queuer_consumers_v1_messages_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_queuer_consumers_v1_messages_proto_goTypes = []interface{}{
 	(*PublishConsumerStatsRequest)(nil),  // 0: queuer.consumers.v1.PublishConsumerStatsRequest
 	(*PublishConsumerStatsResponse)(nil), // 1: queuer.consumers.v1.PublishConsumerStatsResponse
-	(*GetSubscribedStreamsRequest)(nil),  // 2: queuer.consumers.v1.GetSubscribedStreamsRequest
-	(*GetSubscribedStreamsResponse)(nil), // 3: queuer.consumers.v1.GetSubscribedStreamsResponse
-	(*v1.Stats)(nil),                     // 4: queuer.entities.v1.Stats
-	(*v1.Result)(nil),                    // 5: queuer.entities.v1.Result
-	(*v1.Stream)(nil),                    // 6: queuer.entities.v1.Stream
+	(*RegisterConsumerInfoRequest)(nil),  // 2: queuer.consumers.v1.RegisterConsumerInfoRequest
+	(*RegisterConsumerInfoResponse)(nil), // 3: queuer.consumers.v1.RegisterConsumerInfoResponse
+	(*GetSubscribedStreamsRequest)(nil),  // 4: queuer.consumers.v1.GetSubscribedStreamsRequest
+	(*GetSubscribedStreamsResponse)(nil), // 5: queuer.consumers.v1.GetSubscribedStreamsResponse
+	(*v1.Stats)(nil),                     // 6: queuer.entities.v1.Stats
+	(*v1.Result)(nil),                    // 7: queuer.entities.v1.Result
+	(*v1.ConsumerInfo)(nil),              // 8: queuer.entities.v1.ConsumerInfo
+	(*v1.Stream)(nil),                    // 9: queuer.entities.v1.Stream
 }
 var file_queuer_consumers_v1_messages_proto_depIdxs = []int32{
-	4, // 0: queuer.consumers.v1.PublishConsumerStatsRequest.stats:type_name -> queuer.entities.v1.Stats
-	5, // 1: queuer.consumers.v1.PublishConsumerStatsResponse.result:type_name -> queuer.entities.v1.Result
-	6, // 2: queuer.consumers.v1.GetSubscribedStreamsResponse.streams:type_name -> queuer.entities.v1.Stream
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	6, // 0: queuer.consumers.v1.PublishConsumerStatsRequest.stats:type_name -> queuer.entities.v1.Stats
+	7, // 1: queuer.consumers.v1.PublishConsumerStatsResponse.result:type_name -> queuer.entities.v1.Result
+	8, // 2: queuer.consumers.v1.RegisterConsumerInfoRequest.consumer_info:type_name -> queuer.entities.v1.ConsumerInfo
+	7, // 3: queuer.consumers.v1.RegisterConsumerInfoResponse.result:type_name -> queuer.entities.v1.Result
+	9, // 4: queuer.consumers.v1.GetSubscribedStreamsResponse.streams:type_name -> queuer.entities.v1.Stream
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_queuer_consumers_v1_messages_proto_init() }
@@ -351,7 +450,7 @@ func file_queuer_consumers_v1_messages_proto_init() {
 			}
 		}
 		file_queuer_consumers_v1_messages_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetSubscribedStreamsRequest); i {
+			switch v := v.(*RegisterConsumerInfoRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -363,6 +462,30 @@ func file_queuer_consumers_v1_messages_proto_init() {
 			}
 		}
 		file_queuer_consumers_v1_messages_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*RegisterConsumerInfoResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_queuer_consumers_v1_messages_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetSubscribedStreamsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_queuer_consumers_v1_messages_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetSubscribedStreamsResponse); i {
 			case 0:
 				return &v.state
@@ -381,7 +504,7 @@ func file_queuer_consumers_v1_messages_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_queuer_consumers_v1_messages_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
