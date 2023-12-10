@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.24](https://github.com/gsols/goproto/compare/v0.1.23...v0.1.24) (2023-12-10)
+
+
+### Features
+
+* remove unnecesary body [gsols/proto-apis@90a5a232a2a017c7a4bfbd7c09cd116c023717ae] ([2e888e9](https://github.com/gsols/goproto/commit/2e888e9f12aa10252c97415eaa57289a1a7c2517))
+
 ## [0.1.23](https://github.com/gsols/goproto/compare/v0.1.22...v0.1.23) (2023-12-10)
 
 
