@@ -17,8 +17,6 @@ import (
 	"unicode/utf8"
 
 	"google.golang.org/protobuf/types/known/anypb"
-
-	v1 "github.com/gsols/goproto/queuer/entities/v1"
 )
 
 // ensure the imports are used
@@ -35,8 +33,6 @@ var (
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
 	_ = sort.Sort
-
-	_ = v1.CommandStatus(0)
 )
 
 // define the regex for a UUID once up-front
@@ -64,28 +60,8 @@ func (m *SubscribeToCommandsRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetConsumerId()); err != nil {
-		err = SubscribeToCommandsRequestValidationError{
-			field:  "ConsumerId",
-			reason: "value must be a valid UUID",
-			cause:  err,
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if len(errors) > 0 {
 		return SubscribeToCommandsRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-func (m *SubscribeToCommandsRequest) _validateUuid(uuid string) error {
-	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
-		return errors.New("invalid uuid format")
 	}
 
 	return nil
@@ -318,18 +294,6 @@ func (m *AckCommandRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetConsumerId()); err != nil {
-		err = AckCommandRequestValidationError{
-			field:  "ConsumerId",
-			reason: "value must be a valid UUID",
-			cause:  err,
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if err := m._validateUuid(m.GetCommandId()); err != nil {
 		err = AckCommandRequestValidationError{
 			field:  "CommandId",
@@ -341,8 +305,6 @@ func (m *AckCommandRequest) validate(all bool) error {
 		}
 		errors = append(errors, err)
 	}
-
-	// no validation rules for Status
 
 	if len(errors) > 0 {
 		return AckCommandRequestMultiError(errors)
