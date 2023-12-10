@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.23](https://github.com/gsols/goproto/compare/v0.1.22...v0.1.23) (2023-12-10)
+
+
+### Features
+
+* update proto ([52c3d71](https://github.com/gsols/goproto/commit/52c3d7193cde775c9779a50a58616edbc2dfffd9))
+
 ## [0.1.22](https://github.com/gsols/goproto/compare/v0.1.21...v0.1.22) (2023-12-08)
 
 
