@@ -6,7 +6,7 @@ require (
 	github.com/bufbuild/buf v1.28.1
 	github.com/cosmtrek/air v1.49.0
 	github.com/envoyproxy/protoc-gen-validate v1.0.2
-	golang.org/x/tools v0.16.0
+	golang.org/x/tools v0.16.1
 	google.golang.org/genproto/googleapis/api v0.0.0-20231106174013-bbf56f31fb17
 	google.golang.org/grpc v1.59.0
 	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.3.0
