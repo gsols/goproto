@@ -35,6 +35,300 @@ var (
 	_ = sort.Sort
 )
 
+// define the regex for a UUID once up-front
+var _messages_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
+// Validate checks the field values on RegisterConsumerRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *RegisterConsumerRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on RegisterConsumerRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// RegisterConsumerRequestMultiError, or nil if none found.
+func (m *RegisterConsumerRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *RegisterConsumerRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetConsumer()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, RegisterConsumerRequestValidationError{
+					field:  "Consumer",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, RegisterConsumerRequestValidationError{
+					field:  "Consumer",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetConsumer()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RegisterConsumerRequestValidationError{
+				field:  "Consumer",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return RegisterConsumerRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// RegisterConsumerRequestMultiError is an error wrapping multiple validation
+// errors returned by RegisterConsumerRequest.ValidateAll() if the designated
+// constraints aren't met.
+type RegisterConsumerRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m RegisterConsumerRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m RegisterConsumerRequestMultiError) AllErrors() []error { return m }
+
+// RegisterConsumerRequestValidationError is the validation error returned by
+// RegisterConsumerRequest.Validate if the designated constraints aren't met.
+type RegisterConsumerRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RegisterConsumerRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RegisterConsumerRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RegisterConsumerRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RegisterConsumerRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RegisterConsumerRequestValidationError) ErrorName() string {
+	return "RegisterConsumerRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RegisterConsumerRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRegisterConsumerRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RegisterConsumerRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RegisterConsumerRequestValidationError{}
+
+// Validate checks the field values on RegisterConsumerResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *RegisterConsumerResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on RegisterConsumerResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// RegisterConsumerResponseMultiError, or nil if none found.
+func (m *RegisterConsumerResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *RegisterConsumerResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetResult()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, RegisterConsumerResponseValidationError{
+					field:  "Result",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, RegisterConsumerResponseValidationError{
+					field:  "Result",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetResult()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RegisterConsumerResponseValidationError{
+				field:  "Result",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
+		switch v := interface{}(m.GetSession()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, RegisterConsumerResponseValidationError{
+					field:  "Session",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, RegisterConsumerResponseValidationError{
+					field:  "Session",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetSession()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RegisterConsumerResponseValidationError{
+				field:  "Session",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return RegisterConsumerResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// RegisterConsumerResponseMultiError is an error wrapping multiple validation
+// errors returned by RegisterConsumerResponse.ValidateAll() if the designated
+// constraints aren't met.
+type RegisterConsumerResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m RegisterConsumerResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m RegisterConsumerResponseMultiError) AllErrors() []error { return m }
+
+// RegisterConsumerResponseValidationError is the validation error returned by
+// RegisterConsumerResponse.Validate if the designated constraints aren't met.
+type RegisterConsumerResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RegisterConsumerResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RegisterConsumerResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RegisterConsumerResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RegisterConsumerResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RegisterConsumerResponseValidationError) ErrorName() string {
+	return "RegisterConsumerResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RegisterConsumerResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRegisterConsumerResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RegisterConsumerResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RegisterConsumerResponseValidationError{}
+
 // Validate checks the field values on PublishConsumerStatsRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -56,6 +350,18 @@ func (m *PublishConsumerStatsRequest) validate(all bool) error {
 	}
 
 	var errors []error
+
+	if err := m._validateUuid(m.GetConsumerId()); err != nil {
+		err = PublishConsumerStatsRequestValidationError{
+			field:  "ConsumerId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if all {
 		switch v := interface{}(m.GetStats()).(type) {
@@ -88,6 +394,14 @@ func (m *PublishConsumerStatsRequest) validate(all bool) error {
 
 	if len(errors) > 0 {
 		return PublishConsumerStatsRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *PublishConsumerStatsRequest) _validateUuid(uuid string) error {
+	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
 	}
 
 	return nil
@@ -299,22 +613,22 @@ var _ interface {
 	ErrorName() string
 } = PublishConsumerStatsResponseValidationError{}
 
-// Validate checks the field values on RegisterConsumerInfoRequest with the
-// rules defined in the proto definition for this message. If any rules are
+// Validate checks the field values on UpdateConsumerInfoRequest with the rules
+// defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *RegisterConsumerInfoRequest) Validate() error {
+func (m *UpdateConsumerInfoRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on RegisterConsumerInfoRequest with the
+// ValidateAll checks the field values on UpdateConsumerInfoRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// RegisterConsumerInfoRequestMultiError, or nil if none found.
-func (m *RegisterConsumerInfoRequest) ValidateAll() error {
+// UpdateConsumerInfoRequestMultiError, or nil if none found.
+func (m *UpdateConsumerInfoRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *RegisterConsumerInfoRequest) validate(all bool) error {
+func (m *UpdateConsumerInfoRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -325,7 +639,7 @@ func (m *RegisterConsumerInfoRequest) validate(all bool) error {
 		switch v := interface{}(m.GetConsumerInfo()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, RegisterConsumerInfoRequestValidationError{
+				errors = append(errors, UpdateConsumerInfoRequestValidationError{
 					field:  "ConsumerInfo",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -333,7 +647,7 @@ func (m *RegisterConsumerInfoRequest) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, RegisterConsumerInfoRequestValidationError{
+				errors = append(errors, UpdateConsumerInfoRequestValidationError{
 					field:  "ConsumerInfo",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -342,7 +656,7 @@ func (m *RegisterConsumerInfoRequest) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetConsumerInfo()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return RegisterConsumerInfoRequestValidationError{
+			return UpdateConsumerInfoRequestValidationError{
 				field:  "ConsumerInfo",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -351,19 +665,19 @@ func (m *RegisterConsumerInfoRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return RegisterConsumerInfoRequestMultiError(errors)
+		return UpdateConsumerInfoRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// RegisterConsumerInfoRequestMultiError is an error wrapping multiple
-// validation errors returned by RegisterConsumerInfoRequest.ValidateAll() if
-// the designated constraints aren't met.
-type RegisterConsumerInfoRequestMultiError []error
+// UpdateConsumerInfoRequestMultiError is an error wrapping multiple validation
+// errors returned by UpdateConsumerInfoRequest.ValidateAll() if the
+// designated constraints aren't met.
+type UpdateConsumerInfoRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m RegisterConsumerInfoRequestMultiError) Error() string {
+func (m UpdateConsumerInfoRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -372,12 +686,11 @@ func (m RegisterConsumerInfoRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m RegisterConsumerInfoRequestMultiError) AllErrors() []error { return m }
+func (m UpdateConsumerInfoRequestMultiError) AllErrors() []error { return m }
 
-// RegisterConsumerInfoRequestValidationError is the validation error returned
-// by RegisterConsumerInfoRequest.Validate if the designated constraints
-// aren't met.
-type RegisterConsumerInfoRequestValidationError struct {
+// UpdateConsumerInfoRequestValidationError is the validation error returned by
+// UpdateConsumerInfoRequest.Validate if the designated constraints aren't met.
+type UpdateConsumerInfoRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -385,24 +698,24 @@ type RegisterConsumerInfoRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e RegisterConsumerInfoRequestValidationError) Field() string { return e.field }
+func (e UpdateConsumerInfoRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e RegisterConsumerInfoRequestValidationError) Reason() string { return e.reason }
+func (e UpdateConsumerInfoRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e RegisterConsumerInfoRequestValidationError) Cause() error { return e.cause }
+func (e UpdateConsumerInfoRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e RegisterConsumerInfoRequestValidationError) Key() bool { return e.key }
+func (e UpdateConsumerInfoRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e RegisterConsumerInfoRequestValidationError) ErrorName() string {
-	return "RegisterConsumerInfoRequestValidationError"
+func (e UpdateConsumerInfoRequestValidationError) ErrorName() string {
+	return "UpdateConsumerInfoRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e RegisterConsumerInfoRequestValidationError) Error() string {
+func (e UpdateConsumerInfoRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -414,14 +727,14 @@ func (e RegisterConsumerInfoRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sRegisterConsumerInfoRequest.%s: %s%s",
+		"invalid %sUpdateConsumerInfoRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = RegisterConsumerInfoRequestValidationError{}
+var _ error = UpdateConsumerInfoRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -429,24 +742,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = RegisterConsumerInfoRequestValidationError{}
+} = UpdateConsumerInfoRequestValidationError{}
 
-// Validate checks the field values on RegisterConsumerInfoResponse with the
+// Validate checks the field values on UpdateConsumerInfoResponse with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *RegisterConsumerInfoResponse) Validate() error {
+func (m *UpdateConsumerInfoResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on RegisterConsumerInfoResponse with the
+// ValidateAll checks the field values on UpdateConsumerInfoResponse with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// RegisterConsumerInfoResponseMultiError, or nil if none found.
-func (m *RegisterConsumerInfoResponse) ValidateAll() error {
+// UpdateConsumerInfoResponseMultiError, or nil if none found.
+func (m *UpdateConsumerInfoResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *RegisterConsumerInfoResponse) validate(all bool) error {
+func (m *UpdateConsumerInfoResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -457,7 +770,7 @@ func (m *RegisterConsumerInfoResponse) validate(all bool) error {
 		switch v := interface{}(m.GetResult()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, RegisterConsumerInfoResponseValidationError{
+				errors = append(errors, UpdateConsumerInfoResponseValidationError{
 					field:  "Result",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -465,7 +778,7 @@ func (m *RegisterConsumerInfoResponse) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, RegisterConsumerInfoResponseValidationError{
+				errors = append(errors, UpdateConsumerInfoResponseValidationError{
 					field:  "Result",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -474,7 +787,7 @@ func (m *RegisterConsumerInfoResponse) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetResult()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return RegisterConsumerInfoResponseValidationError{
+			return UpdateConsumerInfoResponseValidationError{
 				field:  "Result",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -483,19 +796,19 @@ func (m *RegisterConsumerInfoResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return RegisterConsumerInfoResponseMultiError(errors)
+		return UpdateConsumerInfoResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// RegisterConsumerInfoResponseMultiError is an error wrapping multiple
-// validation errors returned by RegisterConsumerInfoResponse.ValidateAll() if
+// UpdateConsumerInfoResponseMultiError is an error wrapping multiple
+// validation errors returned by UpdateConsumerInfoResponse.ValidateAll() if
 // the designated constraints aren't met.
-type RegisterConsumerInfoResponseMultiError []error
+type UpdateConsumerInfoResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m RegisterConsumerInfoResponseMultiError) Error() string {
+func (m UpdateConsumerInfoResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -504,12 +817,11 @@ func (m RegisterConsumerInfoResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m RegisterConsumerInfoResponseMultiError) AllErrors() []error { return m }
+func (m UpdateConsumerInfoResponseMultiError) AllErrors() []error { return m }
 
-// RegisterConsumerInfoResponseValidationError is the validation error returned
-// by RegisterConsumerInfoResponse.Validate if the designated constraints
-// aren't met.
-type RegisterConsumerInfoResponseValidationError struct {
+// UpdateConsumerInfoResponseValidationError is the validation error returned
+// by UpdateConsumerInfoResponse.Validate if the designated constraints aren't met.
+type UpdateConsumerInfoResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -517,24 +829,24 @@ type RegisterConsumerInfoResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e RegisterConsumerInfoResponseValidationError) Field() string { return e.field }
+func (e UpdateConsumerInfoResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e RegisterConsumerInfoResponseValidationError) Reason() string { return e.reason }
+func (e UpdateConsumerInfoResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e RegisterConsumerInfoResponseValidationError) Cause() error { return e.cause }
+func (e UpdateConsumerInfoResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e RegisterConsumerInfoResponseValidationError) Key() bool { return e.key }
+func (e UpdateConsumerInfoResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e RegisterConsumerInfoResponseValidationError) ErrorName() string {
-	return "RegisterConsumerInfoResponseValidationError"
+func (e UpdateConsumerInfoResponseValidationError) ErrorName() string {
+	return "UpdateConsumerInfoResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e RegisterConsumerInfoResponseValidationError) Error() string {
+func (e UpdateConsumerInfoResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -546,14 +858,14 @@ func (e RegisterConsumerInfoResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sRegisterConsumerInfoResponse.%s: %s%s",
+		"invalid %sUpdateConsumerInfoResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = RegisterConsumerInfoResponseValidationError{}
+var _ error = UpdateConsumerInfoResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -561,7 +873,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = RegisterConsumerInfoResponseValidationError{}
+} = UpdateConsumerInfoResponseValidationError{}
 
 // Validate checks the field values on GetSubscribedStreamsRequest with the
 // rules defined in the proto definition for this message. If any rules are
