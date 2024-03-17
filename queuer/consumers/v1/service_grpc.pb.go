@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ConsumerService_RegisterConsumerInfo_FullMethodName = "/queuer.consumers.v1.ConsumerService/RegisterConsumerInfo"
+	ConsumerService_RegisterConsumer_FullMethodName     = "/queuer.consumers.v1.ConsumerService/RegisterConsumer"
+	ConsumerService_UpdateConsumerInfo_FullMethodName   = "/queuer.consumers.v1.ConsumerService/UpdateConsumerInfo"
 	ConsumerService_PublishConsumerStats_FullMethodName = "/queuer.consumers.v1.ConsumerService/PublishConsumerStats"
 	ConsumerService_GetSubscribedStreams_FullMethodName = "/queuer.consumers.v1.ConsumerService/GetSubscribedStreams"
 )
@@ -28,7 +29,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConsumerServiceClient interface {
-	RegisterConsumerInfo(ctx context.Context, in *RegisterConsumerInfoRequest, opts ...grpc.CallOption) (*RegisterConsumerInfoResponse, error)
+	RegisterConsumer(ctx context.Context, in *RegisterConsumerRequest, opts ...grpc.CallOption) (*RegisterConsumerResponse, error)
+	UpdateConsumerInfo(ctx context.Context, in *UpdateConsumerInfoRequest, opts ...grpc.CallOption) (*UpdateConsumerInfoResponse, error)
 	PublishConsumerStats(ctx context.Context, opts ...grpc.CallOption) (ConsumerService_PublishConsumerStatsClient, error)
 	GetSubscribedStreams(ctx context.Context, in *GetSubscribedStreamsRequest, opts ...grpc.CallOption) (*GetSubscribedStreamsResponse, error)
 }
@@ -41,9 +43,18 @@ func NewConsumerServiceClient(cc grpc.ClientConnInterface) ConsumerServiceClient
 	return &consumerServiceClient{cc}
 }
 
-func (c *consumerServiceClient) RegisterConsumerInfo(ctx context.Context, in *RegisterConsumerInfoRequest, opts ...grpc.CallOption) (*RegisterConsumerInfoResponse, error) {
-	out := new(RegisterConsumerInfoResponse)
-	err := c.cc.Invoke(ctx, ConsumerService_RegisterConsumerInfo_FullMethodName, in, out, opts...)
+func (c *consumerServiceClient) RegisterConsumer(ctx context.Context, in *RegisterConsumerRequest, opts ...grpc.CallOption) (*RegisterConsumerResponse, error) {
+	out := new(RegisterConsumerResponse)
+	err := c.cc.Invoke(ctx, ConsumerService_RegisterConsumer_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *consumerServiceClient) UpdateConsumerInfo(ctx context.Context, in *UpdateConsumerInfoRequest, opts ...grpc.CallOption) (*UpdateConsumerInfoResponse, error) {
+	out := new(UpdateConsumerInfoResponse)
+	err := c.cc.Invoke(ctx, ConsumerService_UpdateConsumerInfo_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +108,8 @@ func (c *consumerServiceClient) GetSubscribedStreams(ctx context.Context, in *Ge
 // All implementations must embed UnimplementedConsumerServiceServer
 // for forward compatibility
 type ConsumerServiceServer interface {
-	RegisterConsumerInfo(context.Context, *RegisterConsumerInfoRequest) (*RegisterConsumerInfoResponse, error)
+	RegisterConsumer(context.Context, *RegisterConsumerRequest) (*RegisterConsumerResponse, error)
+	UpdateConsumerInfo(context.Context, *UpdateConsumerInfoRequest) (*UpdateConsumerInfoResponse, error)
 	PublishConsumerStats(ConsumerService_PublishConsumerStatsServer) error
 	GetSubscribedStreams(context.Context, *GetSubscribedStreamsRequest) (*GetSubscribedStreamsResponse, error)
 	mustEmbedUnimplementedConsumerServiceServer()
@@ -107,8 +119,11 @@ type ConsumerServiceServer interface {
 type UnimplementedConsumerServiceServer struct {
 }
 
-func (UnimplementedConsumerServiceServer) RegisterConsumerInfo(context.Context, *RegisterConsumerInfoRequest) (*RegisterConsumerInfoResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method RegisterConsumerInfo not implemented")
+func (UnimplementedConsumerServiceServer) RegisterConsumer(context.Context, *RegisterConsumerRequest) (*RegisterConsumerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterConsumer not implemented")
+}
+func (UnimplementedConsumerServiceServer) UpdateConsumerInfo(context.Context, *UpdateConsumerInfoRequest) (*UpdateConsumerInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateConsumerInfo not implemented")
 }
 func (UnimplementedConsumerServiceServer) PublishConsumerStats(ConsumerService_PublishConsumerStatsServer) error {
 	return status.Errorf(codes.Unimplemented, "method PublishConsumerStats not implemented")
@@ -129,20 +144,38 @@ func RegisterConsumerServiceServer(s grpc.ServiceRegistrar, srv ConsumerServiceS
 	s.RegisterService(&ConsumerService_ServiceDesc, srv)
 }
 
-func _ConsumerService_RegisterConsumerInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegisterConsumerInfoRequest)
+func _ConsumerService_RegisterConsumer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterConsumerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ConsumerServiceServer).RegisterConsumerInfo(ctx, in)
+		return srv.(ConsumerServiceServer).RegisterConsumer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ConsumerService_RegisterConsumerInfo_FullMethodName,
+		FullMethod: ConsumerService_RegisterConsumer_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConsumerServiceServer).RegisterConsumerInfo(ctx, req.(*RegisterConsumerInfoRequest))
+		return srv.(ConsumerServiceServer).RegisterConsumer(ctx, req.(*RegisterConsumerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ConsumerService_UpdateConsumerInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateConsumerInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ConsumerServiceServer).UpdateConsumerInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ConsumerService_UpdateConsumerInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ConsumerServiceServer).UpdateConsumerInfo(ctx, req.(*UpdateConsumerInfoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -199,8 +232,12 @@ var ConsumerService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ConsumerServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "RegisterConsumerInfo",
-			Handler:    _ConsumerService_RegisterConsumerInfo_Handler,
+			MethodName: "RegisterConsumer",
+			Handler:    _ConsumerService_RegisterConsumer_Handler,
+		},
+		{
+			MethodName: "UpdateConsumerInfo",
+			Handler:    _ConsumerService_UpdateConsumerInfo_Handler,
 		},
 		{
 			MethodName: "GetSubscribedStreams",
