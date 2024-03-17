@@ -13,7 +13,7 @@ jobs:
       pull-requests: write
     strategy:
       matrix:
-        go-version: [1.21.x]
+        go-version: [1.22.x]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
 
