@@ -17,9 +17,4 @@ jobs:
         uses: google-github-actions/release-please-action@cc61a07e2da466bebbc19b3a7dd01d6aecb20d1e #v4.0.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          release-type: go-yoshi
-          changelog-path: CHANGELOG.md
-          signoff: "nickaguilarh[bot] <nickaguilarh@gmail.com>"
-          package-name: ${{ github.repositories }}
-          bump-minor-pre-major: true
-          bump-patch-for-minor-pre-major: true
+          release-type: go

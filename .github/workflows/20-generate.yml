@@ -73,5 +73,5 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           commit-message: "${{env.COMMIT_MSG}}"
-          title: "Build proto files using remote submodule"
+          title: "Build proto files for go using remote submodule"
           body: "${{env.COMMIT_MSG}}"
