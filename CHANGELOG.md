@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.3.0](https://github.com/gsols/goproto/compare/v0.2.0...v0.3.0) (2024-03-18)
+
+
+### Features
+
+* add annotations to reverse proxy [gsols/proto-apis@9f022fd5686c57e0cf37bc162f90280697a20880] ([bc1e87b](https://github.com/gsols/goproto/commit/bc1e87ba1f89cf02179455c6e04bcd44b7ea5cb8))
+* add grpc gateway definitions ([9a667d5](https://github.com/gsols/goproto/commit/9a667d503a486672b0d65cc93e97110d2a8f85d8))
+
+
+### Bug Fixes
+
+* update workflows ([629de43](https://github.com/gsols/goproto/commit/629de43f7befa8907031130d4d11cd794ec9da07))
+
 ## [0.1.24](https://github.com/gsols/goproto/compare/v0.1.23...v0.1.24) (2023-12-10)
 
 
