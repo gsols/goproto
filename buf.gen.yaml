@@ -9,3 +9,6 @@ plugins:
   - name: validate
     out: .
     opt: paths=source_relative,lang=go
+  - name: grpc-gateway
+    out: .
+    opt: paths=source_relative

@@ -6,6 +6,7 @@ require (
 	github.com/bufbuild/buf v1.30.0
 	github.com/cosmtrek/air v1.51.0
 	github.com/envoyproxy/protoc-gen-validate v1.0.4
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.19.1
 	golang.org/x/tools v0.19.0
 	google.golang.org/genproto/googleapis/api v0.0.0-20240314234333-6e1732d8331c
 	google.golang.org/grpc v1.62.1
@@ -15,7 +16,6 @@ require (
 
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.33.0-20240221180331-f05a6f4403ce.1 // indirect
-	buf.build/gen/go/bufbuild/registry/protocolbuffers/go v1.31.0-20231111212044-1119bf4b707e.2 // indirect
 	connectrpc.com/connect v1.15.0 // indirect
 	connectrpc.com/otelconnect v0.7.0 // indirect
 	dario.cat/mergo v1.0.0 // indirect
@@ -28,6 +28,7 @@ require (
 	github.com/bufbuild/protocompile v0.9.0 // indirect
 	github.com/bufbuild/protovalidate-go v0.6.0 // indirect
 	github.com/bufbuild/protoyaml-go v0.1.8 // indirect
+	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
 	github.com/cli/safeexec v1.0.1 // indirect
 	github.com/containerd/stargz-snapshotter/estargz v0.15.1 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.3 // indirect
@@ -82,26 +83,25 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stoewer/go-strcase v1.3.0 // indirect
 	github.com/tdewolff/parse/v2 v2.7.12 // indirect
-	github.com/tetratelabs/wazero v1.7.0 // indirect
 	github.com/vbatts/tar-split v0.11.5 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.49.0 // indirect
 	go.opentelemetry.io/otel v1.24.0 // indirect
+	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.24.0 // indirect
 	go.opentelemetry.io/otel/metric v1.24.0 // indirect
 	go.opentelemetry.io/otel/sdk v1.24.0 // indirect
 	go.opentelemetry.io/otel/trace v1.24.0 // indirect
+	go.opentelemetry.io/proto/otlp v1.1.0 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/crypto v0.21.0 // indirect
 	golang.org/x/exp v0.0.0-20240314144324-c7f7c6466f7f // indirect
-	golang.org/x/lint v0.0.0-20210508222113-6edffad5e616 // indirect
 	golang.org/x/mod v0.16.0 // indirect
 	golang.org/x/net v0.22.0 // indirect
 	golang.org/x/sync v0.6.0 // indirect
 	golang.org/x/sys v0.18.0 // indirect
 	golang.org/x/term v0.18.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
-	google.golang.org/genproto v0.0.0-20240314234333-6e1732d8331c // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240314234333-6e1732d8331c // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

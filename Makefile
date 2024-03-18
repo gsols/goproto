@@ -13,6 +13,7 @@ GO_DEPENDENCIES = google.golang.org/protobuf/cmd/protoc-gen-go \
                   google.golang.org/grpc/cmd/protoc-gen-go-grpc \
                   github.com/envoyproxy/protoc-gen-validate \
                   github.com/bufbuild/buf/cmd/buf \
+    			  github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway \
                   github.com/bufbuild/buf/cmd/protoc-gen-buf-breaking \
                   github.com/bufbuild/buf/cmd/protoc-gen-buf-lint\
                   golang.org/x/tools/cmd/goimports
@@ -37,7 +38,7 @@ protolint: proto/buf.lock bin/protoc-gen-buf-lint ## Lints your protobuf files
 #	bin/buf breaking --against '.git#branch=main'
 
 proto: ## Generates code from protobuf files
-proto:  proto/buf.lock bin/protoc-gen-go bin/protoc-gen-go-grpc bin/protoc-gen-validate
+proto:  proto/buf.lock bin/protoc-gen-go bin/protoc-gen-go-grpc bin/protoc-gen-validate bin/protoc-gen-grpc-gateway
 	PATH=$(PWD)/bin:$$PATH buf generate
 
 
