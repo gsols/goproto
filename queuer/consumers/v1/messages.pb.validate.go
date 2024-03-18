@@ -635,6 +635,18 @@ func (m *UpdateConsumerInfoRequest) validate(all bool) error {
 
 	var errors []error
 
+	if err := m._validateUuid(m.GetConsumerId()); err != nil {
+		err = UpdateConsumerInfoRequestValidationError{
+			field:  "ConsumerId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if all {
 		switch v := interface{}(m.GetConsumerInfo()).(type) {
 		case interface{ ValidateAll() error }:
@@ -666,6 +678,14 @@ func (m *UpdateConsumerInfoRequest) validate(all bool) error {
 
 	if len(errors) > 0 {
 		return UpdateConsumerInfoRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *UpdateConsumerInfoRequest) _validateUuid(uuid string) error {
+	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
 	}
 
 	return nil
@@ -897,8 +917,28 @@ func (m *GetSubscribedStreamsRequest) validate(all bool) error {
 
 	var errors []error
 
+	if err := m._validateUuid(m.GetConsumerId()); err != nil {
+		err = GetSubscribedStreamsRequestValidationError{
+			field:  "ConsumerId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if len(errors) > 0 {
 		return GetSubscribedStreamsRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *GetSubscribedStreamsRequest) _validateUuid(uuid string) error {
+	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
 	}
 
 	return nil
