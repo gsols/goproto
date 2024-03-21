@@ -272,31 +272,31 @@ var _ interface {
 	ErrorName() string
 } = SubscribeToCommandsResponseValidationError{}
 
-// Validate checks the field values on AckCommandRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *AckCommandRequest) Validate() error {
+// Validate checks the field values on CreateCommandRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *CreateCommandRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on AckCommandRequest with the rules
+// ValidateAll checks the field values on CreateCommandRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// AckCommandRequestMultiError, or nil if none found.
-func (m *AckCommandRequest) ValidateAll() error {
+// CreateCommandRequestMultiError, or nil if none found.
+func (m *CreateCommandRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *AckCommandRequest) validate(all bool) error {
+func (m *CreateCommandRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetCommandId()); err != nil {
-		err = AckCommandRequestValidationError{
-			field:  "CommandId",
+	if err := m._validateUuid(m.GetConsumerId()); err != nil {
+		err = CreateCommandRequestValidationError{
+			field:  "ConsumerId",
 			reason: "value must be a valid UUID",
 			cause:  err,
 		}
@@ -306,14 +306,43 @@ func (m *AckCommandRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if all {
+		switch v := interface{}(m.GetConsumer()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, CreateCommandRequestValidationError{
+					field:  "Consumer",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, CreateCommandRequestValidationError{
+					field:  "Consumer",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetConsumer()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return CreateCommandRequestValidationError{
+				field:  "Consumer",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	if len(errors) > 0 {
-		return AckCommandRequestMultiError(errors)
+		return CreateCommandRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *AckCommandRequest) _validateUuid(uuid string) error {
+func (m *CreateCommandRequest) _validateUuid(uuid string) error {
 	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -321,13 +350,13 @@ func (m *AckCommandRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// AckCommandRequestMultiError is an error wrapping multiple validation errors
-// returned by AckCommandRequest.ValidateAll() if the designated constraints
-// aren't met.
-type AckCommandRequestMultiError []error
+// CreateCommandRequestMultiError is an error wrapping multiple validation
+// errors returned by CreateCommandRequest.ValidateAll() if the designated
+// constraints aren't met.
+type CreateCommandRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m AckCommandRequestMultiError) Error() string {
+func (m CreateCommandRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -336,11 +365,11 @@ func (m AckCommandRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m AckCommandRequestMultiError) AllErrors() []error { return m }
+func (m CreateCommandRequestMultiError) AllErrors() []error { return m }
 
-// AckCommandRequestValidationError is the validation error returned by
-// AckCommandRequest.Validate if the designated constraints aren't met.
-type AckCommandRequestValidationError struct {
+// CreateCommandRequestValidationError is the validation error returned by
+// CreateCommandRequest.Validate if the designated constraints aren't met.
+type CreateCommandRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -348,24 +377,24 @@ type AckCommandRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e AckCommandRequestValidationError) Field() string { return e.field }
+func (e CreateCommandRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e AckCommandRequestValidationError) Reason() string { return e.reason }
+func (e CreateCommandRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e AckCommandRequestValidationError) Cause() error { return e.cause }
+func (e CreateCommandRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e AckCommandRequestValidationError) Key() bool { return e.key }
+func (e CreateCommandRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e AckCommandRequestValidationError) ErrorName() string {
-	return "AckCommandRequestValidationError"
+func (e CreateCommandRequestValidationError) ErrorName() string {
+	return "CreateCommandRequestValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e AckCommandRequestValidationError) Error() string {
+func (e CreateCommandRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -377,14 +406,14 @@ func (e AckCommandRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sAckCommandRequest.%s: %s%s",
+		"invalid %sCreateCommandRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = AckCommandRequestValidationError{}
+var _ error = CreateCommandRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -392,24 +421,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = AckCommandRequestValidationError{}
+} = CreateCommandRequestValidationError{}
 
-// Validate checks the field values on AckCommandResponse with the rules
+// Validate checks the field values on CreateCommandResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
-func (m *AckCommandResponse) Validate() error {
+func (m *CreateCommandResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on AckCommandResponse with the rules
+// ValidateAll checks the field values on CreateCommandResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// AckCommandResponseMultiError, or nil if none found.
-func (m *AckCommandResponse) ValidateAll() error {
+// CreateCommandResponseMultiError, or nil if none found.
+func (m *CreateCommandResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *AckCommandResponse) validate(all bool) error {
+func (m *CreateCommandResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -420,7 +449,7 @@ func (m *AckCommandResponse) validate(all bool) error {
 		switch v := interface{}(m.GetResult()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, AckCommandResponseValidationError{
+				errors = append(errors, CreateCommandResponseValidationError{
 					field:  "Result",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -428,7 +457,7 @@ func (m *AckCommandResponse) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, AckCommandResponseValidationError{
+				errors = append(errors, CreateCommandResponseValidationError{
 					field:  "Result",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -437,7 +466,7 @@ func (m *AckCommandResponse) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetResult()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return AckCommandResponseValidationError{
+			return CreateCommandResponseValidationError{
 				field:  "Result",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -446,19 +475,19 @@ func (m *AckCommandResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return AckCommandResponseMultiError(errors)
+		return CreateCommandResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// AckCommandResponseMultiError is an error wrapping multiple validation errors
-// returned by AckCommandResponse.ValidateAll() if the designated constraints
-// aren't met.
-type AckCommandResponseMultiError []error
+// CreateCommandResponseMultiError is an error wrapping multiple validation
+// errors returned by CreateCommandResponse.ValidateAll() if the designated
+// constraints aren't met.
+type CreateCommandResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m AckCommandResponseMultiError) Error() string {
+func (m CreateCommandResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -467,11 +496,11 @@ func (m AckCommandResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m AckCommandResponseMultiError) AllErrors() []error { return m }
+func (m CreateCommandResponseMultiError) AllErrors() []error { return m }
 
-// AckCommandResponseValidationError is the validation error returned by
-// AckCommandResponse.Validate if the designated constraints aren't met.
-type AckCommandResponseValidationError struct {
+// CreateCommandResponseValidationError is the validation error returned by
+// CreateCommandResponse.Validate if the designated constraints aren't met.
+type CreateCommandResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -479,24 +508,24 @@ type AckCommandResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e AckCommandResponseValidationError) Field() string { return e.field }
+func (e CreateCommandResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e AckCommandResponseValidationError) Reason() string { return e.reason }
+func (e CreateCommandResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e AckCommandResponseValidationError) Cause() error { return e.cause }
+func (e CreateCommandResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e AckCommandResponseValidationError) Key() bool { return e.key }
+func (e CreateCommandResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e AckCommandResponseValidationError) ErrorName() string {
-	return "AckCommandResponseValidationError"
+func (e CreateCommandResponseValidationError) ErrorName() string {
+	return "CreateCommandResponseValidationError"
 }
 
 // Error satisfies the builtin error interface
-func (e AckCommandResponseValidationError) Error() string {
+func (e CreateCommandResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -508,14 +537,14 @@ func (e AckCommandResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sAckCommandResponse.%s: %s%s",
+		"invalid %sCreateCommandResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = AckCommandResponseValidationError{}
+var _ error = CreateCommandResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -523,4 +552,259 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = AckCommandResponseValidationError{}
+} = CreateCommandResponseValidationError{}
+
+// Validate checks the field values on AcknowledgeRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AcknowledgeRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AcknowledgeRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AcknowledgeRequestMultiError, or nil if none found.
+func (m *AcknowledgeRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AcknowledgeRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if err := m._validateUuid(m.GetCommandId()); err != nil {
+		err = AcknowledgeRequestValidationError{
+			field:  "CommandId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	// no validation rules for Payload
+
+	if len(errors) > 0 {
+		return AcknowledgeRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *AcknowledgeRequest) _validateUuid(uuid string) error {
+	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
+	}
+
+	return nil
+}
+
+// AcknowledgeRequestMultiError is an error wrapping multiple validation errors
+// returned by AcknowledgeRequest.ValidateAll() if the designated constraints
+// aren't met.
+type AcknowledgeRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AcknowledgeRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AcknowledgeRequestMultiError) AllErrors() []error { return m }
+
+// AcknowledgeRequestValidationError is the validation error returned by
+// AcknowledgeRequest.Validate if the designated constraints aren't met.
+type AcknowledgeRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AcknowledgeRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AcknowledgeRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AcknowledgeRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AcknowledgeRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AcknowledgeRequestValidationError) ErrorName() string {
+	return "AcknowledgeRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AcknowledgeRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAcknowledgeRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AcknowledgeRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AcknowledgeRequestValidationError{}
+
+// Validate checks the field values on AcknowledgeResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AcknowledgeResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AcknowledgeResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AcknowledgeResponseMultiError, or nil if none found.
+func (m *AcknowledgeResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AcknowledgeResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetResult()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, AcknowledgeResponseValidationError{
+					field:  "Result",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, AcknowledgeResponseValidationError{
+					field:  "Result",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetResult()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return AcknowledgeResponseValidationError{
+				field:  "Result",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return AcknowledgeResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// AcknowledgeResponseMultiError is an error wrapping multiple validation
+// errors returned by AcknowledgeResponse.ValidateAll() if the designated
+// constraints aren't met.
+type AcknowledgeResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AcknowledgeResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AcknowledgeResponseMultiError) AllErrors() []error { return m }
+
+// AcknowledgeResponseValidationError is the validation error returned by
+// AcknowledgeResponse.Validate if the designated constraints aren't met.
+type AcknowledgeResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AcknowledgeResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AcknowledgeResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AcknowledgeResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AcknowledgeResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AcknowledgeResponseValidationError) ErrorName() string {
+	return "AcknowledgeResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AcknowledgeResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAcknowledgeResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AcknowledgeResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AcknowledgeResponseValidationError{}

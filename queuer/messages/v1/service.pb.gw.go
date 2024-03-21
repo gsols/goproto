@@ -105,7 +105,7 @@ func RegisterMessageServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/queuer.messages.v1.MessageService/Acknowledge", runtime.WithHTTPPathPattern("/v1/messages/{message_id}:confirm"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/queuer.messages.v1.MessageService/Acknowledge", runtime.WithHTTPPathPattern("/v1/messages/{message_id}/confirm"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -169,7 +169,7 @@ func RegisterMessageServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.messages.v1.MessageService/Acknowledge", runtime.WithHTTPPathPattern("/v1/messages/{message_id}:confirm"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.messages.v1.MessageService/Acknowledge", runtime.WithHTTPPathPattern("/v1/messages/{message_id}/confirm"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -189,7 +189,7 @@ func RegisterMessageServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 }
 
 var (
-	pattern_MessageService_Acknowledge_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "messages", "message_id"}, "confirm"))
+	pattern_MessageService_Acknowledge_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "messages", "message_id", "confirm"}, ""))
 )
 
 var (

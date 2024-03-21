@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_CommandsService_SubscribeToCommands_0(ctx context.Context, marshaler runtime.Marshaler, client CommandsServiceClient, req *http.Request, pathParams map[string]string) (CommandsService_SubscribeToCommandsClient, runtime.ServerMetadata, error) {
+func request_CommandService_SubscribeToCommands_0(ctx context.Context, marshaler runtime.Marshaler, client CommandServiceClient, req *http.Request, pathParams map[string]string) (CommandService_SubscribeToCommandsClient, runtime.ServerMetadata, error) {
 	var protoReq SubscribeToCommandsRequest
 	var metadata runtime.ServerMetadata
 
@@ -48,8 +48,34 @@ func request_CommandsService_SubscribeToCommands_0(ctx context.Context, marshale
 
 }
 
-func request_CommandsService_AckCommand_0(ctx context.Context, marshaler runtime.Marshaler, client CommandsServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq AckCommandRequest
+func request_CommandService_CreateCommand_0(ctx context.Context, marshaler runtime.Marshaler, client CommandServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateCommandRequest
+	var metadata runtime.ServerMetadata
+
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.CreateCommand(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_CommandService_CreateCommand_0(ctx context.Context, marshaler runtime.Marshaler, server CommandServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateCommandRequest
+	var metadata runtime.ServerMetadata
+
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.CreateCommand(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_CommandService_Acknowledge_0(ctx context.Context, marshaler runtime.Marshaler, client CommandServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq AcknowledgeRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -73,13 +99,13 @@ func request_CommandsService_AckCommand_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "command_id", err)
 	}
 
-	msg, err := client.AckCommand(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.Acknowledge(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_CommandsService_AckCommand_0(ctx context.Context, marshaler runtime.Marshaler, server CommandsServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq AckCommandRequest
+func local_request_CommandService_Acknowledge_0(ctx context.Context, marshaler runtime.Marshaler, server CommandServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq AcknowledgeRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -103,25 +129,25 @@ func local_request_CommandsService_AckCommand_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "command_id", err)
 	}
 
-	msg, err := server.AckCommand(ctx, &protoReq)
+	msg, err := server.Acknowledge(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-// RegisterCommandsServiceHandlerServer registers the http handlers for service CommandsService to "mux".
-// UnaryRPC     :call CommandsServiceServer directly.
+// RegisterCommandServiceHandlerServer registers the http handlers for service CommandService to "mux".
+// UnaryRPC     :call CommandServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterCommandsServiceHandlerFromEndpoint instead.
-func RegisterCommandsServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server CommandsServiceServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterCommandServiceHandlerFromEndpoint instead.
+func RegisterCommandServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server CommandServiceServer) error {
 
-	mux.Handle("GET", pattern_CommandsService_SubscribeToCommands_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_CommandService_SubscribeToCommands_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		err := status.Error(codes.Unimplemented, "streaming calls are not yet supported in the in-process transport")
 		_, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 		return
 	})
 
-	mux.Handle("POST", pattern_CommandsService_AckCommand_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CommandService_CreateCommand_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -129,12 +155,12 @@ func RegisterCommandsServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/queuer.commands.v1.CommandsService/AckCommand", runtime.WithHTTPPathPattern("/v1/{command_id}:ack"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/queuer.commands.v1.CommandService/CreateCommand", runtime.WithHTTPPathPattern("/v1/commands"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CommandsService_AckCommand_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CommandService_CreateCommand_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -142,16 +168,41 @@ func RegisterCommandsServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 
-		forward_CommandsService_AckCommand_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CommandService_CreateCommand_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_CommandService_Acknowledge_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/queuer.commands.v1.CommandService/Acknowledge", runtime.WithHTTPPathPattern("/v1/{command_id}/confirm"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_CommandService_Acknowledge_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_CommandService_Acknowledge_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterCommandsServiceHandlerFromEndpoint is same as RegisterCommandsServiceHandler but
+// RegisterCommandServiceHandlerFromEndpoint is same as RegisterCommandServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterCommandsServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterCommandServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.DialContext(ctx, endpoint, opts...)
 	if err != nil {
 		return err
@@ -171,63 +222,85 @@ func RegisterCommandsServiceHandlerFromEndpoint(ctx context.Context, mux *runtim
 		}()
 	}()
 
-	return RegisterCommandsServiceHandler(ctx, mux, conn)
+	return RegisterCommandServiceHandler(ctx, mux, conn)
 }
 
-// RegisterCommandsServiceHandler registers the http handlers for service CommandsService to "mux".
+// RegisterCommandServiceHandler registers the http handlers for service CommandService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterCommandsServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterCommandsServiceHandlerClient(ctx, mux, NewCommandsServiceClient(conn))
+func RegisterCommandServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterCommandServiceHandlerClient(ctx, mux, NewCommandServiceClient(conn))
 }
 
-// RegisterCommandsServiceHandlerClient registers the http handlers for service CommandsService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "CommandsServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "CommandsServiceClient"
+// RegisterCommandServiceHandlerClient registers the http handlers for service CommandService
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "CommandServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "CommandServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "CommandsServiceClient" to call the correct interceptors.
-func RegisterCommandsServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client CommandsServiceClient) error {
+// "CommandServiceClient" to call the correct interceptors.
+func RegisterCommandServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client CommandServiceClient) error {
 
-	mux.Handle("GET", pattern_CommandsService_SubscribeToCommands_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_CommandService_SubscribeToCommands_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.commands.v1.CommandsService/SubscribeToCommands", runtime.WithHTTPPathPattern("/v1/commands"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.commands.v1.CommandService/SubscribeToCommands", runtime.WithHTTPPathPattern("/v1/commands"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CommandsService_SubscribeToCommands_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CommandService_SubscribeToCommands_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CommandsService_SubscribeToCommands_0(annotatedContext, mux, outboundMarshaler, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
+		forward_CommandService_SubscribeToCommands_0(annotatedContext, mux, outboundMarshaler, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_CommandsService_AckCommand_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CommandService_CreateCommand_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.commands.v1.CommandsService/AckCommand", runtime.WithHTTPPathPattern("/v1/{command_id}:ack"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.commands.v1.CommandService/CreateCommand", runtime.WithHTTPPathPattern("/v1/commands"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CommandsService_AckCommand_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CommandService_CreateCommand_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CommandsService_AckCommand_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CommandService_CreateCommand_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_CommandService_Acknowledge_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.commands.v1.CommandService/Acknowledge", runtime.WithHTTPPathPattern("/v1/{command_id}/confirm"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_CommandService_Acknowledge_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_CommandService_Acknowledge_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -235,13 +308,17 @@ func RegisterCommandsServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 }
 
 var (
-	pattern_CommandsService_SubscribeToCommands_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "commands"}, ""))
+	pattern_CommandService_SubscribeToCommands_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "commands"}, ""))
 
-	pattern_CommandsService_AckCommand_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1}, []string{"v1", "command_id"}, "ack"))
+	pattern_CommandService_CreateCommand_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "commands"}, ""))
+
+	pattern_CommandService_Acknowledge_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 2, 2}, []string{"v1", "command_id", "confirm"}, ""))
 )
 
 var (
-	forward_CommandsService_SubscribeToCommands_0 = runtime.ForwardResponseStream
+	forward_CommandService_SubscribeToCommands_0 = runtime.ForwardResponseStream
 
-	forward_CommandsService_AckCommand_0 = runtime.ForwardResponseMessage
+	forward_CommandService_CreateCommand_0 = runtime.ForwardResponseMessage
+
+	forward_CommandService_Acknowledge_0 = runtime.ForwardResponseMessage
 )

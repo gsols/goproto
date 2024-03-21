@@ -57,13 +57,9 @@ func local_request_ConsumerService_RegisterConsumer_0(ctx context.Context, marsh
 
 }
 
-func request_ConsumerService_UpdateConsumerInfo_0(ctx context.Context, marshaler runtime.Marshaler, client ConsumerServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UpdateConsumerInfoRequest
+func request_ConsumerService_GetConsumer_0(ctx context.Context, marshaler runtime.Marshaler, client ConsumerServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetConsumerRequest
 	var metadata runtime.ServerMetadata
-
-	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
 
 	var (
 		val string
@@ -82,13 +78,75 @@ func request_ConsumerService_UpdateConsumerInfo_0(ctx context.Context, marshaler
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "consumer_id", err)
 	}
 
-	msg, err := client.UpdateConsumerInfo(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetConsumer(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_ConsumerService_UpdateConsumerInfo_0(ctx context.Context, marshaler runtime.Marshaler, server ConsumerServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UpdateConsumerInfoRequest
+func local_request_ConsumerService_GetConsumer_0(ctx context.Context, marshaler runtime.Marshaler, server ConsumerServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetConsumerRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["consumer_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "consumer_id")
+	}
+
+	protoReq.ConsumerId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "consumer_id", err)
+	}
+
+	msg, err := server.GetConsumer(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_ConsumerService_GetAuthorizedConsumers_0(ctx context.Context, marshaler runtime.Marshaler, client ConsumerServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetAuthorizedConsumersRequest
+	var metadata runtime.ServerMetadata
+
+	msg, err := client.GetAuthorizedConsumers(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ConsumerService_GetAuthorizedConsumers_0(ctx context.Context, marshaler runtime.Marshaler, server ConsumerServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetAuthorizedConsumersRequest
+	var metadata runtime.ServerMetadata
+
+	msg, err := server.GetAuthorizedConsumers(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_ConsumerService_GetUnauthorizedConsumers_0(ctx context.Context, marshaler runtime.Marshaler, client ConsumerServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetUnauthorizedConsumersRequest
+	var metadata runtime.ServerMetadata
+
+	msg, err := client.GetUnauthorizedConsumers(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ConsumerService_GetUnauthorizedConsumers_0(ctx context.Context, marshaler runtime.Marshaler, server ConsumerServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetUnauthorizedConsumersRequest
+	var metadata runtime.ServerMetadata
+
+	msg, err := server.GetUnauthorizedConsumers(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_ConsumerService_AuthorizeConsumer_0(ctx context.Context, marshaler runtime.Marshaler, client ConsumerServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq AuthorizeConsumerRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -112,7 +170,89 @@ func local_request_ConsumerService_UpdateConsumerInfo_0(ctx context.Context, mar
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "consumer_id", err)
 	}
 
-	msg, err := server.UpdateConsumerInfo(ctx, &protoReq)
+	msg, err := client.AuthorizeConsumer(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ConsumerService_AuthorizeConsumer_0(ctx context.Context, marshaler runtime.Marshaler, server ConsumerServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq AuthorizeConsumerRequest
+	var metadata runtime.ServerMetadata
+
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["consumer_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "consumer_id")
+	}
+
+	protoReq.ConsumerId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "consumer_id", err)
+	}
+
+	msg, err := server.AuthorizeConsumer(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_ConsumerService_RetrieveConsumerCredentials_0(ctx context.Context, marshaler runtime.Marshaler, client ConsumerServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RetrieveConsumerCredentialsRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["consumer_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "consumer_id")
+	}
+
+	protoReq.ConsumerId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "consumer_id", err)
+	}
+
+	msg, err := client.RetrieveConsumerCredentials(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ConsumerService_RetrieveConsumerCredentials_0(ctx context.Context, marshaler runtime.Marshaler, server ConsumerServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq RetrieveConsumerCredentialsRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["consumer_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "consumer_id")
+	}
+
+	protoReq.ConsumerId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "consumer_id", err)
+	}
+
+	msg, err := server.RetrieveConsumerCredentials(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -157,6 +297,58 @@ func request_ConsumerService_PublishConsumerStats_0(ctx context.Context, marshal
 
 	msg, err := stream.CloseAndRecv()
 	metadata.TrailerMD = stream.Trailer()
+	return msg, metadata, err
+
+}
+
+func request_ConsumerService_GetConsumerStreams_0(ctx context.Context, marshaler runtime.Marshaler, client ConsumerServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetConsumerStreamsRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["consumer_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "consumer_id")
+	}
+
+	protoReq.ConsumerId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "consumer_id", err)
+	}
+
+	msg, err := client.GetConsumerStreams(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_ConsumerService_GetConsumerStreams_0(ctx context.Context, marshaler runtime.Marshaler, server ConsumerServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetConsumerStreamsRequest
+	var metadata runtime.ServerMetadata
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["consumer_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "consumer_id")
+	}
+
+	protoReq.ConsumerId, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "consumer_id", err)
+	}
+
+	msg, err := server.GetConsumerStreams(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -244,7 +436,7 @@ func RegisterConsumerServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_ConsumerService_UpdateConsumerInfo_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ConsumerService_GetConsumer_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -252,12 +444,12 @@ func RegisterConsumerServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/UpdateConsumerInfo", runtime.WithHTTPPathPattern("/v1/consumers/{consumer_id}/info"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/GetConsumer", runtime.WithHTTPPathPattern("/v1/consumers/{consumer_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ConsumerService_UpdateConsumerInfo_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ConsumerService_GetConsumer_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -265,7 +457,107 @@ func RegisterConsumerServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 
-		forward_ConsumerService_UpdateConsumerInfo_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConsumerService_GetConsumer_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_ConsumerService_GetAuthorizedConsumers_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/GetAuthorizedConsumers", runtime.WithHTTPPathPattern("/v1/consumers/authorized"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ConsumerService_GetAuthorizedConsumers_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ConsumerService_GetAuthorizedConsumers_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_ConsumerService_GetUnauthorizedConsumers_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/GetUnauthorizedConsumers", runtime.WithHTTPPathPattern("/v1/consumers/unauthorized"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ConsumerService_GetUnauthorizedConsumers_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ConsumerService_GetUnauthorizedConsumers_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_ConsumerService_AuthorizeConsumer_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/AuthorizeConsumer", runtime.WithHTTPPathPattern("/v1/consumers/{consumer_id}/authorize"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ConsumerService_AuthorizeConsumer_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ConsumerService_AuthorizeConsumer_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_ConsumerService_RetrieveConsumerCredentials_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/RetrieveConsumerCredentials", runtime.WithHTTPPathPattern("/v1/consumers/{consumer_id}/credentials"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ConsumerService_RetrieveConsumerCredentials_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ConsumerService_RetrieveConsumerCredentials_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -276,6 +568,31 @@ func RegisterConsumerServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		return
 	})
 
+	mux.Handle("GET", pattern_ConsumerService_GetConsumerStreams_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/GetConsumerStreams", runtime.WithHTTPPathPattern("/v1/consumers/{consumer_id}/streams"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_ConsumerService_GetConsumerStreams_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ConsumerService_GetConsumerStreams_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	mux.Handle("GET", pattern_ConsumerService_GetSubscribedStreams_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
@@ -284,7 +601,7 @@ func RegisterConsumerServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/GetSubscribedStreams", runtime.WithHTTPPathPattern("/v1/consumers/{consumer_id}/streams"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/GetSubscribedStreams", runtime.WithHTTPPathPattern("/v1/consumers/{consumer_id}/subscribed"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -364,25 +681,113 @@ func RegisterConsumerServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 
 	})
 
-	mux.Handle("POST", pattern_ConsumerService_UpdateConsumerInfo_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ConsumerService_GetConsumer_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/UpdateConsumerInfo", runtime.WithHTTPPathPattern("/v1/consumers/{consumer_id}/info"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/GetConsumer", runtime.WithHTTPPathPattern("/v1/consumers/{consumer_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ConsumerService_UpdateConsumerInfo_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ConsumerService_GetConsumer_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ConsumerService_UpdateConsumerInfo_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConsumerService_GetConsumer_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_ConsumerService_GetAuthorizedConsumers_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/GetAuthorizedConsumers", runtime.WithHTTPPathPattern("/v1/consumers/authorized"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ConsumerService_GetAuthorizedConsumers_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ConsumerService_GetAuthorizedConsumers_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_ConsumerService_GetUnauthorizedConsumers_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/GetUnauthorizedConsumers", runtime.WithHTTPPathPattern("/v1/consumers/unauthorized"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ConsumerService_GetUnauthorizedConsumers_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ConsumerService_GetUnauthorizedConsumers_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("POST", pattern_ConsumerService_AuthorizeConsumer_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/AuthorizeConsumer", runtime.WithHTTPPathPattern("/v1/consumers/{consumer_id}/authorize"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ConsumerService_AuthorizeConsumer_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ConsumerService_AuthorizeConsumer_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_ConsumerService_RetrieveConsumerCredentials_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/RetrieveConsumerCredentials", runtime.WithHTTPPathPattern("/v1/consumers/{consumer_id}/credentials"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ConsumerService_RetrieveConsumerCredentials_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ConsumerService_RetrieveConsumerCredentials_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -408,13 +813,35 @@ func RegisterConsumerServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 
 	})
 
+	mux.Handle("GET", pattern_ConsumerService_GetConsumerStreams_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		var err error
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/GetConsumerStreams", runtime.WithHTTPPathPattern("/v1/consumers/{consumer_id}/streams"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_ConsumerService_GetConsumerStreams_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_ConsumerService_GetConsumerStreams_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	mux.Handle("GET", pattern_ConsumerService_GetSubscribedStreams_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/GetSubscribedStreams", runtime.WithHTTPPathPattern("/v1/consumers/{consumer_id}/streams"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/queuer.consumers.v1.ConsumerService/GetSubscribedStreams", runtime.WithHTTPPathPattern("/v1/consumers/{consumer_id}/subscribed"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -436,19 +863,39 @@ func RegisterConsumerServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 var (
 	pattern_ConsumerService_RegisterConsumer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "consumers"}, ""))
 
-	pattern_ConsumerService_UpdateConsumerInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "consumers", "consumer_id", "info"}, ""))
+	pattern_ConsumerService_GetConsumer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "consumers", "consumer_id"}, ""))
+
+	pattern_ConsumerService_GetAuthorizedConsumers_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "consumers", "authorized"}, ""))
+
+	pattern_ConsumerService_GetUnauthorizedConsumers_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "consumers", "unauthorized"}, ""))
+
+	pattern_ConsumerService_AuthorizeConsumer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "consumers", "consumer_id", "authorize"}, ""))
+
+	pattern_ConsumerService_RetrieveConsumerCredentials_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "consumers", "consumer_id", "credentials"}, ""))
 
 	pattern_ConsumerService_PublishConsumerStats_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "consumers", "stats"}, ""))
 
-	pattern_ConsumerService_GetSubscribedStreams_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "consumers", "consumer_id", "streams"}, ""))
+	pattern_ConsumerService_GetConsumerStreams_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "consumers", "consumer_id", "streams"}, ""))
+
+	pattern_ConsumerService_GetSubscribedStreams_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "consumers", "consumer_id", "subscribed"}, ""))
 )
 
 var (
 	forward_ConsumerService_RegisterConsumer_0 = runtime.ForwardResponseMessage
 
-	forward_ConsumerService_UpdateConsumerInfo_0 = runtime.ForwardResponseMessage
+	forward_ConsumerService_GetConsumer_0 = runtime.ForwardResponseMessage
+
+	forward_ConsumerService_GetAuthorizedConsumers_0 = runtime.ForwardResponseMessage
+
+	forward_ConsumerService_GetUnauthorizedConsumers_0 = runtime.ForwardResponseMessage
+
+	forward_ConsumerService_AuthorizeConsumer_0 = runtime.ForwardResponseMessage
+
+	forward_ConsumerService_RetrieveConsumerCredentials_0 = runtime.ForwardResponseMessage
 
 	forward_ConsumerService_PublishConsumerStats_0 = runtime.ForwardResponseMessage
+
+	forward_ConsumerService_GetConsumerStreams_0 = runtime.ForwardResponseMessage
 
 	forward_ConsumerService_GetSubscribedStreams_0 = runtime.ForwardResponseMessage
 )

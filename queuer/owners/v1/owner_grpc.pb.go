@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 const (
 	OwnerService_CreateOwner_FullMethodName      = "/queuer.owners.v1.OwnerService/CreateOwner"
 	OwnerService_GetOwner_FullMethodName         = "/queuer.owners.v1.OwnerService/GetOwner"
+	OwnerService_GetOwners_FullMethodName        = "/queuer.owners.v1.OwnerService/GetOwners"
 	OwnerService_RegisterConsumer_FullMethodName = "/queuer.owners.v1.OwnerService/RegisterConsumer"
 	OwnerService_GetConsumers_FullMethodName     = "/queuer.owners.v1.OwnerService/GetConsumers"
 	OwnerService_ListStreams_FullMethodName      = "/queuer.owners.v1.OwnerService/ListStreams"
@@ -32,6 +33,7 @@ const (
 type OwnerServiceClient interface {
 	CreateOwner(ctx context.Context, in *CreateOwnerRequest, opts ...grpc.CallOption) (*CreateOwnerResponse, error)
 	GetOwner(ctx context.Context, in *GetOwnerRequest, opts ...grpc.CallOption) (*GetOwnerResponse, error)
+	GetOwners(ctx context.Context, in *GetOwnersRequest, opts ...grpc.CallOption) (*GetOwnersResponse, error)
 	RegisterConsumer(ctx context.Context, in *RegisterConsumerRequest, opts ...grpc.CallOption) (*RegisterConsumerResponse, error)
 	GetConsumers(ctx context.Context, in *GetConsumersRequest, opts ...grpc.CallOption) (*GetConsumersResponse, error)
 	ListStreams(ctx context.Context, in *ListStreamsRequest, opts ...grpc.CallOption) (*ListStreamsResponse, error)
@@ -57,6 +59,15 @@ func (c *ownerServiceClient) CreateOwner(ctx context.Context, in *CreateOwnerReq
 func (c *ownerServiceClient) GetOwner(ctx context.Context, in *GetOwnerRequest, opts ...grpc.CallOption) (*GetOwnerResponse, error) {
 	out := new(GetOwnerResponse)
 	err := c.cc.Invoke(ctx, OwnerService_GetOwner_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ownerServiceClient) GetOwners(ctx context.Context, in *GetOwnersRequest, opts ...grpc.CallOption) (*GetOwnersResponse, error) {
+	out := new(GetOwnersResponse)
+	err := c.cc.Invoke(ctx, OwnerService_GetOwners_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -96,6 +107,7 @@ func (c *ownerServiceClient) ListStreams(ctx context.Context, in *ListStreamsReq
 type OwnerServiceServer interface {
 	CreateOwner(context.Context, *CreateOwnerRequest) (*CreateOwnerResponse, error)
 	GetOwner(context.Context, *GetOwnerRequest) (*GetOwnerResponse, error)
+	GetOwners(context.Context, *GetOwnersRequest) (*GetOwnersResponse, error)
 	RegisterConsumer(context.Context, *RegisterConsumerRequest) (*RegisterConsumerResponse, error)
 	GetConsumers(context.Context, *GetConsumersRequest) (*GetConsumersResponse, error)
 	ListStreams(context.Context, *ListStreamsRequest) (*ListStreamsResponse, error)
@@ -111,6 +123,9 @@ func (UnimplementedOwnerServiceServer) CreateOwner(context.Context, *CreateOwner
 }
 func (UnimplementedOwnerServiceServer) GetOwner(context.Context, *GetOwnerRequest) (*GetOwnerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetOwner not implemented")
+}
+func (UnimplementedOwnerServiceServer) GetOwners(context.Context, *GetOwnersRequest) (*GetOwnersResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOwners not implemented")
 }
 func (UnimplementedOwnerServiceServer) RegisterConsumer(context.Context, *RegisterConsumerRequest) (*RegisterConsumerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterConsumer not implemented")
@@ -166,6 +181,24 @@ func _OwnerService_GetOwner_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OwnerServiceServer).GetOwner(ctx, req.(*GetOwnerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OwnerService_GetOwners_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOwnersRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OwnerServiceServer).GetOwners(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OwnerService_GetOwners_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OwnerServiceServer).GetOwners(ctx, req.(*GetOwnersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -238,6 +271,10 @@ var OwnerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetOwner",
 			Handler:    _OwnerService_GetOwner_Handler,
+		},
+		{
+			MethodName: "GetOwners",
+			Handler:    _OwnerService_GetOwners_Handler,
 		},
 		{
 			MethodName: "RegisterConsumer",

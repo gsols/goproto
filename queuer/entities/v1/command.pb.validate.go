@@ -59,21 +59,27 @@ func (m *Command) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetId()); err != nil {
-		err = CommandValidationError{
-			field:  "Id",
-			reason: "value must be a valid UUID",
-			cause:  err,
+	if m.GetId() != "" {
+
+		if err := m._validateUuid(m.GetId()); err != nil {
+			err = CommandValidationError{
+				field:  "Id",
+				reason: "value must be a valid UUID",
+				cause:  err,
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
 		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
+
 	}
 
 	// no validation rules for Action
 
-	// no validation rules for Payload
+	if m.Payload != nil {
+		// no validation rules for Payload
+	}
 
 	if len(errors) > 0 {
 		return CommandMultiError(errors)
