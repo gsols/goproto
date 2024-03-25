@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.0](https://github.com/gsols/goproto/compare/v0.3.0...v0.4.0) (2024-03-25)
+
+
+### Features
+
+* update [gsols/proto-apis@e041bc5d50d5be8e7d57b8047bb84d42b8dc52c7] ([4da512a](https://github.com/gsols/goproto/commit/4da512a7f02ed2389e5274e43f68b530231c90d4))
+* update proto ([0c7cfab](https://github.com/gsols/goproto/commit/0c7cfab6532c919c172376b693f17af6258209d5))
+
 ## [0.3.0](https://github.com/gsols/goproto/compare/v0.2.0...v0.3.0) (2024-03-18)
 
 
