@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.0](https://github.com/gsols/goproto/compare/v0.3.0...v0.4.0) (2024-03-25)
+
+
+### Features
+
+* refactor commands to allow nearly real time communication ([dc3c0ba](https://github.com/gsols/goproto/commit/dc3c0ba7601c63b8413eb1c62796ed874461b1ee))
+* update proto ([0c7cfab](https://github.com/gsols/goproto/commit/0c7cfab6532c919c172376b693f17af6258209d5))
+
 ## [0.3.0](https://github.com/gsols/goproto/compare/v0.2.0...v0.3.0) (2024-03-18)
 
 
