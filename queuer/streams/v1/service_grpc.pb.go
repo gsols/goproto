@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	StreamService_CreateStream_FullMethodName       = "/queuer.streams.v1.StreamService/CreateStream"
+	StreamService_Register_FullMethodName           = "/queuer.streams.v1.StreamService/Register"
 	StreamService_GetStream_FullMethodName          = "/queuer.streams.v1.StreamService/GetStream"
 	StreamService_DeleteStream_FullMethodName       = "/queuer.streams.v1.StreamService/DeleteStream"
 	StreamService_FlushStream_FullMethodName        = "/queuer.streams.v1.StreamService/FlushStream"
@@ -35,7 +35,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type StreamServiceClient interface {
-	CreateStream(ctx context.Context, in *CreateStreamRequest, opts ...grpc.CallOption) (*CreateStreamResponse, error)
+	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	GetStream(ctx context.Context, in *GetStreamRequest, opts ...grpc.CallOption) (*GetStreamResponse, error)
 	DeleteStream(ctx context.Context, in *DeleteStreamRequest, opts ...grpc.CallOption) (*DeleteStreamResponse, error)
 	FlushStream(ctx context.Context, in *FlushStreamRequest, opts ...grpc.CallOption) (*FlushStreamResponse, error)
@@ -55,9 +55,9 @@ func NewStreamServiceClient(cc grpc.ClientConnInterface) StreamServiceClient {
 	return &streamServiceClient{cc}
 }
 
-func (c *streamServiceClient) CreateStream(ctx context.Context, in *CreateStreamRequest, opts ...grpc.CallOption) (*CreateStreamResponse, error) {
-	out := new(CreateStreamResponse)
-	err := c.cc.Invoke(ctx, StreamService_CreateStream_FullMethodName, in, out, opts...)
+func (c *streamServiceClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
+	out := new(RegisterResponse)
+	err := c.cc.Invoke(ctx, StreamService_Register_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -172,7 +172,7 @@ func (c *streamServiceClient) UnregisterConsumer(ctx context.Context, in *Unregi
 // All implementations must embed UnimplementedStreamServiceServer
 // for forward compatibility
 type StreamServiceServer interface {
-	CreateStream(context.Context, *CreateStreamRequest) (*CreateStreamResponse, error)
+	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	GetStream(context.Context, *GetStreamRequest) (*GetStreamResponse, error)
 	DeleteStream(context.Context, *DeleteStreamRequest) (*DeleteStreamResponse, error)
 	FlushStream(context.Context, *FlushStreamRequest) (*FlushStreamResponse, error)
@@ -189,8 +189,8 @@ type StreamServiceServer interface {
 type UnimplementedStreamServiceServer struct {
 }
 
-func (UnimplementedStreamServiceServer) CreateStream(context.Context, *CreateStreamRequest) (*CreateStreamResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateStream not implemented")
+func (UnimplementedStreamServiceServer) Register(context.Context, *RegisterRequest) (*RegisterResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
 func (UnimplementedStreamServiceServer) GetStream(context.Context, *GetStreamRequest) (*GetStreamResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetStream not implemented")
@@ -232,20 +232,20 @@ func RegisterStreamServiceServer(s grpc.ServiceRegistrar, srv StreamServiceServe
 	s.RegisterService(&StreamService_ServiceDesc, srv)
 }
 
-func _StreamService_CreateStream_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateStreamRequest)
+func _StreamService_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(StreamServiceServer).CreateStream(ctx, in)
+		return srv.(StreamServiceServer).Register(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: StreamService_CreateStream_FullMethodName,
+		FullMethod: StreamService_Register_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(StreamServiceServer).CreateStream(ctx, req.(*CreateStreamRequest))
+		return srv.(StreamServiceServer).Register(ctx, req.(*RegisterRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -423,8 +423,8 @@ var StreamService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*StreamServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateStream",
-			Handler:    _StreamService_CreateStream_Handler,
+			MethodName: "Register",
+			Handler:    _StreamService_Register_Handler,
 		},
 		{
 			MethodName: "GetStream",

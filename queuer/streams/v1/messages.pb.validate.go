@@ -42,22 +42,22 @@ var (
 // define the regex for a UUID once up-front
 var _messages_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
 
-// Validate checks the field values on CreateStreamRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *CreateStreamRequest) Validate() error {
+// Validate checks the field values on RegisterRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *RegisterRequest) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on CreateStreamRequest with the rules
+// ValidateAll checks the field values on RegisterRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// CreateStreamRequestMultiError, or nil if none found.
-func (m *CreateStreamRequest) ValidateAll() error {
+// RegisterRequestMultiError, or nil if none found.
+func (m *RegisterRequest) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *CreateStreamRequest) validate(all bool) error {
+func (m *RegisterRequest) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -65,7 +65,7 @@ func (m *CreateStreamRequest) validate(all bool) error {
 	var errors []error
 
 	if utf8.RuneCountInString(m.GetName()) < 3 {
-		err := CreateStreamRequestValidationError{
+		err := RegisterRequestValidationError{
 			field:  "Name",
 			reason: "value length must be at least 3 runes",
 		}
@@ -76,7 +76,7 @@ func (m *CreateStreamRequest) validate(all bool) error {
 	}
 
 	if err := m._validateUuid(m.GetOwnerId()); err != nil {
-		err = CreateStreamRequestValidationError{
+		err = RegisterRequestValidationError{
 			field:  "OwnerId",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -87,14 +87,68 @@ func (m *CreateStreamRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if m.Id != nil {
+
+		if m.GetId() != "" {
+
+			if err := m._validateUuid(m.GetId()); err != nil {
+				err = RegisterRequestValidationError{
+					field:  "Id",
+					reason: "value must be a valid UUID",
+					cause:  err,
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Connector != nil {
+
+		if m.GetConnector() != "" {
+
+			if ip := net.ParseIP(m.GetConnector()); ip == nil {
+				err := RegisterRequestValidationError{
+					field:  "Connector",
+					reason: "value must be a valid IP address",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+
+	}
+
+	if m.Port != nil {
+
+		if val := m.GetPort(); val < 1 || val > 65535 {
+			err := RegisterRequestValidationError{
+				field:  "Port",
+				reason: "value must be inside range [1, 65535]",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
 	if len(errors) > 0 {
-		return CreateStreamRequestMultiError(errors)
+		return RegisterRequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *CreateStreamRequest) _validateUuid(uuid string) error {
+func (m *RegisterRequest) _validateUuid(uuid string) error {
 	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -102,13 +156,13 @@ func (m *CreateStreamRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// CreateStreamRequestMultiError is an error wrapping multiple validation
-// errors returned by CreateStreamRequest.ValidateAll() if the designated
-// constraints aren't met.
-type CreateStreamRequestMultiError []error
+// RegisterRequestMultiError is an error wrapping multiple validation errors
+// returned by RegisterRequest.ValidateAll() if the designated constraints
+// aren't met.
+type RegisterRequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m CreateStreamRequestMultiError) Error() string {
+func (m RegisterRequestMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -117,11 +171,11 @@ func (m CreateStreamRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m CreateStreamRequestMultiError) AllErrors() []error { return m }
+func (m RegisterRequestMultiError) AllErrors() []error { return m }
 
-// CreateStreamRequestValidationError is the validation error returned by
-// CreateStreamRequest.Validate if the designated constraints aren't met.
-type CreateStreamRequestValidationError struct {
+// RegisterRequestValidationError is the validation error returned by
+// RegisterRequest.Validate if the designated constraints aren't met.
+type RegisterRequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -129,24 +183,22 @@ type CreateStreamRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e CreateStreamRequestValidationError) Field() string { return e.field }
+func (e RegisterRequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CreateStreamRequestValidationError) Reason() string { return e.reason }
+func (e RegisterRequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CreateStreamRequestValidationError) Cause() error { return e.cause }
+func (e RegisterRequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CreateStreamRequestValidationError) Key() bool { return e.key }
+func (e RegisterRequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CreateStreamRequestValidationError) ErrorName() string {
-	return "CreateStreamRequestValidationError"
-}
+func (e RegisterRequestValidationError) ErrorName() string { return "RegisterRequestValidationError" }
 
 // Error satisfies the builtin error interface
-func (e CreateStreamRequestValidationError) Error() string {
+func (e RegisterRequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -158,14 +210,14 @@ func (e CreateStreamRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCreateStreamRequest.%s: %s%s",
+		"invalid %sRegisterRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CreateStreamRequestValidationError{}
+var _ error = RegisterRequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -173,24 +225,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CreateStreamRequestValidationError{}
+} = RegisterRequestValidationError{}
 
-// Validate checks the field values on CreateStreamResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *CreateStreamResponse) Validate() error {
+// Validate checks the field values on RegisterResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *RegisterResponse) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on CreateStreamResponse with the rules
+// ValidateAll checks the field values on RegisterResponse with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the result is a list of violation errors wrapped in
-// CreateStreamResponseMultiError, or nil if none found.
-func (m *CreateStreamResponse) ValidateAll() error {
+// RegisterResponseMultiError, or nil if none found.
+func (m *RegisterResponse) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *CreateStreamResponse) validate(all bool) error {
+func (m *RegisterResponse) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -198,10 +250,39 @@ func (m *CreateStreamResponse) validate(all bool) error {
 	var errors []error
 
 	if all {
+		switch v := interface{}(m.GetResult()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, RegisterResponseValidationError{
+					field:  "Result",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, RegisterResponseValidationError{
+					field:  "Result",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetResult()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RegisterResponseValidationError{
+				field:  "Result",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if all {
 		switch v := interface{}(m.GetStream()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, CreateStreamResponseValidationError{
+				errors = append(errors, RegisterResponseValidationError{
 					field:  "Stream",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -209,7 +290,7 @@ func (m *CreateStreamResponse) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, CreateStreamResponseValidationError{
+				errors = append(errors, RegisterResponseValidationError{
 					field:  "Stream",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -218,7 +299,7 @@ func (m *CreateStreamResponse) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetStream()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return CreateStreamResponseValidationError{
+			return RegisterResponseValidationError{
 				field:  "Stream",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -227,19 +308,19 @@ func (m *CreateStreamResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return CreateStreamResponseMultiError(errors)
+		return RegisterResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// CreateStreamResponseMultiError is an error wrapping multiple validation
-// errors returned by CreateStreamResponse.ValidateAll() if the designated
-// constraints aren't met.
-type CreateStreamResponseMultiError []error
+// RegisterResponseMultiError is an error wrapping multiple validation errors
+// returned by RegisterResponse.ValidateAll() if the designated constraints
+// aren't met.
+type RegisterResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m CreateStreamResponseMultiError) Error() string {
+func (m RegisterResponseMultiError) Error() string {
 	var msgs []string
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -248,11 +329,11 @@ func (m CreateStreamResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m CreateStreamResponseMultiError) AllErrors() []error { return m }
+func (m RegisterResponseMultiError) AllErrors() []error { return m }
 
-// CreateStreamResponseValidationError is the validation error returned by
-// CreateStreamResponse.Validate if the designated constraints aren't met.
-type CreateStreamResponseValidationError struct {
+// RegisterResponseValidationError is the validation error returned by
+// RegisterResponse.Validate if the designated constraints aren't met.
+type RegisterResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -260,24 +341,22 @@ type CreateStreamResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e CreateStreamResponseValidationError) Field() string { return e.field }
+func (e RegisterResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e CreateStreamResponseValidationError) Reason() string { return e.reason }
+func (e RegisterResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e CreateStreamResponseValidationError) Cause() error { return e.cause }
+func (e RegisterResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e CreateStreamResponseValidationError) Key() bool { return e.key }
+func (e RegisterResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e CreateStreamResponseValidationError) ErrorName() string {
-	return "CreateStreamResponseValidationError"
-}
+func (e RegisterResponseValidationError) ErrorName() string { return "RegisterResponseValidationError" }
 
 // Error satisfies the builtin error interface
-func (e CreateStreamResponseValidationError) Error() string {
+func (e RegisterResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -289,14 +368,14 @@ func (e CreateStreamResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sCreateStreamResponse.%s: %s%s",
+		"invalid %sRegisterResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = CreateStreamResponseValidationError{}
+var _ error = RegisterResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -304,7 +383,7 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = CreateStreamResponseValidationError{}
+} = RegisterResponseValidationError{}
 
 // Validate checks the field values on GetStreamRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the

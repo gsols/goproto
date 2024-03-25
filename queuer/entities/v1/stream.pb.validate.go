@@ -82,6 +82,25 @@ func (m *Stream) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if m.GetConnector() != "" {
+
+		if ip := net.ParseIP(m.GetConnector()); ip == nil {
+			err := StreamValidationError{
+				field:  "Connector",
+				reason: "value must be a valid IP address",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if m.GetPort() != "" {
+
+	}
+
 	if len(errors) > 0 {
 		return StreamMultiError(errors)
 	}
