@@ -72,39 +72,72 @@ func (m *Consumer) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if utf8.RuneCountInString(m.GetVersion()) < 1 {
+		err := ConsumerValidationError{
+			field:  "Version",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	// no validation rules for IsActive
 
-	if m.Info != nil {
-
-		if all {
-			switch v := interface{}(m.GetInfo()).(type) {
-			case interface{ ValidateAll() error }:
-				if err := v.ValidateAll(); err != nil {
-					errors = append(errors, ConsumerValidationError{
-						field:  "Info",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			case interface{ Validate() error }:
-				if err := v.Validate(); err != nil {
-					errors = append(errors, ConsumerValidationError{
-						field:  "Info",
-						reason: "embedded message failed validation",
-						cause:  err,
-					})
-				}
-			}
-		} else if v, ok := interface{}(m.GetInfo()).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ConsumerValidationError{
-					field:  "Info",
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
+	if utf8.RuneCountInString(m.GetOs()) < 1 {
+		err := ConsumerValidationError{
+			field:  "Os",
+			reason: "value length must be at least 1 runes",
 		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
+	if utf8.RuneCountInString(m.GetArch()) < 1 {
+		err := ConsumerValidationError{
+			field:  "Arch",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetIp()) < 1 {
+		err := ConsumerValidationError{
+			field:  "Ip",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetHostname()) < 1 {
+		err := ConsumerValidationError{
+			field:  "Hostname",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if utf8.RuneCountInString(m.GetBootTime()) < 1 {
+		err := ConsumerValidationError{
+			field:  "BootTime",
+			reason: "value length must be at least 1 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
 	}
 
 	if m.Owner != nil {
@@ -224,157 +257,3 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ConsumerValidationError{}
-
-// Validate checks the field values on ConsumerInfo with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *ConsumerInfo) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on ConsumerInfo with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in ConsumerInfoMultiError, or
-// nil if none found.
-func (m *ConsumerInfo) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *ConsumerInfo) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	if utf8.RuneCountInString(m.GetOs()) < 1 {
-		err := ConsumerInfoValidationError{
-			field:  "Os",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetArch()) < 1 {
-		err := ConsumerInfoValidationError{
-			field:  "Arch",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetIp()) < 1 {
-		err := ConsumerInfoValidationError{
-			field:  "Ip",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetHostname()) < 1 {
-		err := ConsumerInfoValidationError{
-			field:  "Hostname",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetBootTime()) < 1 {
-		err := ConsumerInfoValidationError{
-			field:  "BootTime",
-			reason: "value length must be at least 1 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if len(errors) > 0 {
-		return ConsumerInfoMultiError(errors)
-	}
-
-	return nil
-}
-
-// ConsumerInfoMultiError is an error wrapping multiple validation errors
-// returned by ConsumerInfo.ValidateAll() if the designated constraints aren't met.
-type ConsumerInfoMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m ConsumerInfoMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m ConsumerInfoMultiError) AllErrors() []error { return m }
-
-// ConsumerInfoValidationError is the validation error returned by
-// ConsumerInfo.Validate if the designated constraints aren't met.
-type ConsumerInfoValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e ConsumerInfoValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e ConsumerInfoValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e ConsumerInfoValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e ConsumerInfoValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e ConsumerInfoValidationError) ErrorName() string { return "ConsumerInfoValidationError" }
-
-// Error satisfies the builtin error interface
-func (e ConsumerInfoValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sConsumerInfo.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = ConsumerInfoValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = ConsumerInfoValidationError{}
