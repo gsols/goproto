@@ -19,17 +19,19 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	CommandService_SubscribeToCommands_FullMethodName = "/queuer.commands.v1.CommandService/SubscribeToCommands"
-	CommandService_CreateCommand_FullMethodName       = "/queuer.commands.v1.CommandService/CreateCommand"
-	CommandService_Acknowledge_FullMethodName         = "/queuer.commands.v1.CommandService/Acknowledge"
+	CommandService_Subscribe_FullMethodName   = "/queuer.commands.v1.CommandService/Subscribe"
+	CommandService_Create_FullMethodName      = "/queuer.commands.v1.CommandService/Create"
+	CommandService_Get_FullMethodName         = "/queuer.commands.v1.CommandService/Get"
+	CommandService_Acknowledge_FullMethodName = "/queuer.commands.v1.CommandService/Acknowledge"
 )
 
 // CommandServiceClient is the client API for CommandService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CommandServiceClient interface {
-	SubscribeToCommands(ctx context.Context, in *SubscribeToCommandsRequest, opts ...grpc.CallOption) (CommandService_SubscribeToCommandsClient, error)
-	CreateCommand(ctx context.Context, in *CreateCommandRequest, opts ...grpc.CallOption) (*CreateCommandResponse, error)
+	Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (CommandService_SubscribeClient, error)
+	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
 	Acknowledge(ctx context.Context, in *AcknowledgeRequest, opts ...grpc.CallOption) (*AcknowledgeResponse, error)
 }
 
@@ -41,12 +43,12 @@ func NewCommandServiceClient(cc grpc.ClientConnInterface) CommandServiceClient {
 	return &commandServiceClient{cc}
 }
 
-func (c *commandServiceClient) SubscribeToCommands(ctx context.Context, in *SubscribeToCommandsRequest, opts ...grpc.CallOption) (CommandService_SubscribeToCommandsClient, error) {
-	stream, err := c.cc.NewStream(ctx, &CommandService_ServiceDesc.Streams[0], CommandService_SubscribeToCommands_FullMethodName, opts...)
+func (c *commandServiceClient) Subscribe(ctx context.Context, in *SubscribeRequest, opts ...grpc.CallOption) (CommandService_SubscribeClient, error) {
+	stream, err := c.cc.NewStream(ctx, &CommandService_ServiceDesc.Streams[0], CommandService_Subscribe_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &commandServiceSubscribeToCommandsClient{stream}
+	x := &commandServiceSubscribeClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -56,26 +58,35 @@ func (c *commandServiceClient) SubscribeToCommands(ctx context.Context, in *Subs
 	return x, nil
 }
 
-type CommandService_SubscribeToCommandsClient interface {
-	Recv() (*SubscribeToCommandsResponse, error)
+type CommandService_SubscribeClient interface {
+	Recv() (*SubscribeResponse, error)
 	grpc.ClientStream
 }
 
-type commandServiceSubscribeToCommandsClient struct {
+type commandServiceSubscribeClient struct {
 	grpc.ClientStream
 }
 
-func (x *commandServiceSubscribeToCommandsClient) Recv() (*SubscribeToCommandsResponse, error) {
-	m := new(SubscribeToCommandsResponse)
+func (x *commandServiceSubscribeClient) Recv() (*SubscribeResponse, error) {
+	m := new(SubscribeResponse)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *commandServiceClient) CreateCommand(ctx context.Context, in *CreateCommandRequest, opts ...grpc.CallOption) (*CreateCommandResponse, error) {
-	out := new(CreateCommandResponse)
-	err := c.cc.Invoke(ctx, CommandService_CreateCommand_FullMethodName, in, out, opts...)
+func (c *commandServiceClient) Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
+	out := new(CreateResponse)
+	err := c.cc.Invoke(ctx, CommandService_Create_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *commandServiceClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, CommandService_Get_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -95,8 +106,9 @@ func (c *commandServiceClient) Acknowledge(ctx context.Context, in *AcknowledgeR
 // All implementations must embed UnimplementedCommandServiceServer
 // for forward compatibility
 type CommandServiceServer interface {
-	SubscribeToCommands(*SubscribeToCommandsRequest, CommandService_SubscribeToCommandsServer) error
-	CreateCommand(context.Context, *CreateCommandRequest) (*CreateCommandResponse, error)
+	Subscribe(*SubscribeRequest, CommandService_SubscribeServer) error
+	Create(context.Context, *CreateRequest) (*CreateResponse, error)
+	Get(context.Context, *GetRequest) (*GetResponse, error)
 	Acknowledge(context.Context, *AcknowledgeRequest) (*AcknowledgeResponse, error)
 	mustEmbedUnimplementedCommandServiceServer()
 }
@@ -105,11 +117,14 @@ type CommandServiceServer interface {
 type UnimplementedCommandServiceServer struct {
 }
 
-func (UnimplementedCommandServiceServer) SubscribeToCommands(*SubscribeToCommandsRequest, CommandService_SubscribeToCommandsServer) error {
-	return status.Errorf(codes.Unimplemented, "method SubscribeToCommands not implemented")
+func (UnimplementedCommandServiceServer) Subscribe(*SubscribeRequest, CommandService_SubscribeServer) error {
+	return status.Errorf(codes.Unimplemented, "method Subscribe not implemented")
 }
-func (UnimplementedCommandServiceServer) CreateCommand(context.Context, *CreateCommandRequest) (*CreateCommandResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateCommand not implemented")
+func (UnimplementedCommandServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedCommandServiceServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
 func (UnimplementedCommandServiceServer) Acknowledge(context.Context, *AcknowledgeRequest) (*AcknowledgeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Acknowledge not implemented")
@@ -127,41 +142,59 @@ func RegisterCommandServiceServer(s grpc.ServiceRegistrar, srv CommandServiceSer
 	s.RegisterService(&CommandService_ServiceDesc, srv)
 }
 
-func _CommandService_SubscribeToCommands_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(SubscribeToCommandsRequest)
+func _CommandService_Subscribe_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(SubscribeRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(CommandServiceServer).SubscribeToCommands(m, &commandServiceSubscribeToCommandsServer{stream})
+	return srv.(CommandServiceServer).Subscribe(m, &commandServiceSubscribeServer{stream})
 }
 
-type CommandService_SubscribeToCommandsServer interface {
-	Send(*SubscribeToCommandsResponse) error
+type CommandService_SubscribeServer interface {
+	Send(*SubscribeResponse) error
 	grpc.ServerStream
 }
 
-type commandServiceSubscribeToCommandsServer struct {
+type commandServiceSubscribeServer struct {
 	grpc.ServerStream
 }
 
-func (x *commandServiceSubscribeToCommandsServer) Send(m *SubscribeToCommandsResponse) error {
+func (x *commandServiceSubscribeServer) Send(m *SubscribeResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _CommandService_CreateCommand_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateCommandRequest)
+func _CommandService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CommandServiceServer).CreateCommand(ctx, in)
+		return srv.(CommandServiceServer).Create(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CommandService_CreateCommand_FullMethodName,
+		FullMethod: CommandService_Create_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CommandServiceServer).CreateCommand(ctx, req.(*CreateCommandRequest))
+		return srv.(CommandServiceServer).Create(ctx, req.(*CreateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CommandService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CommandServiceServer).Get(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CommandService_Get_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CommandServiceServer).Get(ctx, req.(*GetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -192,8 +225,12 @@ var CommandService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*CommandServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateCommand",
-			Handler:    _CommandService_CreateCommand_Handler,
+			MethodName: "Create",
+			Handler:    _CommandService_Create_Handler,
+		},
+		{
+			MethodName: "Get",
+			Handler:    _CommandService_Get_Handler,
 		},
 		{
 			MethodName: "Acknowledge",
@@ -202,8 +239,8 @@ var CommandService_ServiceDesc = grpc.ServiceDesc{
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "SubscribeToCommands",
-			Handler:       _CommandService_SubscribeToCommands_Handler,
+			StreamName:    "Subscribe",
+			Handler:       _CommandService_Subscribe_Handler,
 			ServerStreams: true,
 		},
 	},
