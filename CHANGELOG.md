@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/gsols/goproto/compare/v0.5.0...v0.6.0) (2024-03-30)
+
+
+### Features
+
+* rollback create command request [gsols/proto-apis@89d48be12e3ccc263d18b3ec74a84f5cd690f37d] ([54002ee](https://github.com/gsols/goproto/commit/54002eef8e1b61e94e3d8cd20c3a2e84c8d57ef2))
+
 ## [0.5.0](https://github.com/gsols/goproto/compare/v0.4.0...v0.5.0) (2024-03-30)
 
 
