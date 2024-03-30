@@ -295,50 +295,22 @@ func (m *CreateRequest) validate(all bool) error {
 
 	var errors []error
 
+	if err := m._validateUuid(m.GetConsumerId()); err != nil {
+		err = CreateRequestValidationError{
+			field:  "ConsumerId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	// no validation rules for Action
 
 	if m.Payload != nil {
 		// no validation rules for Payload
-	}
-
-	if m.ConsumerId != nil {
-
-		if m.GetConsumerId() != "" {
-
-			if err := m._validateUuid(m.GetConsumerId()); err != nil {
-				err = CreateRequestValidationError{
-					field:  "ConsumerId",
-					reason: "value must be a valid UUID",
-					cause:  err,
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-			}
-
-		}
-
-	}
-
-	if m.StreamId != nil {
-
-		if m.GetStreamId() != "" {
-
-			if err := m._validateUuid(m.GetStreamId()); err != nil {
-				err = CreateRequestValidationError{
-					field:  "StreamId",
-					reason: "value must be a valid UUID",
-					cause:  err,
-				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
-			}
-
-		}
-
 	}
 
 	if len(errors) > 0 {
