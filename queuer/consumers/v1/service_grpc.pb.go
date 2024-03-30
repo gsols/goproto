@@ -24,6 +24,7 @@ const (
 	ConsumerService_GetAuthorizedConsumers_FullMethodName      = "/queuer.consumers.v1.ConsumerService/GetAuthorizedConsumers"
 	ConsumerService_GetUnauthorizedConsumers_FullMethodName    = "/queuer.consumers.v1.ConsumerService/GetUnauthorizedConsumers"
 	ConsumerService_AuthorizeConsumer_FullMethodName           = "/queuer.consumers.v1.ConsumerService/AuthorizeConsumer"
+	ConsumerService_DeauthorizeConsumer_FullMethodName         = "/queuer.consumers.v1.ConsumerService/DeauthorizeConsumer"
 	ConsumerService_RetrieveConsumerCredentials_FullMethodName = "/queuer.consumers.v1.ConsumerService/RetrieveConsumerCredentials"
 	ConsumerService_PublishConsumerStats_FullMethodName        = "/queuer.consumers.v1.ConsumerService/PublishConsumerStats"
 	ConsumerService_GetConsumerStreams_FullMethodName          = "/queuer.consumers.v1.ConsumerService/GetConsumerStreams"
@@ -39,6 +40,7 @@ type ConsumerServiceClient interface {
 	GetAuthorizedConsumers(ctx context.Context, in *GetAuthorizedConsumersRequest, opts ...grpc.CallOption) (*GetAuthorizedConsumersResponse, error)
 	GetUnauthorizedConsumers(ctx context.Context, in *GetUnauthorizedConsumersRequest, opts ...grpc.CallOption) (*GetUnauthorizedConsumersResponse, error)
 	AuthorizeConsumer(ctx context.Context, in *AuthorizeConsumerRequest, opts ...grpc.CallOption) (*AuthorizeConsumerResponse, error)
+	DeauthorizeConsumer(ctx context.Context, in *DeauthorizeConsumerRequest, opts ...grpc.CallOption) (*DeauthorizeConsumerResponse, error)
 	RetrieveConsumerCredentials(ctx context.Context, in *RetrieveConsumerCredentialsRequest, opts ...grpc.CallOption) (*RetrieveConsumerCredentialsResponse, error)
 	PublishConsumerStats(ctx context.Context, opts ...grpc.CallOption) (ConsumerService_PublishConsumerStatsClient, error)
 	GetConsumerStreams(ctx context.Context, in *GetConsumerStreamsRequest, opts ...grpc.CallOption) (*GetConsumerStreamsResponse, error)
@@ -92,6 +94,15 @@ func (c *consumerServiceClient) GetUnauthorizedConsumers(ctx context.Context, in
 func (c *consumerServiceClient) AuthorizeConsumer(ctx context.Context, in *AuthorizeConsumerRequest, opts ...grpc.CallOption) (*AuthorizeConsumerResponse, error) {
 	out := new(AuthorizeConsumerResponse)
 	err := c.cc.Invoke(ctx, ConsumerService_AuthorizeConsumer_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *consumerServiceClient) DeauthorizeConsumer(ctx context.Context, in *DeauthorizeConsumerRequest, opts ...grpc.CallOption) (*DeauthorizeConsumerResponse, error) {
+	out := new(DeauthorizeConsumerResponse)
+	err := c.cc.Invoke(ctx, ConsumerService_DeauthorizeConsumer_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -168,6 +179,7 @@ type ConsumerServiceServer interface {
 	GetAuthorizedConsumers(context.Context, *GetAuthorizedConsumersRequest) (*GetAuthorizedConsumersResponse, error)
 	GetUnauthorizedConsumers(context.Context, *GetUnauthorizedConsumersRequest) (*GetUnauthorizedConsumersResponse, error)
 	AuthorizeConsumer(context.Context, *AuthorizeConsumerRequest) (*AuthorizeConsumerResponse, error)
+	DeauthorizeConsumer(context.Context, *DeauthorizeConsumerRequest) (*DeauthorizeConsumerResponse, error)
 	RetrieveConsumerCredentials(context.Context, *RetrieveConsumerCredentialsRequest) (*RetrieveConsumerCredentialsResponse, error)
 	PublishConsumerStats(ConsumerService_PublishConsumerStatsServer) error
 	GetConsumerStreams(context.Context, *GetConsumerStreamsRequest) (*GetConsumerStreamsResponse, error)
@@ -193,6 +205,9 @@ func (UnimplementedConsumerServiceServer) GetUnauthorizedConsumers(context.Conte
 }
 func (UnimplementedConsumerServiceServer) AuthorizeConsumer(context.Context, *AuthorizeConsumerRequest) (*AuthorizeConsumerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AuthorizeConsumer not implemented")
+}
+func (UnimplementedConsumerServiceServer) DeauthorizeConsumer(context.Context, *DeauthorizeConsumerRequest) (*DeauthorizeConsumerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeauthorizeConsumer not implemented")
 }
 func (UnimplementedConsumerServiceServer) RetrieveConsumerCredentials(context.Context, *RetrieveConsumerCredentialsRequest) (*RetrieveConsumerCredentialsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RetrieveConsumerCredentials not implemented")
@@ -309,6 +324,24 @@ func _ConsumerService_AuthorizeConsumer_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ConsumerService_DeauthorizeConsumer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeauthorizeConsumerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ConsumerServiceServer).DeauthorizeConsumer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ConsumerService_DeauthorizeConsumer_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ConsumerServiceServer).DeauthorizeConsumer(ctx, req.(*DeauthorizeConsumerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ConsumerService_RetrieveConsumerCredentials_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RetrieveConsumerCredentialsRequest)
 	if err := dec(in); err != nil {
@@ -415,6 +448,10 @@ var ConsumerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AuthorizeConsumer",
 			Handler:    _ConsumerService_AuthorizeConsumer_Handler,
+		},
+		{
+			MethodName: "DeauthorizeConsumer",
+			Handler:    _ConsumerService_DeauthorizeConsumer_Handler,
 		},
 		{
 			MethodName: "RetrieveConsumerCredentials",

@@ -1322,6 +1322,260 @@ var _ interface {
 	ErrorName() string
 } = AuthorizeConsumerResponseValidationError{}
 
+// Validate checks the field values on DeauthorizeConsumerRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeauthorizeConsumerRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeauthorizeConsumerRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeauthorizeConsumerRequestMultiError, or nil if none found.
+func (m *DeauthorizeConsumerRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeauthorizeConsumerRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if err := m._validateUuid(m.GetConsumerId()); err != nil {
+		err = DeauthorizeConsumerRequestValidationError{
+			field:  "ConsumerId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return DeauthorizeConsumerRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *DeauthorizeConsumerRequest) _validateUuid(uuid string) error {
+	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
+	}
+
+	return nil
+}
+
+// DeauthorizeConsumerRequestMultiError is an error wrapping multiple
+// validation errors returned by DeauthorizeConsumerRequest.ValidateAll() if
+// the designated constraints aren't met.
+type DeauthorizeConsumerRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeauthorizeConsumerRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeauthorizeConsumerRequestMultiError) AllErrors() []error { return m }
+
+// DeauthorizeConsumerRequestValidationError is the validation error returned
+// by DeauthorizeConsumerRequest.Validate if the designated constraints aren't met.
+type DeauthorizeConsumerRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeauthorizeConsumerRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeauthorizeConsumerRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeauthorizeConsumerRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeauthorizeConsumerRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeauthorizeConsumerRequestValidationError) ErrorName() string {
+	return "DeauthorizeConsumerRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeauthorizeConsumerRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeauthorizeConsumerRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeauthorizeConsumerRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeauthorizeConsumerRequestValidationError{}
+
+// Validate checks the field values on DeauthorizeConsumerResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeauthorizeConsumerResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeauthorizeConsumerResponse with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeauthorizeConsumerResponseMultiError, or nil if none found.
+func (m *DeauthorizeConsumerResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeauthorizeConsumerResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if all {
+		switch v := interface{}(m.GetResult()).(type) {
+		case interface{ ValidateAll() error }:
+			if err := v.ValidateAll(); err != nil {
+				errors = append(errors, DeauthorizeConsumerResponseValidationError{
+					field:  "Result",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		case interface{ Validate() error }:
+			if err := v.Validate(); err != nil {
+				errors = append(errors, DeauthorizeConsumerResponseValidationError{
+					field:  "Result",
+					reason: "embedded message failed validation",
+					cause:  err,
+				})
+			}
+		}
+	} else if v, ok := interface{}(m.GetResult()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return DeauthorizeConsumerResponseValidationError{
+				field:  "Result",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if len(errors) > 0 {
+		return DeauthorizeConsumerResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeauthorizeConsumerResponseMultiError is an error wrapping multiple
+// validation errors returned by DeauthorizeConsumerResponse.ValidateAll() if
+// the designated constraints aren't met.
+type DeauthorizeConsumerResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeauthorizeConsumerResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeauthorizeConsumerResponseMultiError) AllErrors() []error { return m }
+
+// DeauthorizeConsumerResponseValidationError is the validation error returned
+// by DeauthorizeConsumerResponse.Validate if the designated constraints
+// aren't met.
+type DeauthorizeConsumerResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeauthorizeConsumerResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeauthorizeConsumerResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeauthorizeConsumerResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeauthorizeConsumerResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeauthorizeConsumerResponseValidationError) ErrorName() string {
+	return "DeauthorizeConsumerResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeauthorizeConsumerResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeauthorizeConsumerResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeauthorizeConsumerResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeauthorizeConsumerResponseValidationError{}
+
 // Validate checks the field values on RetrieveConsumerCredentialsRequest with
 // the rules defined in the proto definition for this message. If any rules
 // are violated, the first error encountered is returned, or nil if there are
