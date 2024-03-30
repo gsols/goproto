@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/gsols/goproto/compare/v0.4.0...v0.5.0) (2024-03-30)
+
+
+### Features
+
+* add deauthorize rpc [gsols/proto-apis@49cf4c4341a26b3e718c25fe6352f546fcb8876f] ([a782375](https://github.com/gsols/goproto/commit/a7823757c3381a4f7d8354ab69c8ca378946f889))
+
 ## [0.4.0](https://github.com/gsols/goproto/compare/v0.3.0...v0.4.0) (2024-03-25)
 
 
