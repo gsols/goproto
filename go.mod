@@ -4,7 +4,7 @@ go 1.22
 
 require (
 	github.com/bufbuild/buf v1.30.0
-	github.com/cosmtrek/air v1.51.0
+	github.com/cosmtrek/air v1.52.0
 	github.com/envoyproxy/protoc-gen-validate v1.0.4
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.19.1
 	golang.org/x/tools v0.19.0
