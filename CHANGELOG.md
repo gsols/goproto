@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/gsols/goproto/compare/v0.6.0...v0.7.0) (2024-05-08)
+
+
+### Features
+
+* add presence channel and unauthorize consumer [gsols/proto-apis@6ff34c0659ea238318c759b327b83d323db97a8a] ([706a3f5](https://github.com/gsols/goproto/commit/706a3f5059b7560946c5b1c1f35d9f9c9b2b9d1b))
+
 ## [0.6.0](https://github.com/gsols/goproto/compare/v0.5.0...v0.6.0) (2024-03-30)
 
 
