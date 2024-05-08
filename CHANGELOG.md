@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/gsols/goproto/compare/v0.7.0...v0.8.0) (2024-05-08)
+
+
+### Miscellaneous Chores
+
+* release 0.8.0 ([14312bb](https://github.com/gsols/goproto/commit/14312bb092bc61142fb55972dd7cb487eaaf5193))
+
 ## [0.7.0](https://github.com/gsols/goproto/compare/v0.6.0...v0.7.0) (2024-05-08)
 
 
