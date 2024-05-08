@@ -19,6 +19,96 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	PresenceService_IAmAlive_FullMethodName = "/queuer.consumers.v1.PresenceService/IAmAlive"
+)
+
+// PresenceServiceClient is the client API for PresenceService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type PresenceServiceClient interface {
+	IAmAlive(ctx context.Context, in *IAmAliveRequest, opts ...grpc.CallOption) (*IAmAliveResponse, error)
+}
+
+type presenceServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewPresenceServiceClient(cc grpc.ClientConnInterface) PresenceServiceClient {
+	return &presenceServiceClient{cc}
+}
+
+func (c *presenceServiceClient) IAmAlive(ctx context.Context, in *IAmAliveRequest, opts ...grpc.CallOption) (*IAmAliveResponse, error) {
+	out := new(IAmAliveResponse)
+	err := c.cc.Invoke(ctx, PresenceService_IAmAlive_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// PresenceServiceServer is the server API for PresenceService service.
+// All implementations must embed UnimplementedPresenceServiceServer
+// for forward compatibility
+type PresenceServiceServer interface {
+	IAmAlive(context.Context, *IAmAliveRequest) (*IAmAliveResponse, error)
+	mustEmbedUnimplementedPresenceServiceServer()
+}
+
+// UnimplementedPresenceServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedPresenceServiceServer struct {
+}
+
+func (UnimplementedPresenceServiceServer) IAmAlive(context.Context, *IAmAliveRequest) (*IAmAliveResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method IAmAlive not implemented")
+}
+func (UnimplementedPresenceServiceServer) mustEmbedUnimplementedPresenceServiceServer() {}
+
+// UnsafePresenceServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to PresenceServiceServer will
+// result in compilation errors.
+type UnsafePresenceServiceServer interface {
+	mustEmbedUnimplementedPresenceServiceServer()
+}
+
+func RegisterPresenceServiceServer(s grpc.ServiceRegistrar, srv PresenceServiceServer) {
+	s.RegisterService(&PresenceService_ServiceDesc, srv)
+}
+
+func _PresenceService_IAmAlive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IAmAliveRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PresenceServiceServer).IAmAlive(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PresenceService_IAmAlive_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PresenceServiceServer).IAmAlive(ctx, req.(*IAmAliveRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// PresenceService_ServiceDesc is the grpc.ServiceDesc for PresenceService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var PresenceService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "queuer.consumers.v1.PresenceService",
+	HandlerType: (*PresenceServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "IAmAlive",
+			Handler:    _PresenceService_IAmAlive_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "queuer/consumers/v1/service.proto",
+}
+
+const (
 	ConsumerService_RegisterConsumer_FullMethodName            = "/queuer.consumers.v1.ConsumerService/RegisterConsumer"
 	ConsumerService_GetConsumer_FullMethodName                 = "/queuer.consumers.v1.ConsumerService/GetConsumer"
 	ConsumerService_GetAuthorizedConsumers_FullMethodName      = "/queuer.consumers.v1.ConsumerService/GetAuthorizedConsumers"

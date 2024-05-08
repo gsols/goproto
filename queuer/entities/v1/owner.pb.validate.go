@@ -82,6 +82,14 @@ func (m *Owner) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if m.Consumers != nil {
+		// no validation rules for Consumers
+	}
+
+	if m.Streams != nil {
+		// no validation rules for Streams
+	}
+
 	if len(errors) > 0 {
 		return OwnerMultiError(errors)
 	}
