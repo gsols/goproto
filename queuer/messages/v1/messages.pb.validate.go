@@ -38,6 +38,331 @@ var (
 // define the regex for a UUID once up-front
 var _messages_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
 
+// Validate checks the field values on GetMessagesRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetMessagesRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetMessagesRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetMessagesRequestMultiError, or nil if none found.
+func (m *GetMessagesRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetMessagesRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if m.GetStreamId() != "" {
+
+		if err := m._validateUuid(m.GetStreamId()); err != nil {
+			err = GetMessagesRequestValidationError{
+				field:  "StreamId",
+				reason: "value must be a valid UUID",
+				cause:  err,
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if m.GetOwnerId() != "" {
+
+		if err := m._validateUuid(m.GetOwnerId()); err != nil {
+			err = GetMessagesRequestValidationError{
+				field:  "OwnerId",
+				reason: "value must be a valid UUID",
+				cause:  err,
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if m.Search != nil {
+
+		if m.GetSearch() != "" {
+
+		}
+
+	}
+
+	if m.PageToken != nil {
+		// no validation rules for PageToken
+	}
+
+	if m.PageSize != nil {
+
+		if val := m.GetPageSize(); val < 1 || val > 100 {
+			err := GetMessagesRequestValidationError{
+				field:  "PageSize",
+				reason: "value must be inside range [1, 100]",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
+	if len(errors) > 0 {
+		return GetMessagesRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *GetMessagesRequest) _validateUuid(uuid string) error {
+	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
+	}
+
+	return nil
+}
+
+// GetMessagesRequestMultiError is an error wrapping multiple validation errors
+// returned by GetMessagesRequest.ValidateAll() if the designated constraints
+// aren't met.
+type GetMessagesRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetMessagesRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetMessagesRequestMultiError) AllErrors() []error { return m }
+
+// GetMessagesRequestValidationError is the validation error returned by
+// GetMessagesRequest.Validate if the designated constraints aren't met.
+type GetMessagesRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetMessagesRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetMessagesRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetMessagesRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetMessagesRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetMessagesRequestValidationError) ErrorName() string {
+	return "GetMessagesRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetMessagesRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetMessagesRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetMessagesRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetMessagesRequestValidationError{}
+
+// Validate checks the field values on GetMessagesResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetMessagesResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetMessagesResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetMessagesResponseMultiError, or nil if none found.
+func (m *GetMessagesResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetMessagesResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	for idx, item := range m.GetMessages() {
+		_, _ = idx, item
+
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, GetMessagesResponseValidationError{
+						field:  fmt.Sprintf("Messages[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, GetMessagesResponseValidationError{
+						field:  fmt.Sprintf("Messages[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
+				}
+			}
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return GetMessagesResponseValidationError{
+					field:  fmt.Sprintf("Messages[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if err := m._validateUuid(m.GetNextPageToken()); err != nil {
+		err = GetMessagesResponseValidationError{
+			field:  "NextPageToken",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return GetMessagesResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *GetMessagesResponse) _validateUuid(uuid string) error {
+	if matched := _messages_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
+	}
+
+	return nil
+}
+
+// GetMessagesResponseMultiError is an error wrapping multiple validation
+// errors returned by GetMessagesResponse.ValidateAll() if the designated
+// constraints aren't met.
+type GetMessagesResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetMessagesResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetMessagesResponseMultiError) AllErrors() []error { return m }
+
+// GetMessagesResponseValidationError is the validation error returned by
+// GetMessagesResponse.Validate if the designated constraints aren't met.
+type GetMessagesResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetMessagesResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetMessagesResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetMessagesResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetMessagesResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetMessagesResponseValidationError) ErrorName() string {
+	return "GetMessagesResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetMessagesResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetMessagesResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetMessagesResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetMessagesResponseValidationError{}
+
 // Validate checks the field values on AcknowledgeRequest with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
