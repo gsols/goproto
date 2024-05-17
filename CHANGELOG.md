@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/gsols/goproto/compare/v0.8.0...v0.9.0) (2024-05-17)
+
+
+### Features
+
+* add message details on proto message feat: add service to retrieve messages [gsols/proto-apis@cb6a9c65d95b1bbe14eab85ab48ffd35f2ad8e8b] ([c6463b1](https://github.com/gsols/goproto/commit/c6463b1c8ae97ba5078a089a3e58d82d7a4648c0))
+
 ## [0.8.0](https://github.com/gsols/goproto/compare/v0.7.0...v0.8.0) (2024-05-08)
 
 
