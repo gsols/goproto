@@ -3,7 +3,7 @@ module github.com/gsols/goproto
 go 1.22
 
 require (
-	github.com/bufbuild/buf v1.32.0
+	github.com/bufbuild/buf v1.32.1
 	github.com/envoyproxy/protoc-gen-validate v1.0.4
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.20.0
 	golang.org/x/tools v0.21.0
